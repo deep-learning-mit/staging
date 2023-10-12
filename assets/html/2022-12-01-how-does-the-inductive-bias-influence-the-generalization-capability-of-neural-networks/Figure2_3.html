@@ -1,0 +1,99 @@
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: "Roboto",sans-serif;
+        font-weight: 300;
+        margin-left: 0px; 
+        margin-right: 0px;
+    }
+
+
+
+    @media only screen and  (min-width: 820px) and (max-width: 999px) {
+        body {
+        margin-left: 130px; 
+        margin-right: 130px;
+        }
+    }
+
+    @media only screen and  (min-width: 1000px) {
+        body {
+        margin-left: 184px; 
+        margin-right: 184px;
+        }
+    }
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: none;
+  background-color: none;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  border: none;
+}
+</style>
+</head>
+<body>
+
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'FCN')">FCN</button>
+  <button class="tablinks" onclick="openCity(event, 'CNN')">CNN</button>
+</div>
+
+<div id="FCN" class="tabcontent">
+  <h3>Fully connected network</h3>
+  <p><img src="../../img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure2.PNG" alt="FCN" style="width: min(704px, 100%);"> <figcaption>Visualization of predictions from FCNs trained on a single example.</figcaption> </p>
+</div>
+<div id="CNN" class="tabcontent">
+  <h3>Convolutional neural network</h3>
+  <p><img src="../../img/2022-12-01-how-does-the-inductive-bias-influence-the-generalization-capability-of-neural-networks/Figure3.PNG" alt="CNN" style="width: min(704px, 100%);"> <figcaption>Visualization of predictions from CNNs trained on a single example.</figcaption></p> 
+</div>
+
+<script>
+document.getElementsByClassName('tablinks')[0].click()
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+   
+</body>
+</html> 
