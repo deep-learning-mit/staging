@@ -61,7 +61,6 @@ to expect a significant portion of the machine learning community to
 contribute to such an initiative when everyone is trying to establish
 themselves through publications.
 
-> You can read more on our [about]({% link about.md %}) page.
 
 ### A Blog Post Conference Track
 

@@ -2,7 +2,7 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: ICLR Blogposts 2023 (staging) # the website title (if blank, full name will be used instead)
+title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
 first_name: abc
 middle_name: b
 last_name: c
@@ -112,9 +112,9 @@ bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: blogposts # blog_name will be displayed in your blog page
+blog_name: 6.S898 Deep Learning Blogs # blog_name will be displayed in your blog page
 blog_nav_title: blog # your blog must have a title for it to be displayed in the nav bar
-blog_description: Blogpost track entries
+blog_description: Fall 2023
 permalink: /blog/:year/:title/
 
 # Pagination
