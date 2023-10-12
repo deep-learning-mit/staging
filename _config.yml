@@ -20,6 +20,7 @@ icon: iclr_favicon.ico  # the emoji used as the favicon (alternatively, provide 
 url: https://deep-learning-mit.github.io # the base hostname & protocol for your site
 baseurl: /staging # the subpath of your site, e.g. /blog/
 
+
 # url: https://iclr-blogposts.github.io # the base hostname & protocol for your site
 # baseurl: /staging # the subpath of your site, e.g. /blog/
 last_updated: false # set to true if you want to display last updated in the footer
