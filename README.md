@@ -24,24 +24,6 @@ Finally, run the following command that will pull a pre-built image from DockerH
 $ ./bin/dockerhub_run.sh
 ```
 
-Note that when you run it for the first time, it will download a docker image of size 300MB or so.
-
-```bash
-$ ./bin/docker_build_image.sh  
-```
-
-Run the website!
-
-```bash
-$ ./bin/docker_run.sh
-```
-
-> To change port number, you can edit `docker_run.sh` file.
-
-> If you want to update jekyll, install new ruby packages, etc., all you have to do is build the image again using `docker_build_image.sh`! It will download ruby and jekyll and install all ruby packages again from scratch.
-
-</details>
-
 ---
 
 #### Local Setup (Standard)
