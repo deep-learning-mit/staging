@@ -26,6 +26,8 @@ $ ./bin/dockerhub_run.sh
 
 Note that when you run it for the first time, it will download a docker image of size 300MB or so.
 
+If you get an error like `Could not find gem 'jekyll-target-blank' in locally installed gems.` run `sudo gem install jekyll-target-blank`
+
 Now, feel free to customize the theme however you like (don't forget to change the name!). After you are done, you can use the same command (`bin/dockerhub_run.sh`) to render the webpage with all you changes. Also, make sure to commit your final changes.
 
 <details><summary>(click to expand) <strong>Build your own docker image (more advanced):</strong></summary>
