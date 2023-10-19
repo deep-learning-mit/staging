@@ -26,7 +26,7 @@ $ ./bin/dockerhub_run.sh
 
 ---
 
-#### Local Setup (Standard)
+#### Local setup without Docker
 
 Assuming you have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Bundler](https://bundler.io/) installed on your system (*hint: for ease of managing ruby gems, consider using [rbenv](https://github.com/rbenv/rbenv)*), do the following:
 
