@@ -266,18 +266,6 @@ John-->>Alice: Great!
 
 ***
 
-## Tweets
-
-An example of displaying a tweet:
-{% twitter https://twitter.com/rubygems/status/518821243320287232 %}
-
-An example of pulling from a timeline:
-{% twitter https://twitter.com/jekyllrb maxwidth=500 limit=3 %}
-
-For more details on using the plugin visit: [jekyll-twitter-plugin](https://github.com/rob-murray/jekyll-twitter-plugin)
-
-***
-
 ## Blockquotes
 
 <blockquote>
