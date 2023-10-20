@@ -37,9 +37,6 @@ $ bundle install
 $ bundle exec jekyll serve
 ```
 
-Now, feel free to customize the theme however you like (don't forget to change the name!).
-After you are done, **commit** your final changes.
-
 ---
 >
 
