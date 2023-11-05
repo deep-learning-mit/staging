@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Sample Blog Post
+title: Preston's Blog Post
 description: Your blog post's abstract.
   This is an example of a distill-style blog post and the main elements it supports.
 date: 2022-12-01
