@@ -3,10 +3,10 @@
 # -----------------------------------------------------------------------------
 
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
-first_name: abc
-middle_name: b
-last_name: c
-email: charlie.gauthier@umontreal.ca
+first_name: R.
+middle_name: Preston
+last_name: Hess
+email: rphess@mit.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Staging website for the 2023 ICLR Blogposts track
 footer_text: >
