@@ -1,9 +1,9 @@
 ---
 layout: distill
-title: Sample Blog Post
+title: Injecting Node Information via Embedding Initializations
 description: Your blog post's abstract.
   This is an example of a distill-style blog post and the main elements it supports.
-date: 2022-12-01
+date: 2023-11-07
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -11,18 +11,10 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Albert Einstein
+  - name: Emma Tysinger
     url: "https://en.wikipedia.org/wiki/Albert_Einstein"
     affiliations:
-      name: IAS, Princeton
-  - name: Boris Podolsky
-    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
-    affiliations:
-      name: IAS, Princeton
-  - name: Nathan Rosen
-    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
-    affiliations:
-      name: IAS, Princeton
+      name: MIT
 
 # must be the exact same name as your blogpost
 bibliography: 2022-12-01-distill-example.bib  
