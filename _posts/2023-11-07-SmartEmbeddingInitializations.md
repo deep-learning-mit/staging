@@ -64,10 +64,18 @@ Possible applications of purposeful embedding initializations could help in the 
 
 Our project will consist of two parts. The first will be to implement a GNN on this ____ graph. We will train two models, one with random initializations and a other with embeddings initialized as ...
 The second part of the project will focus on evaluating our model.
-- GNN Task accuracy
-- Visualization of node embedding latent space
 
-Questions to consider during the model comparisons include does the GNN perform better on the task? Do the optimized model embeddings maintain information injected from the non-random initializations?
+#### Emmbedding Quality Analysis
+- Assess the qualitative differences in embeddings between random and intentional initializations.
+- Perform intrinsic evaluation by measuring how well the embeddings capture semantic similarity or relatedness.
+- Question to consider: Does embedding quality improve using intentional initializations, that could be used for downstream tasks via transfer learning?
+
+#### Node Clustering
+- Visualization of node embedding latent space using t-SNE plots and heatmaps
+- Question to consider: Do the optimized model embeddings maintain information injected from the non-random initializations?
+
+#### Link Prediction Accuracy
+- Determine if embeddings initialized with additional node information improve the performance of link prediction tasks compared to randomly initialized embeddings
   
 
 ## Equations
