@@ -3,10 +3,10 @@
 # -----------------------------------------------------------------------------
 
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
-first_name: abc
-middle_name: b
-last_name: c
-email: charlie.gauthier@umontreal.ca
+first_name: Eunhae
+middle_name: 
+last_name: Lee
+email: eunhae@mit.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Staging website for the 2023 ICLR Blogposts track
 footer_text: >
@@ -70,10 +70,10 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # Social integration
 # -----------------------------------------------------------------------------
 
-github_username: # your GitHub user name
+github_username: viajeraune
 gitlab_username: # your GitLab user name
 twitter_username: # your Twitter handle
-linkedin_username: # your LinkedIn user name
+linkedin_username: eunhaelee
 scholar_userid: # your Google Scholar ID
 semanticscholar_id: # your Semantic Scholar ID
 orcid_id: # your ORCID ID
