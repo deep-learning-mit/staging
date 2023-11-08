@@ -66,6 +66,7 @@ Our project will consist of two parts. The first will be to implement a GNN on t
 The second part of the project will focus on evaluating our model.
 - GNN Task accuracy
 - Visualization of node embedding latent space
+
 Questions to consider during the model comparisons include does the GNN perform better on the task? Do the optimized model embeddings maintain information injected from the non-random initializations?
   
 
