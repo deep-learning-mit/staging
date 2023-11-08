@@ -1,9 +1,8 @@
 ---
 layout: distill
-title: Sample Blog Post
-description: Your blog post's abstract.
-  This is an example of a distill-style blog post and the main elements it supports.
-date: 2022-12-01
+title: Multimodal Commonsense Proposal
+description: 6.S898 project proposal for analyzing and evaluating the commonsense reasoning performance of multimodal vs text-only models.
+date: 2023-11-09
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -11,35 +10,24 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Albert Einstein
-    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
-    affiliations:
-      name: IAS, Princeton
-  - name: Boris Podolsky
-    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
-    affiliations:
-      name: IAS, Princeton
-  - name: Nathan Rosen
-    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
-    affiliations:
-      name: IAS, Princeton
+  - name: Vincent Lin
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-distill-example.bib
+bibliography: 2023-11-09-multimodal-commonsense.bib
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
-toc:
-  - name: Equations
-  - name: Images and Figures
-    subsections:
-    - name: Interactive Figures
-  - name: Citations
-  - name: Footnotes
-  - name: Code Blocks
-  - name: Layouts
-  - name: Other Typography?
+# toc:
+#   - name: Equations
+#   - name: Images and Figures
+#     subsections:
+#     - name: Interactive Figures
+#   - name: Citations
+#   - name: Footnotes
+#   - name: Code Blocks
+#   - name: Layouts
+#   - name: Other Typography?
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
