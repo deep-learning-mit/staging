@@ -12,17 +12,22 @@ htmlwidgets: true
 
 authors:
   - name: Emma Tysinger
-    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
+    url: "https://www.linkedin.com/in/emma-tysinger/"
+    affiliations:
+      name: MIT
+  - name: Sam Costa
+    url: "https://www.linkedin.com/in/samuelcos/"
     affiliations:
       name: MIT
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-distill-example.bib  
+bibliography: 2023-11-07-SmartEmbeddingInitializations.bib 
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
+  - name: Proposal
   - name: Equations
   - name: Images and Figures
     subsections:
@@ -52,6 +57,17 @@ _styles: >
     font-size: 16px;
   }
 ---
+## Proposal
+
+This project will take a deeper dive into node embedding initializations for graph neural networks. We will explore the question can additional node information be injected into the model by using intentional embedding initializations rather than random initializations? Furthermore, are the learned embeddings better representations of the nodes? 
+Possible applications of purposeful embedding initializations could help in the field of drug discovery. For GNNs used for protein retrieval trained on a biomedical knowledge graph, using ESM embeddings for the proteins could add structure information that is not previously encoded in the graph entities. 
+
+Our project will consist of two parts. The first will be to implement a GNN on this ____ graph. We will train two models, one with random initializations and a other with embeddings initialized as ...
+The second part of the project will focus on evaluating our model.
+- GNN Task accuracy
+- Visualization of node embedding latent space
+Questions to consider during the model comparisons include does the GNN perform better on the task? Do the optimized model embeddings maintain information injected from the non-random initializations?
+  
 
 ## Equations
 
