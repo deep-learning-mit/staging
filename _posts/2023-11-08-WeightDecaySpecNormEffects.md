@@ -1,8 +1,7 @@
 ---
 layout: distill
 title: Exploring Weight decay and Spectral Normalization in MLPs and Residual networks
-description: Your blog post's abstract.
-  This is an example of a distill-style blog post and the main elements it supports.
+description: Project proposal for Spectral normalization related final project for 6.s898, Fall 2023.
 date: 2023-11-08
 htmlwidgets: true
 
