@@ -72,8 +72,9 @@ Here are some research papers related to catastrophic forgetting in large langua
 
 ## Open questions
 
-1. How can I scope the project so it's feasible in 4-5 weeks? What are some specific ideas on how I could scope down if needed?
-2. Would there be a scenario where I could forego the experimentation but still be able to fulfill the requirements of the project (mostly due to sake of time)?
+1. Is the research approach of looking into the "MemoryBank" concept based on a very recent paper and expanding it a good direction for this project?
+2. How can I scope the project so it's feasible in 4-5 weeks? What are some specific ideas on how I could scope down if needed?
+3. Would there be a scenario where I could forego the experimentation but still be able to fulfill the requirements of the project (mostly due to sake of time)? 
 
 
 <!-- ## Appendix -->
