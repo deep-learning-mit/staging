@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Preston's Blog Post
+title: Exploring Weight decay and Spectral Normalization in MLPs and Residual networks
 description: Your blog post's abstract.
   This is an example of a distill-style blog post and the main elements it supports.
 date: 2022-12-01
@@ -11,18 +11,13 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Albert Einstein
-    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
+  - name: Preston Hess
+    url: "https://rphess.cargo.site/"
     affiliations:
-      name: IAS, Princeton
-  - name: Boris Podolsky
-    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
+      name: MIT BCS and EECS
+  - name: Andrew Hutchison
     affiliations:
-      name: IAS, Princeton
-  - name: Nathan Rosen
-    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
-    affiliations:
-      name: IAS, Princeton
+      name: MIT EECS
 
 # must be the exact same name as your blogpost
 bibliography: 2022-12-01-distill-example.bib  
