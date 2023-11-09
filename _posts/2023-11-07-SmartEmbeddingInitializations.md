@@ -57,8 +57,8 @@ Graph Neural Networks (GNNs) have emerged as a transformative tool in machine le
 
 Possible applications of initial embedding initializations could help in the field of drug discovery. For GNNs used for protein retrieval trained on a biomedical knowledge graph, using ESM embeddings for the proteins could add structure information that is not previously encoded in the graph entities. 
 
-Our project will consist of two parts. The first will be to implement a GNN on this ____ graph. We will train two models, one with random initializations and a other with embeddings initialized as ...
-The second part of the project will focus on evaluating our model.
+Our project will consist of two parts. We will use a GNN, TxGNN, that is implemented for disease-drug link prediction on a biomedical knowledge graph as a baseline model. The first part will be focused on modifying the GNN for protein-molecular function, retrieving the embeddings and training. We will train two models, one with random initializations and a other with embeddings initialized as ESM embeddings for the protein nodes. 
+The second part of the project will focus on evaluating our models.
 
 #### Embedding Quality Analysis
 - Assess the qualitative differences in embeddings between random and intentional initializations.
@@ -71,6 +71,8 @@ The second part of the project will focus on evaluating our model.
 
 #### Link Prediction Accuracy
 - Determine if embeddings initialized with additional node information improve the performance of link prediction tasks compared to randomly initialized embeddings
+
+
   
 
 
