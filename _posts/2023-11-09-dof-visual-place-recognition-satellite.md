@@ -10,7 +10,7 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Andrew Feldman
+  - name: Andrew Feldman (Kerberos: abf149)
     url: "https://andrew-feldman.com/"
     affiliations:
       name: MIT
