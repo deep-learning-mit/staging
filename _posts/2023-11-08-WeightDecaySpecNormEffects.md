@@ -20,7 +20,7 @@ authors:
       name: MIT EECS
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-09-WeightDecaySpecNormEffects.bib  
+bibliography: 2023-11-08-WeightDecaySpecNormEffects.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -28,6 +28,8 @@ bibliography: 2023-11-09-WeightDecaySpecNormEffects.bib
 toc:
   - name: Relevance and Investigation
   - name: Proposed Methods
+
+---
 
 ## Relevance and Investigation
 
