@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: Exploring Weight decay and Spectral Normalization in MLPs and Residual networks
+title: Sample Blog Post
 description: Your blog post's abstract.
   This is an example of a distill-style blog post and the main elements it supports.
 date: 2022-12-01
@@ -11,23 +11,28 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Preston Hess
-    url: "https://rphess.cargo.site/"
+  - name: Albert Einstein
+    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
     affiliations:
-      name: MIT BCS and EECS
-  - name: Andrew Hutchison
+      name: IAS, Princeton
+  - name: Boris Podolsky
+    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
     affiliations:
-      name: MIT EECS
+      name: IAS, Princeton
+  - name: Nathan Rosen
+    url: "https://en.wikipedia.org/wiki/Nathan_Rosen"
+    affiliations:
+      name: IAS, Princeton
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-09-WeightDecaySpecNormEffects.bib  
+bibliography: 2022-12-01-distill-example.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
-  - name: Relevance and Investigation
-  - name: Proposed Methods
+  - name: Equations
+  - name: Images and Figures
     subsections:
     - name: Interactive Figures
   - name: Citations
@@ -423,4 +428,4 @@ Here's a line for us to start with.
 This line is separated from the one above by two newlines, so it will be a *separate paragraph*.
 
 This line is also a separate paragraph, but...
-This line is only separated by a single newline, so it's a separate line in the *same paragraph*.
+This line is only separated by a single newline, so it's a separate line in the *same paragraph*.0px
