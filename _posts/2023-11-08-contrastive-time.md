@@ -2,7 +2,7 @@
 layout: distill
 title: Contrastive Time Series Representation Learning
 description: Proposal for a new method of time series representation learning
-date: 2022-11-08
+date: 2022-11-07
 htmlwidgets: true
 
 
@@ -21,7 +21,7 @@ authors:
       name: Harvard University
 
 # must be the exact same name as your blogpost
-bibliography: assets/bibliography/2023-11-08-contrastive-time.bib  
+bibliography: 2023-11-08-contrastive-time.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -55,7 +55,7 @@ _styles: >
 
 ## Introduction
 
-Time-series data analysis is pivotal in numerous scientific and industrial applications, including dynamical system, weather forecasting, and stock market prediction. The underlying parameters governing the time-series data can often be complex and not directly observable. Unlike traditional time series approaches, which predominantly focus on prediction tasks, leading to a "black-box" prediction. In this project, we want to leverage the contrastive learning approach studied in class to learn latent parameters. 
+Time-series data analysis is pivotal in numerous scientific and industrial applications, including dynamical system, weather forecasting, and stock market prediction. The underlying parameters governing the time-series data can often be complex and not directly observable. Unlike traditional time series approaches, which predominantly focus on prediction tasks, leading to a "black-box" prediction <d-cite key="Lim_2021"></d-cite>. Recent literatures have explored using contrastive learning to learn time-series representation, but none has explored learning underlying system parameters <d-cite key="eldele2021timeseries"></d-cite>. In this project, we want to leverage the contrastive learning approach studied in class to learn underlying system parameters parameters.
 
 A deep comprehension of these underlying parameters, if successfully achieved, can lead to 2 benefits - 1) enhanced model capability for making accurate future predictions, and 2) a better understanding of the underlying system. The latter is particularly important in scientific, where the goal is to understand the underlying system, and engineering, where safety and reliability are of paramount importance.
 
