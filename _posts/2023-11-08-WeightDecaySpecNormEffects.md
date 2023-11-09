@@ -19,7 +19,7 @@ authors:
       name: MIT EECS
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-08-WeightDecaySpecNormEffects.bib  
+bibliography: _biblography/2023-11-08-WeightDecaySpecNormEffects.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
