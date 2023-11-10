@@ -114,6 +114,7 @@ Here are some relevant research papers related to user modeling, representation 
 6. [Task Relation-aware Continual User Representation Learning (Kim et al., 2023)](https://www.semanticscholar.org/paper/Task-Relation-aware-Continual-User-Representation-Kim-Lee/8603050ecf87bc1a073500bc0602c16de14cafc7)
 7. [Scaling Law for Recommendation Models: Towards General-purpose User Representations (Shin et al., 2023)](https://www.semanticscholar.org/paper/Scaling-Law-for-Recommendation-Models%3A-Towards-User-Shin-Kwak/7567744a0e23174166575e8d98590967684696b4)
 
+*Note: I didn't add the bibliography of the second proposal in the .bib file for sake of time.*
 
 ## Open questions
 
