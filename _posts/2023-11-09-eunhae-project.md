@@ -18,15 +18,24 @@ bibliography: 2023-11-09-eunhae-project.bib
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
-  - name: Abstract
-  - name: Proposed outline
-  - name: Relevant literature
+  - name: "Proposal #1"
+    subsections:
+    - name: "Proposal #1: Abstract"
+    - name: "Proposal #1: Outline"
+    - name: "Proposal #1: Relevant literature"
+  - name: "Proposal #2"
+    subsections:
+    - name: "Proposal #2: Abstract"
+    - name: "Proposal #2: Outline"
+    - name: "Proposal #2: Relevant literature"
   - name: Open questions
   # - name: Appendix
 
 ---
 
-## Abstract
+## Proposal #1
+
+### Proposal #1: Abstract
 
 **Title**: "Mitigating Catastrophic Forgetting in LLMs through a Dynamic Memory Bank Approach" (TBD)
 
@@ -39,7 +48,7 @@ toc:
 **Background:** Large language models have shown remarkable capabilities when it comes to producing human-like text and having a two-way conversation. However, catastrophic forgetting — the tendency of LLMs to lose previously acquired information when new information is presented — poses a significant challenge. This phenomenon is particularly problematic in dynamic environments (i.e. when new information is presented, such as user feedback) where continuous learning is essential. For this project, I will explore the concept of a dynamic memory bank to LLMs to help them learn incrementally from user interactions without forgetting previously learned information. I will explore existing approaches to tackle this issue, and propose a new or updated approach to the concept of memory bank.
 
 
-## Proposed outline
+### Proposal #1: Outline
 
 1. **Literature review**: Review existing solutions to catastrophic forgetting, such as elastic weight consolidation (EWC), replay methods, and [dual-memory learning systems](https://arxiv.org/abs/1710.10368). Evaluate their strengths and limitations in the context of LLMs.
 
@@ -57,7 +66,7 @@ toc:
 4. **Practical applications**: Discuss how improvements in catastrophic forgetting through memory banks could affect the deployment LLMs in real-world scenarios. Could potentially do a deeper dive into one specific use case (i.e. financial robo-advisor)
 
 
-## Relevant literature
+### Proposal #1: Relevant literature
 
 Here are some research papers related to catastrophic forgetting in large language models (LLMs) and the concept of a memory bank or related techniques to mitigate such forgetting, in no particular order:
 
@@ -69,13 +78,49 @@ Here are some research papers related to catastrophic forgetting in large langua
 6. **[Investigating the Catastrophic Forgetting in Multimodal Large Language Models (Zhai et al., 2023)](https://nips.cc/virtual/2023/79641)**: Following the development of GPT-4, this paper explores the occurrence of catastrophic forgetting in multimodal LLMs, emphasizing the challenge as these models are fine-tuned from pre-trained states.
 7. **[Interactive AI with a Theory of Mind (Çelikok et al., 2019)](https://arxiv.org/abs/1912.05284)**: The authors formulate human-AI interaction as a multi-agent problem, endowing AI with a computational theory of mind to understand and anticipate the user.
 
+<br />
+
+## Proposal #2
+
+### Proposal #2: Abstract
+
+**Title:** "Advancing User Representation with Contrastive Learning in Dynamic Environments"
+
+**Research Question:** How can contrastive self-supervised learning enhance user representation in constantly evolving environments? How can user representations be used in the context of intelligent assistants in a new domain (i.e. financial advising)?
+
+**Objective:** To explore, design, and evaluate contrastive learning methods for dynamic, accurate user representation, enhancing personalization in dynamic, interactive setting such as intelligent assistants.
+
+**Hypothesis:** Utilizing contrastive learning will significantly improve the adaptability and accuracy of user models, leading to superior personalization in user-centric systems.
+
+**Background:** Traditional user representation techniques often falter in dynamic settings. This study builds on recent advances in contrastive self-supervised learning ([Jing et al., 2023](https://www.semanticscholar.org/paper/Contrastive-Self-supervised-Learning-in-Recommender-Jing-Zhu/ca67a13a34b15624a4fc4b002e931fd82e3a4a0c); [Shin et al., 2023](https://www.semanticscholar.org/paper/Scaling-Law-for-Recommendation-Models%3A-Towards-User-Shin-Kwak/7567744a0e23174166575e8d98590967684696b4); [Xie et al., 2021](https://arxiv.org/pdf/2010.14395.pdf); [Cheng et al., 2021](http://staff.ustc.edu.cn/~qiliuql/files/Publications/Mingyue-Cheng-ICDM21.pdf); [Sun et al., 2021](https://arxiv.org/abs/2109.08865)) to develop user models that better capture and evolve with user behavior, offering a novel approach to user representation in dynamic contexts. Moreover, learning user representations is key to personalization in many domains and has been largely researched in the context of recommendation systems (i.e. commerce, advertising). This project will explore potential application to different contexts, specifically intelligent assistants in the context of financial advising.
+
+### Proposal #2: Outline
+
+- Literature review: Review existing approaches using contrastive learning for user representations as mentioned above, as well as papers that survey other trending approaches in user modeling.
+  - More recent research has explored continual learning in user representations, which helps mitigate catastrophic forgetting  [(Kim et al., 2023)](https://www.semanticscholar.org/paper/Task-Relation-aware-Continual-User-Representation-Kim-Lee/8603050ecf87bc1a073500bc0602c16de14cafc7)
+- Design: Adapt novel user representation technique to intelligent systems, building upon existing approaches from recommendation systems.
+- Evaluate (Stretch goal): I could design a small scale experiment to measure the improvement.
+- Practical applications/future work
+
+### Proposal #2: Relevant literature
+
+Here are some relevant research papers related to user modeling, representation learning and contrastive learning:
+
+1. [A Survey on Representation Learning for User Modeling (Li and Zhao, 2020)](https://www.ijcai.org/proceedings/2020/0695.pdf)
+2. [Contrastive Self-supervised Learning in Recommender Systems: A Survey (Jing et al., 2023](https://www.semanticscholar.org/paper/Contrastive-Self-supervised-Learning-in-Recommender-Jing-Zhu/ca67a13a34b15624a4fc4b002e931fd82e3a4a0c))
+3. [Contrastive Learning for Sequential Recommendation (Xie et al., 2021](https://arxiv.org/pdf/2010.14395.pdf))
+4. [Learning Transferable User Representations with Sequential Behaviors via Contrastive Pre-training (Cheng et al., 2021)](http://staff.ustc.edu.cn/~qiliuql/files/Publications/Mingyue-Cheng-ICDM21.pdf)
+5. [Interest-oriented Universal User Representation via Contrastive Learning (Sun et al., 2021)](https://arxiv.org/abs/2109.08865)
+6. [Task Relation-aware Continual User Representation Learning (Kim et al., 2023)](https://www.semanticscholar.org/paper/Task-Relation-aware-Continual-User-Representation-Kim-Lee/8603050ecf87bc1a073500bc0602c16de14cafc7)
+7. [Scaling Law for Recommendation Models: Towards General-purpose User Representations (Shin et al., 2023)](https://www.semanticscholar.org/paper/Scaling-Law-for-Recommendation-Models%3A-Towards-User-Shin-Kwak/7567744a0e23174166575e8d98590967684696b4)
+
 
 ## Open questions
 
-1. Is the research approach of looking into the "MemoryBank" concept based on a very recent paper and expanding it a good direction for this project?
+1. (For proposal #1) Is the research approach of looking into the "MemoryBank" concept based on a very recent paper and expanding it a good direction for this project?
 2. How can I scope the project so it's feasible in 4-5 weeks? What are some specific ideas on how I could scope down if needed?
 3. Would there be a scenario where I could forego the experimentation but still be able to fulfill the requirements of the project (mostly due to sake of time)? 
-
+4. Which project would you recommend in terms of scope/feasibility and relevance?
 
 <!-- ## Appendix -->
 
