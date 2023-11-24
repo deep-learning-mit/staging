@@ -8,5 +8,4 @@ _site
 .tweet-cache
 Gemfile.lock
 vendor
-scatchpaper/
-
+scratchpaper/physionet.org/files/hd-semg/1.0.0/pr_dataset
