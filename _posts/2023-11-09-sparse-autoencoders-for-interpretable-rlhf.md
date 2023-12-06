@@ -20,27 +20,41 @@ authors:
       name: Harvard
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-06-sparse_autoencoders_for_interpretable_rlhf.bib  
+bibliography: 2023-11-09-sparse-autoencoders-for-interpretable-rlhf.bib
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
-  - name: Introduction
-  - name: Our Research Questions
-  - name: Study Outline (Methods, Analysis, Metrics)
-  - name: Progress and Next Steps
+  - name: Introduction  # including an interactive demo of our sparse autoencoder for Pythia 6.9B
+  - name: Related Work  # literature review of 8-10 highly relevant papers or blogs, with 1-3 sentences thoughtfully summarizing and connecting the idea in each one
+  - name: Methods # including one subsection rigorously defining our sparse autoencoders, one subsection for PPO and the reward model (including our auxiliary parameters for RLHF), and one subsection for the datasets we experimented on (openwebtext, and a little with chess)
+  - name: Experiments  # Did we find that our SAE-surgery model performed under RLHF? Example: could it detect to minimize swear words?
+  - name: Discussion
+  - name: Future Directions
 ---
 
 ## Introduction
 
-Transformer-based large language models are increasingly deployed in high-stakes scenarios, but we have only rudimentary methods to predict when and how these models will fail. Mechanistic interpretability seeks to catch failure modes before they arise by reverse-engineering specific learned circuitry. While exciting work has been done on interpreting the [attention heads](https://transformer-circuits.pub/2021/framework/index.html) of models, the MLPs -- both the hidden layer, and the residual stream post-MLP -- have remained more elusive.
+Understanding how machine learning models arrive at the answers they do, known as *interpretability*, is increasingly important as models become deployed in high-stakes scenarios. Otherwise models may exhibit bias, toxicity, hallucinations, or dishonesty without the user or the creators knowing. But machine learning models are notoriously difficult to interpret. Adding to the challenge, the most widely used method for aligning language models with human preferences, RLHF (Reinforcement Learning from Human Feedback), impacts model cognition in ways that researchers do not understand. In this work, inspired by recent advances in sparse autoencoders from Anthropic, we contribute a novel, more interpretable way to perform RLHF. Along the way, we introduce the building blocks, including sparse autoencoders and PPO (Proximal Policy Optimization). We assume familiarity with the transformer architecture.
 
-Individual neurons and the residual stream are often difficult to interpret because neurons are **polysemantic**. A polysemantic neuron is one that activates in response to multiple unrelated features, such as “cat” and “car,” or “this text is in Arabic” and “this text is about DNA.” Some researchers hypothesize that NNs learn a compression scheme known as **[superposition](https://transformer-circuits.pub/2022/toy_model/index.html)**, and that superposition gives rise to polysemanticity. Superposition occurs when there are more features embedded inside a layer than there are dimensions in that layer. Since each feature is represented as a direction in activation space, the features then form an overcomplete basis of the activation space. This overcomplete basis can still lead to excellent performance if the features are sparse -- e.g., most text is not in Arabic -- and if nonlinearities can smooth over interference between features.
+{% include figure.html path="assets/img/2022-11-09-sparse-autoencoders-for-interpretable-rlhf.md/interpretability-hard-cartoon.png" class="img-fluid" %}
 
-But in the past year, a promising new idea was proposed to take features out of superposition: **sparse autoencoders** (SAEs). Sparse autoencoders were first proposed in a [blog post](https://www.lesswrong.com/posts/z6QQJbtpkEAX3Aojj/interim-research-report-taking-features-out-of-superposition) in December 2022 by Lee Sharkey. In September 2023, two groups published further work on SAEs: Anthropic ([Bricken et al.](https://transformer-circuits.pub/2023/monosemantic-features/)) and a group of independent researchers ([Cunningham et al.](https://arxiv.org/abs/2309.08600)). In an SAE, the goal is to learn a sparse representation in the latent dimension, such that each neuron represents an interpretable feature. SAEs are typically applied either to the residual stream or to the hidden layer of an MLP. The SAE trains on both L2 reconstruction loss and L1 sparsity in its hidden layer. The hidden dimension of the autoencoder is usually much larger than its input dimension, for instance by a factor of 8.
+## Related Work
 
-## Our Research Questions
+Research on interpreting machine learning models falls broadly under one of two areas: representation engineering and mechanistic interpretability.
+
+Representation engineering seeks to map out meaningful directions in the representation space of models. For example, Li et al. found a direction in one model that causally corresponds to truthfulness <d-cite key="li2023inferencetime" />. Subsequent work by Zou et al. borrows from neuroscience methods to find directions for hallucination, honesty, power, and morality, in addition to several others <d-cite key="zou2023representation" />. But directions in representation space can prove brittle. As Marks et al. find, truthfulness directions for the same model can vary across datasets <d-cite key="marks2023geometry" />. Moreover, current methods for extracting representation space directions largely rely on probing <d-cite key="belinkov-2022-probing" /> and the linearity hypothesis <d-cite key="elhage2022superposition" />. Gurnee et al. showed that language models represent time and space using internal world models <d-cite key="gurnee2023language" />; but world models may have an incentive to store certain information in nonlinear ways, such as logarithmically, for example, which would allow reasoning about the size of the sun and the size of electrons in a consistent way without floating point errors.
+
+Mechanistic interpretability, unlike representation engineering, studies individual neurons, layers, and circuits, seeking to map out model reasoning at a granular level. One challenge is that individual neurons often fire in response to many unrelated features, a phenomenon known as polysemanticity. For example, Olah et al. found polysemantic neurons in vision models, including one that fires on both cat legs and car fronts <d-cite key="olah2020zoom"></d-cite>. Olah et al. hypothesize that polysemanticity arises due to superposition, which is when the model attempts to learn more features than it has dimensions. Subsequent work investigated superposition in toy models, suggesting paths toward disentangling superposition in real models <d-cite key="elhage2022superposition" />. Superposition is relevant for language models because the real world has billions of features that a model could learn (names, places, facts, etc.), while highly deployed models have many fewer hidden dimensions, such as 12,288 for GPT-3 <d-cite key="brown2020fewshot" />.
+
+Recently, Sharkey et al. proposed using sparse autoencoders to pull features out of superposition. In an interim research report, the team describes inserting a sparse autoencoder, which expands dimensionality, into the residual stream of a transformer layer <d-cite key="sharkey2022interim" />. In a follow-up work, Cunningham et al. find that sparse autoencoders learn highly interpretable features in language models <d-cite key="cunningham2023sparse">. In a study on one-layer transformers, Anthropic provided further evidence that sparse autoencoders can tease interpretable features out of superposition <d-cite key="bricken2023monosemanticity" />.
+
+[Reinforcement learning paragraph] <d-cite key="marks2023rlhf" />
+
+## Methods
+
+Building on the highly interpretable feature directions learned by sparse autoencoders, our work proposes that these feature directions could induce more interpretable learnable parameters in RLHF.
 
 The main question we wish to answer is:
 
@@ -51,8 +65,6 @@ To answer this main question, we may need to investigate several further questio
 1. What metrics accurately describe effective, interpretable RLHF?
 2. How do we measure how good a sparse autoencoder is?
 3. How do we train the best sparse autoencoders we can?
-
-## Study Outline (Methods, Analysis, Metrics)
 
 To explore how sparse autoencoders can support a more interpretable RLHF, we will begin with the following initial experiment. Rather than fine-tuning all the transformer's weights in RLHF, we will experiment with fine-tuning *only a smaller subset of more interpretable parameters*.
 
@@ -73,7 +85,7 @@ Our **metrics for success** will be:
 
 Science is an iterative process. Creating new state-of-the-art methods for RLHF is not our goal. Rather, **our mission is a deeper understanding of the dynamics of RLHF in the context of sparse autoencoders**, along with releasing community-building, open-source contributions of clean, extendable, and useful training code to help future researchers at the intersection of reinforcement learning and sparse autoencoders.
 
-## Progress and Next Steps
+## Experiments
 
 We have made significant progress on our research agenda already.
 * We have learned how to **load, run, and save** large models such as Pythia 7B from the popular open-source hub Hugging Face.
@@ -86,3 +98,7 @@ In the next weeks, we will pursue these goals:
 1. Learn how to perform RLHF on large models such as Pythia 7B.
 2. Apply RLHF to sparse autoencoders we train on Pythia 7B.
 3. Iterate on our methods. Research is a learning process!
+
+## Discussion
+
+## Future Directions
