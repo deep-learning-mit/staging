@@ -42,8 +42,10 @@ _styles: >
   }
 ---
 
-## Partial differential equations and numerical methods 
-At the continuum level, spatiotemporal physical phenomena such as reaction-diffusion processes and wave propagations can be described by partial differential equations (PDEs). By modeling PDEs, we can understand the complex dynamics of and relationships between parameters across space and time, particularly at the mesoscale. However, PDEs usually do not have analytical solutions and are often solved numerically using methods such as the finite difference, finite volume, and finite element methods <d-cite key="LoggMardalEtAl2012"></d-cite>. For example, the finite element method (FEM) approximates PDE solutions by first discretizing a sample domain into a mesh of interconnected elements and then solving a system of equations iteratively given a set of boundary conditions, initial conditions, and material properties. **In my project, I will first briefly introduce established methods of numerically solving PDEs.** A popular PDE is the Navier-Stokes equation that describes the dynamics of viscous fluids, an example PDE below is the 2D Navier-Stokes equation for viscous and incompressible fluid in vorticity form and I will use its numerical solutions as training data for my project. 
+## Partial differential equations 
+At the continuum level, spatiotemporal physical phenomena such as reaction-diffusion processes and wave propagations can be described by partial differential equations (PDEs). By modeling PDEs, we can understand the complex dynamics of and relationships between parameters across space and time, particularly at the mesoscale. However, PDEs usually do not have analytical solutions and are often solved numerically using methods such as the finite difference, finite volume, and finite element methods <d-cite key="LoggMardalEtAl2012"></d-cite>. For example, the finite element method (FEM) approximates PDE solutions by first discretizing a sample domain into a mesh of interconnected elements and then solving a system of equations iteratively given a set of boundary conditions, initial conditions, and material properties. 
+
+The Navier-Stokes equation describes the dynamics of viscous fluids. For example, the PDE below is for viscous and incompressible fluid in vorticity form. The solution data were from the original paper<d-cite key="li2020fourier"></d-cite> where the equation is for a sampled initial condition, a constant forcing term, and periodic boundary conditions. The problem was solved with a pseudospectral method using a 1e-4 time step with the Crank-Nicolson scheme. 
 
 $$
 \begin{gather}
@@ -53,7 +55,7 @@ w(x, 0) = w_0(x), \quad x \in (0,1)^2
 \end{gather}
 $$
 
-## Motivations for neural PDEs
+### Motivations for neural PDEs
 Well-established numerical methods are very successful in approximating the solutions of PDEs, however, these methods require high computational cost especially for high spatial and temporal resolutions. Furthermore, it is important to have fast and accurate surrogate models that would target problems that require uncertainty quanitifcation, inverse design, and PDE-constrained optimizations. In recent years, there have been growing interests in neural operators that learn the mapping between input and output solution functions. These models are trained on numerical solutions from existing methods and inferences are orders of magnitude faster than calculating the solutions again through numerical methods. 
 
 In my project, I will focus on these 3 questions:
@@ -63,6 +65,7 @@ In my project, I will focus on these 3 questions:
 
 
 ## Base model: UNets with convolutional layers 
+Let's begin with examining whether a U-Net with convolutional layers can be used to learn the dynamics. We can use Conv2d layers to learn features from each frame of the PDE solution, treating the solution in xy like an image. As for the time component, the surrogate model takes the input solution from the previous N time steps to predict solution in the next N+1 time step. Then, the solution from the previous N-1 steps are concatenated with the predicted next-step solution for input back into the model to predict the next step. In a nutshell, the model is trained to predict autoregressively. 
 
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/unet_train_test_loss.png" class="img-fluid" %}
 
@@ -70,7 +73,11 @@ In my project, I will focus on these 3 questions:
 
 
 ## Applying FNO3d and FNO2dt on 2D Navier Stokes time-dependent PDE 
-In my project, I will first examine the neural operator approaches in learning PDEs, particularly Fourier neural operators. Fourier neural operators (FNOs) <d-cite key="li2020fourier"></d-cite> learn the mapping between input functions and solution functions <d-cite key="kovachki2021neural"></d-cite>, for example, mapping the solutions from earlier to later time steps for time-dependent PDEs. FNOs introduce the Fourier layers to learn convolution operators in the frequency domain by performing fast Fourier transforms and inverse transforms. The animation below shows the predicted solutions for the Navier-Stokes equations using a pretrained FNO. 
+Fourier neural operators (FNOs) <d-cite key="li2020fourier"></d-cite> try to learn the mapping between input functions and solution functions <d-cite key="kovachki2021neural"></d-cite>, for example, mapping the solutions from earlier to later time steps for time-dependent PDEs. FNOs introduce the Fourier layers to learn convolution operators in the frequency domain by performing fast Fourier transforms and inverse transforms. 
+
+Learning with FNO2d recurrent over time 
+
+{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/2dt_nspred42.gif" class="img-fluid" %}
 
 
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/train_test_loss.png" class="img-fluid" %}
@@ -78,11 +85,6 @@ In my project, I will first examine the neural operator approaches in learning P
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/nspred42.gif" class="img-fluid" %}
 
 It learns the global dynamics well but these seem to be mostly global dynamic changes. 
-
-
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/2dt_nspred42.gif" class="img-fluid" %}
-
-Learning with FNO2d recurrent over time 
 
 
 ### Representation learning: The learned representations in the Fourier layers 
@@ -93,30 +95,30 @@ Learning with FNO2d recurrent over time
 
 How Fourier layers work in contrast with CNN layers, and why they can learn the underlying dynamics regardless of data resolution.
 
-### Lower frequency modes are learned - sinusoidal waves 
+### Frequency modes that are learnt and the importance of positional encoding 
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dxdt.png" class="img-fluid" %}
+<div style="display: flex; justify-content: center; align-items: center;">
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dxdt.png" class="img-fluid" %}
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dydt.png" class="img-fluid" %}
+</div>
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dydt.png" class="img-fluid" %}
-
-
-### Importance of positional encoding 
 Removing positional encodings for x and y grids would make the performance worse compared to with positional encodings. 
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dxdt.png" class="img-fluid" %}
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dydt.png" class="img-fluid" %}
+</div>
 
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/train_test_loss_noencoding.png" class="img-fluid" %}
 
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/ns_noencode_pred42.gif" class="img-fluid" %}
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dxdt.png" class="img-fluid" %}
-
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dydt.png" class="img-fluid" %}
 
 ## Learning long term dynamics in coupled time-dependent PDE
 
 However, I will then highlight the inability for FNOs to capture long term dynamics (the losses accumulate when predictions made autoregressively are needed for long time steps) and how it could be due to FNOs' inability to learn representations at lower frequency modes (especially for systems where we care more about local changes instead of global changes in the dynamics). These are still preliminary hypotheses which I will examine properly during the project. 
 
-
-To deal with long time-steps predictions for time-dependent PDEs is still an open research question. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. I will first incorporate these techniques with the base FNO model to examine accuracies of long time dynamics. Next, I will examine if attention mechanisms introduced with transformer layers can help improve accuracies for lower frequency modes at longer time scales. These new model architectures would all be compared on the base dataset of Navier-Stokes equations (2D spatially with time dependence). Finally, I also hope to compare these methods on a coupled reaction heat-diffusion PDE with two dependent states, shown below. This PDE tend to have more chaotic behaviors when initial conditions are changed and thus its dynamics can be harder to learn especially for longer time scales and for lower frequency modes (for FNOs). 
+On a coupled reaction heat-diffusion PDE with two dependent states, this PDE tend to have more chaotic behaviors when initial conditions are changed. Therefore, its dynamics can be harder to learn especially for longer time scales and for lower frequency modes in an FNO.
 
 $$
 \begin{gather}
@@ -125,4 +127,24 @@ $$
 \end{gather}
 $$
 
-Therefore, by the end of the project, I hope to propose a new neural PDE approach with **(1) spatial convolutions in the Fourier space, (2) transformer layers for improved attention on local dynamics, and (3) pushforward and temporal bundling tricks to deal with predictions over long time scales**. 
+<div style="display: flex; justify-content: center; align-items: center;">
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/516.gif" class="img-fluid" %}
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/1129.gif" class="img-fluid" %}
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/1526.gif" class="img-fluid" %}
+</div>
+
+
+To deal with long time-steps predictions for time-dependent PDEs is still an open research question. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. I will first incorporate these techniques with the base FNO model to examine accuracies of long time dynamics. Next, I will examine if attention mechanisms introduced with transformer layers can help improve accuracies for lower frequency modes at longer time scales. These new model architectures would all be compared on the base dataset of Navier-Stokes equations (2D spatially with time dependence). 
+
+### Using ReVIN to normalize and denormalize the time series input for 1D PDEs 
+
+
+### Improving long time-step rollout with temporal bundling and pushforward tricks 
+
+
+## Incorporating local window attention to learn local dynamics
+
+
+
+## Conclusion 
+By the end of the project, I hope to propose a new neural PDE approach with **(1) spatial convolutions in the Fourier space, (2) transformer layers for improved attention on local dynamics, and (3) pushforward and temporal bundling tricks to deal with predictions over long time scales**. 
