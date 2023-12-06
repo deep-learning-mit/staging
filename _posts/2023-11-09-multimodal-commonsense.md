@@ -2,7 +2,7 @@
 layout: distill
 title: Multimodal Commonsense Proposal
 description: 6.S898 project proposal for analyzing and evaluating the commonsense reasoning performance of multimodal vs text-only models.
-date: 2023-11-09
+date: 2023-11-08
 htmlwidgets: true
 
 # Anonymize when submitting
