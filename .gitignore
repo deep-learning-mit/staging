@@ -10,3 +10,4 @@ Gemfile.lock
 vendor
 scratchpaper/physionet.org/files/hd-semg/1.0.0/pr_dataset
 env/
+.pkl
