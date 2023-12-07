@@ -28,6 +28,7 @@ bibliography: 2023-11-09-sparse-autoencoders-for-interpretable-rlhf.bib
 toc:
   - name: Introduction  # including an interactive demo of our sparse autoencoder for Pythia 6.9B
   - name: Related Work  # literature review of 8-10 highly relevant papers or blogs, with 1-3 sentences thoughtfully summarizing and connecting the idea in each one
+  - name: Background  # quickly explaining autoencoder, sparse autoencoder (and any other concepts needed)
   - name: Methods # including one subsection rigorously defining our sparse autoencoders, one subsection for PPO and the reward model (including our auxiliary parameters for RLHF), and one subsection for the datasets we experimented on (openwebtext, and a little with chess)
   - name: Experiments  # Did we find that our SAE-surgery model performed under RLHF? Example: could it detect to minimize swear words?
   - name: Discussion
@@ -44,17 +45,47 @@ Understanding how machine learning models arrive at the answers they do, known a
 
 Research on interpreting machine learning models falls broadly under one of two areas: representation engineering and mechanistic interpretability.
 
-Representation engineering seeks to map out meaningful directions in the representation space of models. For example, Li et al. found a direction in one model that causally corresponds to truthfulness <d-cite key="li2023inferencetime" />. Subsequent work by Zou et al. borrows from neuroscience methods to find directions for hallucination, honesty, power, and morality, in addition to several others <d-cite key="zou2023representation" />. But directions in representation space can prove brittle. As Marks et al. find, truthfulness directions for the same model can vary across datasets <d-cite key="marks2023geometry" />. Moreover, current methods for extracting representation space directions largely rely on probing <d-cite key="belinkov-2022-probing" /> and the linearity hypothesis <d-cite key="elhage2022superposition" />. Gurnee et al. showed that language models represent time and space using internal world models <d-cite key="gurnee2023language" />; but world models may have an incentive to store certain information in nonlinear ways, such as logarithmically, for example, which would allow reasoning about the size of the sun and the size of electrons in a consistent way without floating point errors.
+Representation engineering seeks to map out meaningful directions in the representation space of models. For example, Li et al. found a direction in one model that causally corresponds to truthfulness <d-cite key="li2023inferencetime"></d-cite>. Subsequent work by Zou et al. borrows from neuroscience methods to find directions for hallucination, honesty, power, and morality, in addition to several others <d-cite key="zou2023representation"></d-cite>. But directions in representation space can prove brittle. As Marks et al. find, truthfulness directions for the same model can vary across datasets <d-cite key="marks2023geometry"></d-cite>. Moreover, current methods for extracting representation space directions largely rely on probing <d-cite key="belinkov-2022-probing"></d-cite> and the linearity hypothesis <d-cite key="elhage2022superposition"></d-cite>, but models may have an incentive to store some information in nonlinear ways. For example, Gurnee et al. showed that language models represent time and space using internal world models <d-cite key="gurnee2023language"></d-cite>; for a world model to store physical scales ranging from the size of the sun to the size of an electron, it may prefer a logarithmic representation.
 
-Mechanistic interpretability, unlike representation engineering, studies individual neurons, layers, and circuits, seeking to map out model reasoning at a granular level. One challenge is that individual neurons often fire in response to many unrelated features, a phenomenon known as polysemanticity. For example, Olah et al. found polysemantic neurons in vision models, including one that fires on both cat legs and car fronts <d-cite key="olah2020zoom"></d-cite>. Olah et al. hypothesize that polysemanticity arises due to superposition, which is when the model attempts to learn more features than it has dimensions. Subsequent work investigated superposition in toy models, suggesting paths toward disentangling superposition in real models <d-cite key="elhage2022superposition" />. Superposition is relevant for language models because the real world has billions of features that a model could learn (names, places, facts, etc.), while highly deployed models have many fewer hidden dimensions, such as 12,288 for GPT-3 <d-cite key="brown2020fewshot" />.
+Mechanistic interpretability, unlike representation engineering, studies individual neurons, layers, and circuits, seeking to map out model reasoning at a granular level. One challenge is that individual neurons often fire in response to many unrelated features, a phenomenon known as polysemanticity. For example, Olah et al. found polysemantic neurons in vision models, including one that fires on both cat legs and car fronts <d-cite key="olah2020zoom"></d-cite>. Olah et al. hypothesize that polysemanticity arises due to superposition, which is when the model attempts to learn more features than it has dimensions. Subsequent work investigated superposition in toy models, suggesting paths toward disentangling superposition in real models <d-cite key="elhage2022superposition"></d-cite>. Superposition is relevant for language models because the real world has billions of features that a model could learn (names, places, facts, etc.), while highly deployed models have many fewer hidden dimensions, such as 12,288 for GPT-3 <d-cite key="brown2020fewshot"></d-cite>.
 
-Recently, Sharkey et al. proposed using sparse autoencoders to pull features out of superposition. In an interim research report, the team describes inserting a sparse autoencoder, which expands dimensionality, into the residual stream of a transformer layer <d-cite key="sharkey2022interim" />. In a follow-up work, Cunningham et al. find that sparse autoencoders learn highly interpretable features in language models <d-cite key="cunningham2023sparse">. In a study on one-layer transformers, Anthropic provided further evidence that sparse autoencoders can tease interpretable features out of superposition <d-cite key="bricken2023monosemanticity" />.
+Recently, Sharkey et al. proposed using sparse autoencoders to pull features out of superposition. In an interim research report, the team describes inserting a sparse autoencoder, which expands dimensionality, into the residual stream of a transformer layer <d-cite key="sharkey2022interim"></d-cite>. In a follow-up work, Cunningham et al. find that sparse autoencoders learn highly interpretable features in language models <d-cite key="cunningham2023sparse"></d-cite>. In a study on one-layer transformers, Anthropic provided further evidence that sparse autoencoders can tease interpretable features out of superposition <d-cite key="bricken2023monosemanticity"></d-cite>. Although interest in sparse autoencoders in machine learning is relatively recent, sparse autoencoders have been studied in neuroscience for many decades under the name of expansion recoding <d-cite key="albus1971cerebellar"></d-cite>.
 
-[Reinforcement learning paragraph] <d-cite key="marks2023rlhf" />
+[Reinforcement learning paragraph] <d-cite key="marks2023rlhf"></d-cite>
+
+## Background
+
+An **autoencoder** is an architecture for reproducing input data, with a dimensionality bottleneck. Let $d_\text{model}$ denote the dimension of the residual stream in a transformer (4096 for Pythia 6.9B). Let $d_\text{auto}$ denote the dimensionality of the autoencoder. To enforce the bottleneck, we require $d_\text{model} > d_\text{auto}$. See the autoencoder diagram below:
+
+{% include figure.html path="assets/img/2022-11-09-sparse-autoencoders-for-interpretable-rlhf.md/autoencoder-wide.png" class="img-fluid" %}
+
+A **sparse autoencoder** relies on a different kind of bottleneck, called sparsity. Now, we let $d_\text{auto} > d_\text{model}$ by a factor known as the *expansion factor*. For language model interpretability, we use an expansion factor of 4 or 8. The purpose of the sparse autoencoder is to expand out the dimension enough to overcome superposition. See the sparse autoencoder diagram below:
+
+{% include figure.html path="assets/img/2022-11-09-sparse-autoencoders-for-interpretable-rlhf.md/sparse-autoencoder.png" class="img-fluid" %}
+
+
 
 ## Methods
 
-Building on the highly interpretable feature directions learned by sparse autoencoders, our work proposes that these feature directions could induce more interpretable learnable parameters in RLHF.
+Our main experiment is to insert a sparse autoencoder into a transformer layer, train the autoencoder, and then use the fused model to define a new, more interpretable form of fine-tuning.
+
+### Sparse Autoencoders in a Transformer
+
+Transformers embed tokens into a residual stream space and then alternate between attention blocks and MLP blocks. Three natural places to insert a sparse autoencoder into a transformer are MLP activations before the nonlinearity, MLP activations before adding back to the residual stream, or directly in the residual stream. We choose the second option. The upside of inserting in the MLP space is that MLP blocks may be in slightly less superposition than the residual stream, given that they may perform more isolated operations on residual stream subspaces. The upside of inserting after the $W_\text{out}$ matrix is an engineering concern: the dimension is 4x smaller, making a larger expansion possible with the same memory resources.
+
+We choose MLP-post  The choice we hav Building on the highly interpretable feature directions learned by sparse autoencoders, we train sparse autoencoders with a focus on the Pythia 6.9B model <d-cite key="biderman2023pythia"></d-cite>. To investigate a more interpretable form of fine-tuning, we insert the trained sparse autoencoder into one MLP layer and restrict the fine-tuning to change only special weights associated with the sparse autoencoder. <d-footnote>While we originally planned to investigate RLHF, we determined that existing libraries could not perform PPO (Proximal Policy Optimization) on custom model architectures such as our transformer fused with a sparse autoencoder. As a result, we chose to investigate fine-tuning instead of RLHF.</d-footnote>
+
+When inserting a sparse autoencoder into a transformer, one can choose where to put it out of a 
+
+
+Specifically, we train our sparse autoencoder on layer one of Pythia 6.9B. 
+
+$$yy$$
+
+<div class="l-page">
+  <iframe src="{{ 'assets/html/2023-11-09-sparse-autoencoders-for-interpretable-rlhf/plotly_demo_1.html' | relative_url }}" frameborder='0' scrolling='no' height="600px" width="100%"></iframe>
+</div>
+
 
 The main question we wish to answer is:
 
