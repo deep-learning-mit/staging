@@ -19,11 +19,11 @@ bibliography: 2023-11-06-attention-regularization.bib
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
-  - name: Proposal
-    subsections: 
-    - name: Methods
-    - name: Data
-    - name: Implementation
+  - name: Introduction
+  - name: Background
+  - name: Methodology
+  - name: Results
+  - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -45,25 +45,34 @@ _styles: >
   }
 ---
 
-## Proposal
+## Introduction
 
 Transformer models are exeptionally popular and successful at completing many tasks. However, they can overfit to their training data if they are not given enough data to generalize. Frequently, part of the reason for overfitting is the overfitting of a self-attention layer, which highlights important tensors in the model. However, if there is not enough data, the attention layer can overfit to the training data and highlight some tensors too much. Therefore, researchers have proposed methods of regularizing attention layers. This regularization has many different approaches to solving this issue, from simply smoothing attention layers to encouraging multi-headed models to approach diffierent solutions. Therefore, there are differences in the effects of different regularization methods and some might perform better in different circumstances. There does not seem to be a standard approach to dealing with this form of regualrization and while many authors have claimed their regularizations have positive effects on training, there are few comparisions of methods. Therefore, I propose a study of these regularization techniques to identify the advantages and disadvantages of differing models.
 
-### Methods
-The following are various regularization methods that would be interesting to test.
-#### Relaxed Attention <d-cite key ="lohrenz2023relaxed"></d-cite>:
+## Methodology
+We implemented and benchmarked the following regularization techniques. These techniques were all tested on the CIFAR-10 dataset using the following transformer architecture. // show architecture
+
+
+CIFAR-10 consists of 60,000 32x32 color images representing 10 different classes. These classes are airplanes, cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. They are evenly distributed, such that there are 6,000 images of each class. We split this data into training and test sets and tested the different forms of regularization. We found that our transformer model with no regularization could easily acheive near-zero error on the training data, but only acheived around 60% in test accuracy. Therefore, testing regularization methods on this dataset could prove helpful.
+
+
+test on cifar-100 too?
+### Transformer Architecture
+
+
+### Relaxed Attention <d-cite key ="lohrenz2023relaxed"></d-cite>:
 This method smooths the attention weights in the self-attention layer to reduce overfitting. This helps reduce the magnitude of the highest attention scores.
 
-#### DropAttention <d-cite key = "zehui2019dropattention"></d-cite>:
+### DropAttention <d-cite key = "zehui2019dropattention"></d-cite>:
 This method uses dropout, a common regularization method used in fully connect neural networks, in self-attention layers. This encourages the model to use more of the input, rather than just a few tensors.
 
-#### DropDim <d-cite key = "zhang2022dropdim"></d-cite>:
+### DropDim <d-cite key = "zhang2022dropdim"></d-cite>:
 This method is an adapted form of dropout, which drops part of the embedding dimensions. This forces the transformer to learn with some of its embedding dimensions erased. We can tune the number of dimensions that are dropped.
 
-#### Multi-head attention with disagreement regularization <d-cite key = "li2018multi"></d-cite>:
+### Multi-head attention with disagreement regularization <d-cite key = "li2018multi"></d-cite>:
 Regularization can also be applied to mulit-head attention. Specifically, this method uses disagreement regularization to encourage each head to be different from each other head. The methodology uses different combinations of regularization on different parts of multi-headed attention.
 
-#### Potential New or Other Regularization Techniques:
+### Potential New or Other Regularization Techniques:
 I will explore other potential attention regularization techniques and look into novel approaches for regularization.
 
 ### Data
@@ -74,4 +83,8 @@ I will use a variety of data to sufficiently compare the above methods. We have 
 
 I will complete more research regarding different types of regularization and the code already available to use for testing. I will either implement these methods into a PyTorch transformer or use the transformer we implemented in the problem set, depending on the ease at which I can add attention regularization to PyTorch. Therefore, more experimentation is needed to determine exact implementations for the project.
 
+
+## Results
+
+## Conclusion
 
