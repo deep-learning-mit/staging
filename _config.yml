@@ -3,10 +3,10 @@
 # -----------------------------------------------------------------------------
 
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
-first_name: Eunhae
-middle_name: 
-last_name: Lee
-email: eunhae@mit.edu
+first_name: abc
+middle_name: b
+last_name: c
+email: charlie.gauthier@umontreal.ca
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Staging website for the 2023 ICLR Blogposts track
 footer_text: >
@@ -16,7 +16,6 @@ footer_text: >
 keywords: machine-learning, ml, deep-learning, reinforcement-learning, iclr  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: iclr_favicon.ico  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 url: https://deep-learning-mit.github.io # the base hostname & protocol for your site
 baseurl: /staging # the subpath of your site, e.g. /blog/
 
@@ -70,10 +69,10 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 # Social integration
 # -----------------------------------------------------------------------------
 
-github_username: viajeraune
+github_username: # your GitHub user name
 gitlab_username: # your GitLab user name
 twitter_username: # your Twitter handle
-linkedin_username: eunhaelee
+linkedin_username: # your LinkedIn user name
 scholar_userid: # your Google Scholar ID
 semanticscholar_id: # your Semantic Scholar ID
 orcid_id: # your ORCID ID

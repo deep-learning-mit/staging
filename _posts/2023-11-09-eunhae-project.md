@@ -123,5 +123,9 @@ Here are some relevant research papers related to user modeling, representation 
 3. Would there be a scenario where I could forego the experimentation but still be able to fulfill the requirements of the project (mostly due to sake of time)? 
 4. Which project would you recommend in terms of scope/feasibility and relevance?
 
+<d-cite key="luo2023empirical"></d-cite>
+<d-cite key="kirkpatrick2017overcoming"></d-cite>
+
+
 <!-- ## Appendix -->
 
