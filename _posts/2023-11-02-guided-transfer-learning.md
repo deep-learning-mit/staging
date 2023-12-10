@@ -5,7 +5,7 @@ description: For downstream tasks that involve extreme few-shot learning, it's o
   with only general knowledge using traditional pre-training. In this blog, we explore the nuances and potential applications of 
   Guided Transfer Learning, a meta-learning approach that allows a model to learn inductive biases
   on top of general knowledge during pre-training.
-date: 2023-11-02
+date: 2023-12-10
 htmlwidgets: true
 
 # Anonymize when submitting
