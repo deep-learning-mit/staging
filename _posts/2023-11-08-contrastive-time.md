@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Contrastive Time Series Representation Learning
-description: Proposal for a new method of time series representation learning
+description: A new method of learning hidden parameters within dynamical systems
 date: 2022-11-07
 htmlwidgets: true
 
@@ -28,10 +28,11 @@ bibliography: 2023-11-08-contrastive-time.bib
 #     for hyperlinks within the post to work correctly.
 toc:
   - name: Introduction
-  - name: Objectives
-  - name: Hypothesis
-  - name: Experimental Setup
-  - name: Conclusion
+  - name: Methodology
+  - name: Experiments
+  - name: Another Framework - Generative Modeling
+  - name: Experiments - Generative Modeling
+  - name: Conclusion and Future Works
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -275,8 +276,7 @@ Training focuses on 1) the reconstruction loss between real and a generated traj
 
 The evaluation metrics for this second framework are aligned with the first, utilizing MAE to assess both the underlying parameter estimation and the next k-step prediction accuracy of the encoder LSTM. A key addition in this framework is the **MAE on Reconstruction Loss**.This metric is used to gauge the model's ability to accurately reconstruct input sequences, thereby reflecting its understanding of the data's fundamental structure. A lower reconstruction loss implies that the model has effectively internalized the essential characteristics of the data distribution. Our expectation is that this deeper grasp of data structure will enable the model to infer underlying system parameters independently, without prior exposure to specific parameter set information.
 
-## Experiments
-
+## Experiments - Generative Modeling
 ### Autoencoder v.s. Variational Autoencoder
 
 In addition to exploring the Variational Autoencoder (VAE) framework, we also experimented with a traditional autoencoder setup. This variant mirrors the architecture of the VAE but excludes the computation of the mean ($\mu$) and log variance ($\log \sigma^2$), thereby omitting the variational element. This modification streamlines the model, narrowing its focus to purely reconstructing input data from its latent representations.
@@ -321,7 +321,7 @@ We hypothesize that enhancing the complexity of the encoder/decoder architecture
 </div>
 
 
-## Conclusion and future works
+## Conclusion and Future Works
 
 In contrast to current machine learning literature that predominantly focuses on predicting future states of dynamical systems, our work is geared towards uncovering the underlying system parameters from observed trajectories. Our key contributions include:
 
@@ -334,7 +334,7 @@ The ability to accurately estimate underlying system parameters significantly en
 While this project did extensive analysis on a spring-mass system, future work may extend this analysis to a broader range of dynamical systems. Moreover, future work can integrate the strengths of both frameworks to incorporate contrastive learning within an unsupervised context, possibly through data augmentation strategies. Further advancements could also focus on refining the impact of latent variables on trajectory generation. Such progress is expected to bolster trust in AI solutions and facilitate their integration into essential decision-making frameworks across various domains.
 
 
-
+Here's the link to our Github Repo: [https://github.com/martinzwm/meta_param_est](https://github.com/martinzwm/meta_param_est)
 
 
 
