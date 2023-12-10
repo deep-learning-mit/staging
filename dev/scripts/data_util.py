@@ -67,7 +67,7 @@ def jsonl2ds(hellaswag_jsonl, return_df=False, out_file=None):
     Preprocessing:
     * Keep only ActivityNet prompts
     '''
-    with open('../data/raw_data/hellaswag_train.jsonl', 'r') as f:
+    with open(hellaswag_jsonl, 'r') as f:
         data = [json.loads(line) for line in f.readlines()]
 
     df = pd.DataFrame(data)
@@ -79,6 +79,37 @@ def jsonl2ds(hellaswag_jsonl, return_df=False, out_file=None):
     if return_df:
         return df
     return ds
+
+
+def create_sampled_hellaswag_jsonl(hellaswag_jsonl, out_file, n):
+    '''
+    randomly sample rows from hellaswag csv to create a new csv of length n. all
+    rows have been checked for their corresponding video being public
+    '''
+    with open(hellaswag_jsonl, 'r') as f:
+        data = [json.loads(line) for line in f.readlines()]
+        df = pd.DataFrame(data)
+
+    seen = set()
+    ydl = youtube_dl.YoutubeDL()
+    ydl.add_default_info_extractors()
+
+    while len(seen) < n:
+        m = random.randint(0, df.shape[0])
+        if m in seen:
+            continue
+        # check if corresponding video is not private
+        series = df.iloc[m]
+        yt_id = re.search(r'activitynet~v_(.*)', series['source_id']).group(1)
+        url = f'https://www.youtube.com/watch?v={yt_id}'
+        try:
+            ydl.extract_info(url, download=False)
+        except youtube_dl.utils.YoutubeDLError:
+            continue
+        seen.add(m)
+
+    sampled_df = df.iloc[list(seen)]
+    sampled_df.to_json(out_file, orient='records', lines=True)
 
 
 ### image saving util ###
@@ -189,6 +220,10 @@ if __name__ == '__main__':
     for name in ['train', 'test', 'val']:
         jsonl2ds(f'../data/raw_data/hellaswag_{name}.jsonl', out_file=f'../data/jsonl/hellaswag_{name}.jsonl')
 
+    ### create sampled train, test, and val sets
+    for name in ['train']:
+        create_sampled_hellaswag_jsonl('../data/jsonl/hellaswag_test.jsonl',
+                                       '../data/jsonl/tiny_hellaswag_train.jsonl', 10)
 
 
     # # ### scrape images from tiny hellaswag
