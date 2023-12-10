@@ -1,7 +1,7 @@
 ---
 layout: distill
-title: Contrastive Time Series Representation Learning
-description: A new method of learning hidden parameters within dynamical systems
+title: Contrastive Representation Learning for Dynamical Systems
+description: A deep learning method of learning system underlying parameters from observed trajectories
 date: 2022-11-07
 htmlwidgets: true
 
