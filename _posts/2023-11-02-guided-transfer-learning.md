@@ -352,7 +352,7 @@ It's important to note that these two datasets, OSD 105 and 104, contain RNA-seq
 
 After deciding on the scouting problem formulation, the rest of the pipeline is pretty straightforward. Here's the full pipeline:
 1. **Pre-train scBERT traditionally** on recount3 (self-supervised masked input prediction). This involves the encoder portion of the architecture, which embeds the input, and a reconstructor portion, which uses that embedding to reconstruct the masked input values. The goal here, as always, is to learn *general knowledge* about the domain (RNA-seq) in the form of good *pre-trained weights*.
-2. **Scouting** on recount 3, using the scouting formulation described above. Here, we replace the reconstructor portion of the scBERT architecture with a classification layer. The goal here is, of course, to learn *inductive biases* in the form of *guide values*.
+2. **Scouting** on recount3, using the scouting formulation described above. Here, we replace the reconstructor portion of the scBERT architecture with a classification layer. The goal here is, of course, to learn *inductive biases* in the form of *guide values*.
 3. **Downstream few-shot fine-tuning** on NASA OSDR datasets, using the few-shot formulation described above. Here, we use the *same* architecture as the scouts. *All guide values transfer over!*
 
 <div class="row mt-3">
