@@ -76,8 +76,6 @@ Let us elaborate further. If you were to train some neural network and visualize
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/random_matrix_equation.png" class="img-fluid" %}
     </div>
 </div>
-<div class="caption">
-</div>
 
 You are likely looking at superposition!
 
@@ -89,7 +87,11 @@ In a linear model, i.e., one which maps inputs to outputs with only linear funct
 
 
 **TODO** Diagram of linear on the left, and RELU on the right
-
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/random_matrix_equation.png" class="img-fluid" %}
+    </div>
+</div>
 
 So why do we care about Superposition? Why spend time studying this?
 
@@ -247,6 +249,11 @@ Motivated by <d-cite key="toymodels"></d-cite>, we use a standard MSE loss, wher
 
 Below we present each activation function, along with plots depicting how training results in superposition at varying degrees of sparsity.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/grid_plot.png" class="img-fluid" %}
+    </div>
+</div>
 
 
 [STRUCTURE NOTES]
@@ -257,29 +264,61 @@ ReLU (OG), Sigmoid/Tanh (simple, OG, similar), GeLU/SiLU (still per-neuron, good
 ReLU (OG), GeLU/SiLU (similar results: antipodal pairs), Sigmoid/Tanh (more polysemanticity), SoLU (multi-neuron activation),
 Similar activation shapes: ReLU/GeLU/SiLU (flat + linear-ish), Sigmoid/Tanh (S), SoLU (indie boy)
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% raw %}
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_relu.html" class="img-fluid" %}
+        {% endraw %}
+    </div>
+</div>
 
 The ReLU (Rectified Linear Units) activation function is a piecewise-linear function, a property which results in the ReLU model attempting to simulate the identity function when possible. [IDK WE NEED MORE AND IDK, look at comment]
 Similar to the results in <d-cite key="toymodels"></d-cite>, the ReLU model focuses on the most significant features in the low sparsity regime (generally resulting in monosemanticity), while relying on superposition in the high sparsity regime (polysemanticity). With weaker signals for the most important features in the high sparsity regime, the model encodes multiple features in each neuron activation in order to minimize error of the sparse signals. <d-cite key="toymodels"></d-cite> explores this model extensively and gives a baseline for how superposition appears in toy models. Notably, the ReLU model uses antipodal pairs in the mapping of features in order to encode multiple features to single neurons. This can be seen as a light-colored diagonal entry within $W^T W$ and a corresponding dark-colored off-diagonal entry within the same column. This antipodal mapping of features is a method that the model uses to compress more than one feature to one neuron. This antipodal mapping is more interpretable than other kinds of polysemanticity which occurs in subsequently-described activation functions which “speckle” multiple features into a single neuron, making it more difficult to determine how the superposition occurs in that model.
 [SOMETHING ABOUT THE DRAWbACK OF RELU MODEL PERHAPS]
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% raw %}
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_gelu.html" class="img-fluid" %}
+        {% endraw %}
+    </div>
+</div>
 
 GeLU (Gaussian Error Linear Units)
 GeLU have recently been popularized as they are the activation functions of choice in many transformers, including BERT and GPT. The GeLU is differentiable for all $x$ - and has a smoother curve than the SilU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the Solu. This may be the case after having many linear layers activation - but a single layer this is not the case.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% raw %}
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_silu.html" class="img-fluid" %}
+        {% endraw %}
+    </div>
+</div>
 
 SiLU (Sigmoid Linear Units)
 
 
 The GeLU and SiLU models exhibit similar kinds of superposition in their weight matrices. With increasing sparsity, superposition of features does happen, but it is more “strict” than the ReLU model, perceptibly mapping at most two features to any single neuron. In all polysemantic neurons, though, there is one feature that dominates, suggesting that these activation functions enforce sparsity in their activations. There are also many antipodal pairs of features within these models, reiterating the behavior that exists in the ReLU models (also found in <d-cite key="toymodels"></d-cite>).
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% raw %}
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_sigmoid.html" class="img-fluid" %}
+        {% endraw %}
+    </div>
+</div>
 
 The Sigmoid function is a smooth activation function with an output range of $(0, 1)$. This maps directly to the desired range of values that the model is trying to replicate. The Sigmoid model exhibits superposition in all neurons as soon as the  sparsity is non-zero, as can be seen from the “speckling” of non-zero off-diagonal terms in $W^T W$. This is a difference from the ReLU model, for which the superposition “leaks” into the least significant encoded features at low, non-zero sparsities and eventually affects all features at higher sparsities. This low-sparsity superposition may occur because the Sigmoid function strictly maps to $(0, 1)$, with increasingly large pre-activation inputs necessary to map to values close to 0 and 1. As such, the model may be “speckling” the off-diagonal values in an attempt to “reach” these inputs which are close to 0 and 1.
 
-
-
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% raw %}
+        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_tanh.html" class="img-fluid" %}
+        {% endraw %}
+    </div>
+</div>
 
 The Tanh function is another smooth activation function, but it results in significantly different behavior, prioritizing the most important features regardless of sparsity. This behavior is possibly attributed to the range that the Tanh function maps to: $(-1, 1)$.
-
 
 Despite similarities in the S-like curvature of the Sigmoid and Tanh activation functions, the Sigmoid model exhibits superposition, whereas the Tanh model exhibits nearly zero superposition. One key difference between the two functions is the fact that the Sigmoid function maps inputs to a range of $(0, 1)$, while the Tanh function maps inputs to a range of $(-1, 1)$. This difference is significant in our experiment, as our experiment uses models to recreate random vectors with elements in the range $[0, 1]$. The range of the Sigmoid function matches this range, while the range of the Tanh function which matches this range only occurs for non-negative inputs to the Tanh function. In other words, the $(-\infty, 0)$ input domain (which maps to the range $(-1, 0)$) of the Tanh function remains useless for prediction of values which should be in the range $[0, 1]$. Therefore, the tanh function empirically acts like a linear function (i.e., no activation layer).
 
