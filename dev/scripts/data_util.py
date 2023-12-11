@@ -95,7 +95,7 @@ def create_sampled_hellaswag_jsonl(hellaswag_jsonl, out_file, n):
     ydl.add_default_info_extractors()
 
     while len(seen) < n:
-        m = random.randint(0, df.shape[0])
+        m = random.randint(0, df.shape[0]-1)
         if m in seen:
             continue
         # check if corresponding video is not private
@@ -107,6 +107,8 @@ def create_sampled_hellaswag_jsonl(hellaswag_jsonl, out_file, n):
         except youtube_dl.utils.YoutubeDLError:
             continue
         seen.add(m)
+        if len(seen) % 100 == 0:
+            print(f'{len(seen)} rows sampled...\n')
 
     sampled_df = df.iloc[list(seen)]
     sampled_df.to_json(out_file, orient='records', lines=True)
@@ -123,7 +125,7 @@ def save_frames(yt_id_list: list, time_list: list, out_dir, res='144p'):
     ydl.add_default_info_extractors()
 
     count_saved = 0
-    for _id, time in zip(yt_id_list, time_list):
+    for ix, (_id, time) in enumerate(zip(yt_id_list, time_list)):
         url = 'https://www.youtube.com/watch?v=' + _id
         info = ydl.extract_info(url, download=False)
         for f in info['formats']:
@@ -141,6 +143,8 @@ def save_frames(yt_id_list: list, time_list: list, out_dir, res='144p'):
                 count_saved += 1
 
                 break
+        if (ix+1) % 100 == 0:
+            print(f'    ---- {ix+1} frames processed ----')
     print(f'{len(yt_id_list)} total videos, {count_saved} saved')
 
 
@@ -162,12 +166,14 @@ def get_time(annotations):
     return (start + end) / 2
 
 
-def scrape_images(hellaswag_csv, activity_net_csv, out_dir):
+def scrape_images(hellaswag_jsonl, activity_net_csv, out_dir):
     '''
-    scrape a frame from corresponding video of each hellaswag_csv entry,
+    scrape a frame from corresponding video of each hellaswag_jsonl entry,
     saved to out_dir
     '''
-    hellaswag_df = pd.read_csv(hellaswag_csv)
+    with open(hellaswag_jsonl, 'r') as f:
+        data = [json.loads(line) for line in f.readlines()]
+        hellaswag_df = pd.DataFrame(data)
     activity_net_df = pd.read_csv(activity_net_csv)
 
     yt_id_list = []
@@ -178,9 +184,9 @@ def scrape_images(hellaswag_csv, activity_net_csv, out_dir):
 
         yt_id_list.append(yt_id)
         time_list.append(time)
-    print('start saving frames...')
+    print(f'start saving frames for {hellaswag_jsonl}...')
     save_frames(yt_id_list, time_list, out_dir)
-    print('...end saving frames')
+    print(f'...end saving frames for {hellaswag_jsonl}')
 
 
 
@@ -194,7 +200,7 @@ if __name__ == '__main__':
     # ### create tiny hellaswag test set
     # create_sampled_hellaswag_csv('csv/hellaswag_train.csv', 'csv/tiny_hellaswag_train.csv', 10)
 
-    # ### create sampled train, test, and val sets
+    # ### create sampled train, test, and val sets from csv
     # csv_size_dict = {
     #     'train': 14740,
     #     'val': 3243,
@@ -216,18 +222,44 @@ if __name__ == '__main__':
     #     scrape_images(sampled_csv_fp, 'csv/activity_net.csv',
     #                  f'hellaswag_images/sampled_hellaswag_{name}/')
 
-    ### create jsonl files containing only activitynet
-    for name in ['train', 'test', 'val']:
-        jsonl2ds(f'../data/raw_data/hellaswag_{name}.jsonl', out_file=f'../data/jsonl/hellaswag_{name}.jsonl')
+    # ### create jsonl files containing only activitynet
+    # for name in ['train', 'test', 'val']:
+    #     jsonl2ds(f'../data/raw_data/hellaswag_{name}.jsonl', out_file=f'../data/jsonl/hellaswag_{name}.jsonl')
 
-    ### create sampled train, test, and val sets
-    for name in ['train']:
-        create_sampled_hellaswag_jsonl('../data/jsonl/hellaswag_test.jsonl',
-                                       '../data/jsonl/tiny_hellaswag_train.jsonl', 10)
+    # ### create tiny train set
+    # for name in ['train']:
+    #     create_sampled_hellaswag_jsonl('../data/jsonl/hellaswag_train.jsonl',
+    #                                    '../data/jsonl/tiny_hellaswag_train.jsonl', 10)
 
+    # ### create sampled train, test, and val sets from jsonl
+    # csv_size_dict = {
+    #     'train': 14740,
+    #     'val': 3243,
+    #     'test': 3521
+    # }
+
+    # sample_factor = 0.1
+
+    # for name in ['train', 'val', 'test']:
+    #     original_jsonl_fp = f'../data/jsonl/hellaswag_{name}.jsonl'
+    #     sampled_jsonl_fp = f'../data/jsonl/sampled_hellaswag_{name}.jsonl'
+
+    #     print(f'creating sampled {name} jsonl...')
+    #     create_sampled_hellaswag_jsonl(original_jsonl_fp,
+    #                                    sampled_jsonl_fp,
+    #                                    csv_size_dict[name] * sample_factor)
+
+    #     # print(f'scraping {name} images...')
+    #     # scrape_images(sampled_jsonl_fp, 'csv/activity_net.csv',
+    #     #              f'hellaswag_images/sampled_hellaswag_{name}/')
 
     # # ### scrape images from tiny hellaswag
     # scrape_images('csv/tiny_hellaswag_train.csv', 'csv/activity_net.csv', 'hellaswag_images/tiny_hellaswag_train/')
+
+    ### scrape images from train, val, and test sets
+
+    for name in ['train', 'val', 'test']:
+        scrape_images(f'../data/jsonl/sampled_hellaswag_{name}.jsonl', '../data/csv/activity_net.csv', f'../data/hellaswag_images/hellaswag_{name}/')
 
 
     pass
