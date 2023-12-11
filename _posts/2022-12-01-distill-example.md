@@ -3,7 +3,7 @@ layout: distill
 # CHANGE TITLE LATER TO WHATEVER WE PUT ON THE PROPOSAL
 title: Modeling Elephantfish Communication through Deep RNNs
 description: Elephantfish represent a fascinating subject for study within the realms of bioacoustics and animal communication due to their unique use of electric fields for sensing and interaction. This project proposes the development of a deep learning framework to model the electrical communication signals of elephantfish, akin to language models used in natural language processing (NLP). The overarching goal is to decode and understand the complexity of elephantfish communication and to explore the broader applications in sociolinguistics, pragmatics, and computational linguistics for non-human species. This project pioneers in utilizing deep learning, specifically Recurrent Neural Networks (RNNs), to model and interpret the electrical communication signals of elephantfish. The study's novelty lies in its interdisciplinary approach, combining insights from bioacoustics, linguistics, and computer science to unravel the complexities of non-human communication systems. Our goal is to translate these unique bioelectrical signals into a form comprehensible to humans, thereby expanding our understanding of animal cognition and communication.
-date: 2023-12-12
+date: 2022-12-01
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -21,7 +21,7 @@ authors:
       name: Harvard
 
 # must be the exact same name as your blogpost
-bibliography: 2023-12-12-distill-example.bib  
+bibliography: 2022-12-01-distill-example.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
