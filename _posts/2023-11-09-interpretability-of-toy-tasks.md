@@ -4,34 +4,30 @@ title: The Effect of Activation Function On Superposition in Toy Models
 description: An in-depth exploration of how different activation functions influence superposition in neural networks.
 date: 2023-11-08
 htmlwidgets: true
-
-
 authors:
  - name: Vedang Lad
    url: "https://www.vedanglad.com"
    affiliations:
-     name: MIT
+     - name: MIT
  - name: Timothy Kostolansky
    affiliations:
-     name: MIT
-
+     - name: MIT
 
 bibliography: 2023-11-09-interpretability-of-toy-tasks.bib
+sections:
+- name: Monosemanticity and Polysemanticity
+- name: Problem Setting and Notation
+  subitems:
+    - name: Problem Specification
+    - name: Features
+      subitems:
+        - name: Sparsity
+        - name: Importance
+    - name: Dataset
+    - name: Network
+    - name: Loss
+- name: Results
 
-
-toc:
- - name: Introduction to Superposition
- - name: Monosemanticity and Polysemanticity
- - name: Challenges of Interpretibility
- - name: Problem Setting and Notation
-   - name: Features
-     - name: Sparsity
-     - name: Importance
-   - name: Dataset
-   - name: Network
-   - name: Loss
- - name: Results
- - name: Conclusion
 
 
 _styles: >
@@ -54,7 +50,7 @@ _styles: >
 ### Introduction to Superposition
 
 
-With the recent emergence of grokking, mechanistic interpretability research has trended towards understanding how models learn \cite{GrokNanda} \cite{Pizza} \cite{}. A central concept in this pursuit is superposition - a single neuron learning multiple "features."
+With the recent emergence of grokking, mechanistic interpretability research has trended towards understanding how models learn \cite{GrokNanda} \cite{Pizza}. A central concept in this pursuit is superposition - a single neuron learning multiple "features."
 
 
 Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas (sometimes discovering even features and even less) . For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
@@ -143,7 +139,7 @@ Monosemantic neurons are those that specialize in a single, distinct feature, ac
 Polysemantic neurons do not align with just one feature but engage with multiple features simultaneously, offering a broader and more nuanced understanding of the data. This trait is essential for handling complex, high-dimensional datasets but comes at the cost of reduced interpretability.
 
 
-### Problem Setting
+### Problem Setting and Notation
 
 
 Our work extends the work done in \cite{toymodels} by examining how the changing of the activation function on toy model networks affects the behavior and interpretability of these networks. \cite{toymodels} uses the canonical ReLU activation function to add non-linearity to two-layer models in order to analyze how superposition occurs within small networks. Our work substitutes the ReLU function with five other common activation functions: Sigmoid, Tanh, GeLU, SiLU, and SoLU. We hope that generalizing the phenomenon across activation functions can, can push the toy dataset to be in closer to realistic ML settings.
@@ -220,18 +216,18 @@ Caption: Each column of the plots represents a feature vector of length 20. Each
 #### Network
 Below are the architectures of the base (linear) and experimental (non-linear) models that we are using in this experiment. Of particular note is the activation function $\mathbb{f}$, which we will substitute using the aforementioned activation functions.
 
-
+<!-- 
 | Linear Model | Activation \(\mathbb{f}\) Output Model |
 | --- | --- |
-| $$\begin{align*}
+| 
 h &= Wx \\
 x' &= W^T h + b \\
 x' &= W^T Wx + b
-\end{align*}$$ | $$\begin{align*}
+| 
 h &= Wx \\
 x' &= \mathbb{f}(W^T h + b) \\
 x' &= \mathbb{f}(W^T Wx + b)
-\end{align*}$$ |
+| -->
 
 
 **Autoencoder image**
@@ -249,9 +245,8 @@ We create an autoencoder - compressing down to induce polysemanticity. This maps
 Sparsity, Importance and Our Network come together in the following loss function:
 
 
-\begin{displaymath}
-   L = \sum_{i} \sum_{x} I_{i}(x_{i} - x'_{i})^{2}
-\end{displaymath}
+$$
+   L = \sum_{i} \sum_{x} I_{i}(x_{i} - x'_{i})^{2} $$
 
 
 Motivated by \cite{toymodels}, we use a standard MSE loss, where $x_i$ and $x_i'$ measure the absolute difference in the auto-encoding of the datapoint. The Importance factor, $I_i$ , describes how important the given reconstruction is. A smaller importance will allow loss minimization even with a poor reconstruction.
