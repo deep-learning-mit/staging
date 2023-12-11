@@ -207,11 +207,14 @@ We will train separate models for each of the varying levels of sparsity. For an
 
 Below is a visualization of two batches of inputs with respective sparsities $S=0.5$ and $S=0.99$.
 
-{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/input_batch_50.png" class="img-fluid" %}
-{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/input_batch_99.png" class="img-fluid" %}
-
-Caption: Each column of the plots represents a feature vector of length 20. Each batch has size 100, corresponding to the number of columns in the plots. Notice how the changing in sparsity affects the feature density.
-
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/input_batches.png" class="img-fluid" %}
+    </div>
+</div>
+<div class="caption">
+    Each column of the plots represents a feature vector of length 20. Each batch has size 100, corresponding to the number of columns in the plots. Notice how the changing in sparsity affects the feature density.
+</div>
 
 #### Network
 Below are the architectures of the base (linear) and experimental (non-linear) models that we are using in this experiment. Of particular note is the activation function $\mathbb{f}$, which we will substitute using the aforementioned activation functions.
