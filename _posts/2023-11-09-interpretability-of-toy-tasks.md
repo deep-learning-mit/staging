@@ -71,9 +71,13 @@ In this work we:
 ### Superposition
 Let us elaborate further. If you were to train some neural network and visualize the weights - chances are you would see some mess that looks like this:
 
-
-**TODO**
-
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/random_matrix_equation.png" class="img-fluid" %}
+    </div>
+</div>
+<div class="caption">
+</div>
 
 You are likely looking at superposition!
 
