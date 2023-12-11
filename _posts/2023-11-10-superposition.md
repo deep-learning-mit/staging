@@ -59,6 +59,14 @@ With the recent emergence of grokking, mechanistic interpretability research has
 
 Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas (sometimes discovering even features and even less) . For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
 
+
+
+
+[2103.01819] The Rediscovery Hypothesis: Language Models Need to Meet Linguistics - the rediscovery hypothesis
+
+
+
+
 **TODO**
 
 
@@ -203,8 +211,8 @@ We will train separate models for each of the varying levels of sparsity. For an
 
 Below is a visualization of two batches of inputs with respective sparsities $S=0.5$ and $S=0.99$.
 
-![Input Batch with 50% Sparsity](../assets/img/2023-11-10-superposition/input_batch_50.png)
-![Input Batch with 99% Sparsity](../assets/img/2023-11-10-superposition/input_batch_99.png)
+
+
 
 Caption: Each column of the plots represents a feature vector of length 20. Each batch has size 100, corresponding to the number of columns in the plots. Notice how the changing in sparsity affects the feature density.
 
@@ -251,7 +259,18 @@ Motivated by \cite{toymodels}, we use a standard MSE loss, where $x_i$ and $x_i'
 
 ### Results
 
+
 Below we present each activation function, along with plots depicting how training results in superposition at varying degrees of sparsity.
+
+
+
+[STRUCTURE NOTES]
+For each activation function, we should include the Sparsity_super.png, as well as the phase change diagram, at the very least. (Maybe this would be busy/hard to read? Not sure until I see it.)
+Should we also include a function definition (ie 1/(1+e^-x) for Sigmoid) and accompanying graph for each (would the additional and likely simple graph be too much visualization)?
+Potential orders of activations in paper:
+ReLU (OG), Sigmoid/Tanh (simple, OG, similar), GeLU/SiLU (still per-neuron, good (?) transition to SoLU), SoLU
+ReLU (OG), GeLU/SiLU (similar results: antipodal pairs), Sigmoid/Tanh (more polysemanticity), SoLU (multi-neuron activation),
+Similar activation shapes: ReLU/GeLU/SiLU (flat + linear-ish), Sigmoid/Tanh (S), SoLU (indie boy)
 
 
 The ReLU (Rectified Linear Units) activation function is a piecewise-linear function, a property which results in the ReLU model attempting to simulate the identity function when possible. [IDK WE NEED MORE AND IDK, look at comment]
@@ -272,6 +291,8 @@ The GeLU and SiLU models exhibit similar kinds of superposition in their weight 
 The Sigmoid function is a smooth activation function with an output range of $(0, 1)$. This maps directly to the desired range of values that the model is trying to replicate. The Sigmoid model exhibits superposition in all neurons as soon as the  sparsity is non-zero, as can be seen from the “speckling” of non-zero off-diagonal terms in $W^T W$. This is a difference from the ReLU model, for which the superposition “leaks” into the least significant encoded features at low, non-zero sparsities and eventually affects all features at higher sparsities. This low-sparsity superposition may occur because the Sigmoid function strictly maps to $(0, 1)$, with increasingly large pre-activation inputs necessary to map to values close to 0 and 1. As such, the model may be “speckling” the off-diagonal values in an attempt to “reach” these inputs which are close to 0 and 1.
 
 
+
+
 The Tanh function is another smooth activation function, but it results in significantly different behavior, prioritizing the most important features regardless of sparsity. This behavior is possibly attributed to the range that the Tanh function maps to: $(-1, 1)$.
 
 
@@ -279,6 +300,18 @@ Despite similarities in the S-like curvature of the Sigmoid and Tanh activation 
 
 
 The SoLU (Softmax Linear Units) activation function is based on the work from \cite{elhage2022solu}. SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in \cite{elhage2022solu}. In our experiment, the SoLU model results in non-zero superposition of all features with all amounts of sparsity. This may be attributed to the way that the SoLU “forces” activations to be sparse, i.e., the activations result in a “winner-takes-all” behavior due to the way that the Softmax function works. This is not a useful property for prediction of a vector of independently-drawn values, as the input vectors are unlikely to be peaky, i.e., the SoLU does not quite fit the purposes of its task.
+
+
+SoLU blog citation:
+@article{elhage2022solu,
+   title={Softmax Linear Units},
+   author={Elhage, Nelson and Hume, Tristan and Olsson, Catherine and Nanda, Neel and Henighan, Tom and Johnston, Scott and ElShowk, Sheer and Joseph, Nicholas and DasSarma, Nova and Mann, Ben and Hernandez, Danny and Askell, Amanda and Ndousse, Kamal and Jones, Andy and Drain, Dawn and Chen, Anna and Bai, Yuntao and Ganguli, Deep and Lovitt, Liane and Hatfield-Dodds, Zac and Kernion, Jackson and Conerly, Tom and Kravec, Shauna and Fort, Stanislav and Kadavath, Saurav and Jacobson, Josh and Tran-Johnson, Eli and Kaplan, Jared and Clark, Jack and Brown, Tom and McCandlish, Sam and Amodei, Dario and Olah, Christopher},
+   year={2022},
+   journal={Transformer Circuits Thread},
+   note={https://transformer-circuits.pub/2022/solu/index.html}
+}
+
+
 
 
 ### AI Safety Perspective
