@@ -55,6 +55,15 @@ w(x, 0) = w_0(x), \quad x \in (0,1)^2
 \end{gather}
 $$
 
+You can visualize the solution for the Navier-Stokes equation through the time steps:
+
+<div class="l-body-outset" style="display: flex; justify-content: center; align-items: center;">
+  <iframe src="{{ 'assets/html/2023-11-05-neural-PDEs-long-time-dynamics/navierstokes.html' | relative_url }}" frameborder="0" scrolling="no" height="600px" width="100%"></iframe>
+</div>
+<div class="caption">
+Solution of Navier-Stokes <d-cite key="li2020fourier"></d-cite>, drag the slider!
+</div>
+
 ### Motivations for neural PDEs
 Well-established numerical methods are very successful in approximating the solutions of PDEs, however, these methods require high computational cost especially for high spatial and temporal resolutions. Furthermore, it is important to have fast and accurate surrogate models that would target problems that require uncertainty quanitifcation, inverse design, and PDE-constrained optimizations. In recent years, there have been growing interests in neural operators that learn the mapping between input and output solution functions. These models are trained on numerical solutions from existing methods and inferences are orders of magnitude faster than calculating the solutions again through numerical methods. 
 
@@ -114,11 +123,8 @@ Removing positional encodings for x and y grids would make the performance worse
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/ns_noencode_pred42.gif" class="img-fluid" %}
 
 
-## Learning long term dynamics in coupled time-dependent PDE
-
-However, I will then highlight the inability for FNOs to capture long term dynamics (the losses accumulate when predictions made autoregressively are needed for long time steps) and how it could be due to FNOs' inability to learn representations at lower frequency modes (especially for systems where we care more about local changes instead of global changes in the dynamics). These are still preliminary hypotheses which I will examine properly during the project. 
-
-On a coupled reaction heat-diffusion PDE with two dependent states, this PDE tend to have more chaotic behaviors when initial conditions are changed. Therefore, its dynamics can be harder to learn especially for longer time scales and for lower frequency modes in an FNO.
+## Inability to capture local dynamics and long-term accuracies in time-dependent PDEs
+While the FNO has worked accurately for the Navier-Stokes data example, it does not perform well on other PDEs, especially when local dynamics and long-term accuracies are important. Here, I introduce another PDE - a coupled reaction heat-diffusion PDE with two dependent states. When the initial conditions of T and alpha are changed, the dynamics can become chaotic over time. 
 
 $$
 \begin{gather}
@@ -127,6 +133,21 @@ $$
 \end{gather}
 $$
 
+<div class="l-body-outset">
+  <iframe src="{{ 'assets/html/2023-11-05-neural-PDEs-long-time-dynamics/unstablefromp.html' | relative_url }}" frameborder='0' scrolling='no' height="750px" width="100%"></iframe>
+</div>
+<div class="caption">
+Solution of the above coupled PDE with 2 dependent states, solved using FEM. Drag the slider!
+</div>
+
+
+Firstly, it can be harder for the Fourier layers to learn the local changes since the Fourier layers would only approximate kernels in the lower frequency modes and higher frequency modes are truncated away. Secondly, since numerical methods can be expensive, we want to use the first k steps (i.e. first 10 steps) of the true solution to predict the next N steps (as high as possible). Clearly, the prediction accuracies lower as we want higher resolution predictions for longer time steps as output. In an autoregressive training scheme, where the k input steps are used to predict the next step autoregressively until N steps are predicted on rollout, the losses will accumulate as we propagate more time steps forward. 
+
+To overcome these 2 problems, there have been attempts to generally improve the accuracies of neural PDE models and also training tricks proposed to improve long-term accuracies in rollout. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. 
+
+
+
+
 <div style="display: flex; justify-content: center; align-items: center;">
     {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/516.gif" class="img-fluid" %}
     {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/1129.gif" class="img-fluid" %}
@@ -134,7 +155,7 @@ $$
 </div>
 
 
-To deal with long time-steps predictions for time-dependent PDEs is still an open research question. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. I will first incorporate these techniques with the base FNO model to examine accuracies of long time dynamics. Next, I will examine if attention mechanisms introduced with transformer layers can help improve accuracies for lower frequency modes at longer time scales. These new model architectures would all be compared on the base dataset of Navier-Stokes equations (2D spatially with time dependence). 
+I will first incorporate these techniques with the base FNO model to examine accuracies of long time dynamics. Next, I will examine if attention mechanisms introduced with transformer layers can help improve accuracies for lower frequency modes at longer time scales. These new model architectures would all be compared on the base dataset of Navier-Stokes equations (2D spatially with time dependence). 
 
 ### Using ReVIN to normalize and denormalize the time series input for 1D PDEs 
 
@@ -142,7 +163,8 @@ To deal with long time-steps predictions for time-dependent PDEs is still an ope
 ### Improving long time-step rollout with temporal bundling and pushforward tricks 
 
 
-## Incorporating local window attention to learn local dynamics
+## Large Kernel Attention 
+
 
 
 
