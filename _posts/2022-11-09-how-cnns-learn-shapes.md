@@ -29,11 +29,11 @@ toc:
     - name: Training Data
     - name: Architecture and Training Hyperparameters
     - name: Convolutional Layer Filter Size
-    - name: Data Augmentation - Fragmentation 
-    - name: Data Augmentation - Negative Labels 
+    - name: Data Augmentation - Fragmentation  
+    - name: Data Augmentation - Negative Labels
   - name: Results
     subsections:
-      - name: Training Evalution
+      - name: Training Evaluation
       - name: Conflict Set Evaluation 
       - name: Filter Variation
       - name: Data Augmentation Variation
