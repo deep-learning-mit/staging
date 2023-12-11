@@ -60,7 +60,10 @@ _styles: >
 ---
 
 ## Background
-One widely accepted intuition is that Convolutional Neural Networks (CNNs) that are trained for object classification, combine low-level features (e.g. edges) to gradually learn more complex and abstracted patterns that are useful in differentiating images. Stemming from this is the idea that neural networks can understand and use shape information to classify objects, as humans would. Previous works have termed this explanation the shape hypothesis.  As <d-cite key="kriegeskorte2015deep"></d-cite> puts it, *“the network acquires complex knowledge about the kinds of shapes associated with each category. [...] High-level units appear to learn representations of shapes occurring in natural images”* (p. 429). This notion also appears in other explanations, such as in <d-cite key="lecun2015deep"></d-cite> : Intermediate CNN layers recognize *“parts of familiar objects, and subsequent layers [...] detect objects as combinations of these parts”* (p. 436). 
+One widely accepted intuition is that Convolutional Neural Networks (CNNs) that are trained for object classification, combine low-level features (e.g. edges) to gradually learn more complex and abstracted patterns that are useful in differentiating images. Stemming from this is the idea that neural networks can understand and use shape information to classify objects, as humans would. Previous works have termed this explanation the shape hypothesis.  As <d-cite key="kriegeskorte2015deep"></d-cite> puts it, 
+> “the network acquires complex knowledge about the kinds of shapes associated with each category. [...] High-level units appear to learn representations of shapes occurring in natural images”* (p. 429). 
+This notion also appears in other explanations, such as in <d-cite key="lecun2015deep"></d-cite> 
+> Intermediate CNN layers recognize *“parts of familiar objects, and subsequent layers [...] detect objects as combinations of these parts”* (p. 436). 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/shapetexture.png" class="img-fluid" style="width:100px; height:75px;"%}
 Figure 1. <d-cite key="geirhos2018imagenet"></d-cite> shows that CNNs trained on ImageNet data are biased towards predicting the category corresponding to the texture rather than shape.
