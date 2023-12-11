@@ -8,42 +8,31 @@ authors:
  - name: Vedang Lad
    url: "https://www.vedanglad.com"
    affiliations:
-     - name: MIT
+      name: MIT
  - name: Timothy Kostolansky
    affiliations:
-     - name: MIT
+      name: MIT
 
 bibliography: 2023-11-09-interpretability-of-toy-tasks.bib
-sections:
-- name: Monosemanticity and Polysemanticity
-- name: Problem Setting and Notation
-  subitems:
-    - name: Problem Specification
-    - name: Features
-      subitems:
-        - name: Sparsity
-        - name: Importance
-    - name: Dataset
-    - name: Network
-    - name: Loss
-- name: Results
+toc:
+  - name: Introduction to Superposition
+    subitems:
+      - name: Superposition
+      - name: Monosemanticity and Polysemanticity
+  - name: Problem Setting and Notation
+    subitems:
+      - name: Problem Specification
+      - name: Features
+        subitems:
+          - name: Sparsity
+          - name: Importance
+      - name: Dataset
+      - name: Network
+      - name: Loss
+  - name: Results
+  - name: AI Safety
+  - name: Conclusion
 
-
-
-_styles: >
- .fake-img {
-   background: #bbb;
-   border: 1px solid rgba(0, 0, 0, 0.1);
-   box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
-   margin-bottom: 12px;
- }
- .fake-img p {
-   font-family: monospace;
-   color: white;
-   text-align: center;
-   margin: 12px 0;
-   font-size: 16px;
- }
 ---
 
 
@@ -312,7 +301,7 @@ SoLU blog citation:
 
 
 
-### AI Safety Perspective
+### AI Safety 
 Interpretable models would be a useful tool for safe AI systems. It would be easy to understand why models made the decision they did and how they made it. As presented by \cite{elhage2022solu}, the SoLU pushes models to mono semanticity in the transformer architecture, allowing increasing interpretability - however this forces some parts of the model into polysemanticity.
 
 
