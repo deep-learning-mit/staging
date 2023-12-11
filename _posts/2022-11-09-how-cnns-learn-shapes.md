@@ -80,7 +80,7 @@ The first way that the model is pushed to learn global features is by training i
 The hypothesis is that because of the scarsity of features, and absense of other local features such as texture, the model would inevitably have to learn global features that humans commonly associate to object categories, such as shape.
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/QuickDraw_example.png" class="img-fluid" style="width:300px; height:200px;"%}
-Example from circle and square category of Quick, Draw! dataset that is used in this project. 
+Figure 2. Example from circle and square category of [Quick, Draw! dataset](https://github.com/googlecreativelab/quickdraw-dataset) that is used in this project. 
 
 For the following experiments I use 100,000 instances each from the circle and square categories of the [Quick, Draw! dataset](https://github.com/googlecreativelab/quickdraw-dataset) that have been rendered into 28x28 grayscale bitmap in .npy format. The dataset is split 85% for training and 15% for validation. 
 
