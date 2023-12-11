@@ -282,65 +282,94 @@ This result mirrors the phase diagram in <d-cite key="toymodels"></d-cite> as ex
 
 ### GeLU
 
+The GeLU (Gaussian Error Linear Units) activation function 
+It has recently been popularized as they are the activation functions of choice in many transformers, including BERT and GPT. The GeLU is differentiable for all $x$ - and has a smoother curve than the SilU (Swish) activation.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_gelu.png" class="img-fluid" %}
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_gelu.png" class="img-fluid" %}
     </div>
 </div>
 
-GeLU (Gaussian Error Linear Units)
-GeLU have recently been popularized as they are the activation functions of choice in many transformers, including BERT and GPT. The GeLU is differentiable for all $x$ - and has a smoother curve than the SilU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the Solu. This may be the case after having many linear layers activation - but a single layer this is not the case.
+<d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the Solu. This may be the case after having many linear layers activation - but a single layer this is not the case.
+
+{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_gelu.png" class="img-fluid" %}
+
+Significant monosemanticity at high degrees of sparsity, unlike the ReLU
+May reflect a better fit for picking up the signal in sparse feature representations
 
 ### SiLU
+
+SiLU (Sigmoid Linear Units)
+Similar to GeLU and ReLU
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_silu.png" class="img-fluid" %}
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_silu.png" class="img-fluid" %}
     </div>
 </div>
 
-SiLU (Sigmoid Linear Units)
-
+{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_silu.png" class="img-fluid" %}
 
 The GeLU and SiLU models exhibit similar kinds of superposition in their weight matrices. With increasing sparsity, superposition of features does happen, but it is more “strict” than the ReLU model, perceptibly mapping at most two features to any single neuron. In all polysemantic neurons, though, there is one feature that dominates, suggesting that these activation functions enforce sparsity in their activations. There are also many antipodal pairs of features within these models, reiterating the behavior that exists in the ReLU models (also found in <d-cite key="toymodels"></d-cite>).
 
 ### Sigmoid
 
+The Sigmoid function is a smooth activation function with an output range of $(0, 1)$. This maps directly to the desired range of values that the model is trying to replicate.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_sigmoid.png" class="img-fluid" %}
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_sigmoid.png" class="img-fluid" %}
+        
     </div>
 </div>
 
-The Sigmoid function is a smooth activation function with an output range of $(0, 1)$. This maps directly to the desired range of values that the model is trying to replicate. The Sigmoid model exhibits superposition in all neurons as soon as the  sparsity is non-zero, as can be seen from the “speckling” of non-zero off-diagonal terms in $W^T W$. This is a difference from the ReLU model, for which the superposition “leaks” into the least significant encoded features at low, non-zero sparsities and eventually affects all features at higher sparsities. This low-sparsity superposition may occur because the Sigmoid function strictly maps to $(0, 1)$, with increasingly large pre-activation inputs necessary to map to values close to 0 and 1. As such, the model may be “speckling” the off-diagonal values in an attempt to “reach” these inputs which are close to 0 and 1.
+The Sigmoid model exhibits superposition in all neurons as soon as the  sparsity is non-zero, as can be seen from the “speckling” of non-zero off-diagonal terms in $W^T W$. This is a difference from the ReLU model, for which the superposition “leaks” into the least significant encoded features at low, non-zero sparsities and eventually affects all features at higher sparsities. This low-sparsity superposition may occur because the Sigmoid function strictly maps to $(0, 1)$, with increasingly large pre-activation inputs necessary to map to values close to 0 and 1. As such, the model may be “speckling” the off-diagonal values in an attempt to “reach” these inputs which are close to 0 and 1.
+
+{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_sigmoid.png" class="img-fluid" %}
+
+Similar to ReLU phase diagram
+high degrees of superposition given enough sparsity
 
 ### Tanh
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_tanh.png" class="img-fluid" %}
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_tanh.png" class="img-fluid" %}
+        
     </div>
 </div>
 
 The Tanh function is another smooth activation function, but it results in significantly different behavior, prioritizing the most important features regardless of sparsity. This behavior is possibly attributed to the range that the Tanh function maps to: $(-1, 1)$.
 
+{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_tanh.png" class="img-fluid" %}
+
+small model mirrors performance of large model
+Very much like linear model performance
+The phase diagram mirrors the performance in the 
+
 Despite similarities in the S-like curvature of the Sigmoid and Tanh activation functions, the Sigmoid model exhibits superposition, whereas the Tanh model exhibits nearly zero superposition. One key difference between the two functions is the fact that the Sigmoid function maps inputs to a range of $(0, 1)$, while the Tanh function maps inputs to a range of $(-1, 1)$. This difference is significant in our experiment, as our experiment uses models to recreate random vectors with elements in the range $[0, 1]$. The range of the Sigmoid function matches this range, while the range of the Tanh function which matches this range only occurs for non-negative inputs to the Tanh function. In other words, the $(-\infty, 0)$ input domain (which maps to the range $(-1, 0)$) of the Tanh function remains useless for prediction of values which should be in the range $[0, 1]$. Therefore, the tanh function empirically acts like a linear function (i.e., no activation layer).
 
+
+
 ### SoLU
+
+The SoLU (Softmax Linear Units) activation function is based on the work from <d-cite key="elhage2022solu"></d-cite>. SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in <d-cite key="elhage2022solu"></d-cite>. 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_solu.png" class="img-fluid" %}
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_solu.png" class="img-fluid" %}
+        
     </div>
 </div>
 
+In our experiment, the SoLU model results in non-zero superposition of all features with all degrees of sparsity. This may be attributed to the way that the SoLU “forces” activations to be sparse, i.e., the activations result in a “winner-takes-all” behavior due to the way that the Softmax function works. This is not a useful property for prediction of a vector of independently-drawn values, as the input vectors are unlikely to be peaky, i.e., the SoLU does not quite fit the purposes of its task.
 
-The SoLU (Softmax Linear Units) activation function is based on the work from <d-cite key="elhage2022solu"></d-cite>. SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in <d-cite key="elhage2022solu"></d-cite>. In our experiment, the SoLU model results in non-zero superposition of all features with all amounts of sparsity. This may be attributed to the way that the SoLU “forces” activations to be sparse, i.e., the activations result in a “winner-takes-all” behavior due to the way that the Softmax function works. This is not a useful property for prediction of a vector of independently-drawn values, as the input vectors are unlikely to be peaky, i.e., the SoLU does not quite fit the purposes of its task.
+{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_solu.png" class="img-fluid" %}
+
+Very polysemantic
+Function not fit for task, results in using polysemanticity to attempt to pass information
+Still has preference for the more important feature in the low sparsity regime
 
 
 ## AI Safety 
