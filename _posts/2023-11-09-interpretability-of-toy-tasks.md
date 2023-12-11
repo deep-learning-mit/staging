@@ -196,8 +196,8 @@ We will train separate models for each of the varying levels of sparsity. For an
 
 Below is a visualization of two batches of inputs with respective sparsities $S=0.5$ and $S=0.99$.
 
-{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/input_batch_50.png" class="img-fluid" %}
-{% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/input_batch_99.png" class="img-fluid" %}
+
+
 
 Caption: Each column of the plots represents a feature vector of length 20. Each batch has size 100, corresponding to the number of columns in the plots. Notice how the changing in sparsity affects the feature density.
 
@@ -205,18 +205,12 @@ Caption: Each column of the plots represents a feature vector of length 20. Each
 #### Network
 Below are the architectures of the base (linear) and experimental (non-linear) models that we are using in this experiment. Of particular note is the activation function $\mathbb{f}$, which we will substitute using the aforementioned activation functions.
 
-<!-- 
-| Linear Model | Activation \(\mathbb{f}\) Output Model |
-| --- | --- |
-| 
-h &= Wx \\
-x' &= W^T h + b \\
-x' &= W^T Wx + b
-| 
-h &= Wx \\
-x' &= \mathbb{f}(W^T h + b) \\
-x' &= \mathbb{f}(W^T Wx + b)
-| -->
+| Linear Model               | Activation \( $\mathbb{f}$ \) Output Model |
+|:---------------------------:|:------------------------------------------:|
+| $$h = Wx$$                   | $$h = Wx$$                                   |
+| $$ x' = W^T h + b $$   | $$x' = f(W^T h + b)$$          |
+| $$x' = W^T Wx + b$$  | $$x' = f(W^T Wx + b)$$          |
+
 
 
 **Autoencoder image**
