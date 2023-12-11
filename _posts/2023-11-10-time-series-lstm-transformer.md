@@ -1,58 +1,138 @@
-# 6.S898 Final Project Proposal - LSTM vs Transformers for Time Series Modeling
+---
+layout: distill
+title: "LSTM vs Transformers for Time Series Modeling"
+description: A comparison study between LSTM and Transformer models in the context of time-series forecasting. 
+date: 2023-12-12
+htmlwidgets: true
 
-By Miranda Cai, Roderick Huang
+# Anonymize when submitting
+# authors:
+#   - name: Anonymous
+
+authors:
+  - name: Miranda Cai
+    url:
+    affiliations:
+      name: MIT
+  - name: Roderick Huang
+    url:
+    affiliations:
+      name: MIT
+
+# must be the exact same name as your blogpost
+bibliography: 2023-12-12-time-series-lstm-transformer.bib
+
+# Add a table of contents to your post.
+#   - make sure that TOC names match the actual section names
+#     for hyperlinks within the post to work correctly.
+toc:
+  - name: "Introduction"
+  - name: "Related Work"
+    subsections:
+    - name: Effect of Dataset Size
+    - name: Effect of Noisy Datasets
+    - name: Effect of Multi-step Prediction
+  - name: "Methodology"
+  - name: "Experimental Results and Discussion"
+    subsections:
+    - name: Size of a Dataset
+    - name: Amount of Noise in a Dataset
+    - name: Output Size
+  - name: "Conclusion"
+
+
+---
+
+# 6.S898 Final Project - LSTM vs Transformers for Time Series Modeling
+
+By Miranda Cai and Roderick Huang
 
 ## 1. Introduction
+In the context of time series forecasting, comparing Long Short-Term Memory (LSTM) networks to Transformers is a fascinating exploration into the evolution of deep learning architectures. Despite having distinct strengths and approaches, both LSTM and transformer models have revolutionized natural language processing (NLP) and sequential data tasks.
 
-For our final project, we will perform a comparative analysis of LSTMs and transformers in the context of time series forecasting. Traditionally, most models that make time series predictions have relied on LSTM models because of an LSTM's ability to recognize sequence patterns of any length using its long-term memory. While the accuracy of such models have been shown to be quite effective in many applications, training LSTM models takes a relatively long time because of the fact that they must remember all past observances.
 
-One faster alternative to LSTM models are transformers. Transformers are able to remember only the important bits of inputs using an attention-mechanism, and is also parallelizable making it much faster to train than recursive LSTMs that must be processed sequentially. With its recent development, people have started opting to use transformer based models to solve sequence problems that once relied on LSTMs. One significant example is for NLP use cases, where transformers can process sentences as a whole rather than by individual words like LSTMs do. However, since transformers have been around for less than a decade, there are still many potential applications that are yet to be deeply explored.
+LSTMs, with their recurrent structure, were pioneers in capturing long-range dependencies in sequential data. While the accuracy of such models have been shown to be quite effective in many applications, training LSTM models takes a relatively long time because of the fact that they must remember all past observances. One faster alternative to LSTM models are transformers. Transformers are able to remember only the important bits of inputs using an attention-mechanism, and is also parallelizable making it much faster to train than recursive LSTMs that must be processed sequentially. 
 
-Thus, we would like to explore the effectiveness of transformers specifically for time series forecasting. Our goal is to realize which particular features of time series datasets could lead transformer-based models to outperform LSTM ones. We plan to evaluate our experiments on both training time and accuracy.
+With its recent development, people have started opting to use transformer based models to solve sequence problems that once relied on LSTMs. One significant example is for NLP use cases, where transformers can process sentences as a whole rather than by individual words like LSTMs do. However, since transformers have been around for less than a decade, there are still many potential applications that are yet to be deeply explored. Thus, we will explore the effectiveness of transformers specifically for time series forecasting which finds applications across a wide spectrum of industries including finance, supply chain management, energy, etc. 
 
-## 2. Investigation and Analysis
+Our goal is to realize which particular features of time series datasets could lead transformer-based models to outperform LSTM models. 
 
-### 2.1 Comparative Analysis
+## 2. Related Work
 
-To perform a comparative analysis of LSTMs and transformers, we intend to utilize PyTorch to implement an LSTM model and a transformer model that will be both trained on a time-series datasets to pinpoint the advantages and disadvantages of each architecture. We will be comparing the following features for datasets:
+With the growth of ChatGPT in the recent years, extensive research has been done across various NLP tasks such as language modeling, machine translation, sentiment analysis, and summarization, each aiming to provide comprehensive insights into when each architecture excels and where their limitations lie. While research on time series data exists, it hasn't garnered as much attention, so we aim to broaden this area of study.
 
-- **Small versus Large Datasets**: The size of a dataset should play a role in the performance of an LSTM model versus a transformer model. A study [1] done in the NLP field compared a pre-trained BERT model with a bidirectional LSTM on different language dataset sizes. They experimentally showed that the LSTM accuracy was higher by 16.21\% relative difference with 25\% of the dataset versus 2.25\% relative difference with 80\% of the dataset. This makes sense since BERT is a robust transformer architecture that needs more data. As shown in the figure below from [1], while LSTM outperformed BERT, the accuracy difference gets smaller as the perctange of training data used for training increases. With smaller datasets, it's likely that BERT will overfit. We predict that in time series datasets, a similar pattern should appear where LSTMs work better for smaller datasets and transformers become better for larger datasets.
+### 2.1 Effect of Dataset Size
+The size of a dataset plays an important role in the performance of an LSTM model versus a transformer model. A study <d-cite key="comparison"></d-cite> done in the NLP field compared a pre-trained BERT model with a bidirectional LSTM on different language dataset sizes. They experimentally showed that the LSTM accuracy was higher by 16.21% relative difference with 25% of the dataset versus 2.25% relative difference with 80% of the dataset. This makes sense since BERT is a robust transformer architecture that performs better with more data. As shown in the figure below from <d-cite key="comparison"></d-cite>, while LSTM outperformed BERT, the accuracy difference gets smaller as the perctange of training data used for training increases.
+<p align="center">
+  <img src="./assets/img/2023-12-12-time-series-lstm-transformer/dataset_size_research_fig.png">
+</p>
+While we perform a similar methodology which is discussed further in section 4.1, the major difference is in the type of data we test. Instead of measuring classification accuracy for NLP tasks, this study measures the mean squared error (MSE) loss for regression time series data. 
 
-![Figure 1 - LSTM outperforms BERT for all partitions of a dataset](assets/img/2023-12-12-time-series-lstm-transformer/dataset_size_research_fig.png)
+### 2.2 Effect of Noisy Datasets
 
-- **Clean versus Noisy Datasets**: Theoretically, LSTMs are more robust to noisy data due to its ability to capture local dependencies. On the other hand, the self-attention mechanisms in transformers propagate errors and may struggle with sequences that have a high degree of noise. Electronic traders have been recently attempting to apply transformer models in financial time series prediction to beat LSTMs [2]. Financial data sets are known to be extremely noisy. Experimental results have shown that transformer models have limited advantage in absolute price sequence prediction. In other scenarios like price difference and price movement, LSTMs had better performance.
+Theoretically, LSTMs are more robust to noisy data due to its ability to capture local dependencies. On the other hand, the self-attention mechanisms in transformers propagate errors and may struggle with sequences that have a high degree of noise. Electronic traders have been recently attempting to apply transformer models in financial time series prediction to beat LSTMs <d-cite key="trading"></d-cite>. Largely focused on type of assets, the research showed that transformer models have limited advantage in absolute price sequence prediction. In other scenarios like price difference and price movement, LSTMs had better performance.
 
-Since LSTMs have been around much longer than transformers, they're usually the primary architecture for time series forecasting. However, recently, intense debates have risen after research has shown that transformers can be designed in such a way that they can perform better than LSTMs. The Autoformer architecture [3] adds series decomposition blocks to focus on seasonal patterns which is common in time series datasets.
+Financial data sets are known to be extremely noisy, and in addition, very hard to find due to their confidential nature. The application of <d-cite key="trading"></d-cite> gave inspiration to study how the "amount" of noisiness would affect the LSTM and transformer models. Discussed further in section 4.2, this study added various amounts of noise to a clean dataset to see how this would affect each architecture.
 
-We hope that in this project, we can pinpoint some features that allow transformer models to potentially outperform LSTM models.
+### 2.3 Effect of Multi-step Prediction
+gonna relate to this paper: https://arno.uvt.nl/show.cgi?fid=160767
+<d-cite key="multistep"></d-cite>
+they train by filtering out data, less precision
+so ours is novel by seeing if we could keep level of precision but predict into the future
 
-### 2.2 Evaluation Metrics
+## 3. Methodology
 
-The combination of architectures and datasets will be evaluated with _efficiency_ and _accuracy_. Efficiency will be measured through the time it takes the model to train a dataset. Accuracy will be measured by the mean squared error (MSE) loss of the test set or future time series data. Another possible measure of accuracy is Mean Absolute Scaled Error (MASE) [4] which is commonly used in evaluating time series forecasting modeling.
+The dataset we will be using throughout this study is the Hourly Energy Consumption dataset that documents hourly energy consumption data in megawatts (MW) from the Eastern Interconnection grid system <d-cite key="dataset"></d-cite>. 
 
-### 2.3 Hypothesis
+<p align="center">
+  <img src="./assets/img/2023-12-12-time-series-lstm-transformer/energy_dataset_split.png" width="700">
+</p>
 
-We plan to utilize an energy consumption dataset [5] for our analysis. This choice is driven by the dataset's relative simplicity in terms of data cleaning and its greater accessibility in comparison to financial datasets. By investigating the dataset type and size, we have formulated the following hypotheses.
+We can utilize this dataset to predict energy consumption over the following features of a dataset.
+- **Size of a dataset**: As discussed in Section 2.1 <d-cite key="comparison"></d-cite>, the size of a dataset played an impact in measuring classification accuracy for NLP tasks. Since the energy dataset is numerical, it's important to test the same concept. We leveraged nearly 150,000 data points, progressively extracting subsets ranging from 10% to 90% of the dataset. For each subset, we trained the architectures, allowing us to explore their performance across varying data volumes.
+- **Amount of noise in the dataset**: As discussed in Section 2.2 <d-cite key="trading"></d-cite>, research was done to test LSTMs vs transformers on noisy stock data for various assets. We deemed the energy dataset to be relatively clean since it follows a predictable trend depending on the seasons of the year and time of the day. For example, there are higher energy levels during the winter and daytime hours. To test noise, we added incrementing levels of jittering / Gaussian noise <d-cite key="augmentations"></d-cite> to observe the effect of noisy data on LSTMs and transformers.
+- **Output size**: As discussed in Section 2.3
 
-|               | Small Dataset | Large Dataset |
-| ------------- | ------------- | ------------- |
-| Clean Dataset | LSTM          | Transformer   |
-| Noisy Dataset | LSTM          | ???           |
+## 4. Experimental Results and Discussion
 
-As depicted in the table, we have a keen interest in assessing whether transformers can surpass LSTM models in performance when confronted with larger and more noise-prone datasets. This combination has been the subject of significant debate and continues to pique the interest of researchers, making it a noteworthy area of investigation based on prior research.
+### 4.1 Size of a Dataset
+Given the energy consumption dataset described in Section 3, we trained and evaluated an LSTM model and transformer model on progressively increasing subsets ranging from 10% to 90% of the dataset. The figure below shows the normalized mean squared error (MSE) loss for each subset of the dataset. The experimental results show that transformers have an improving trend   
+<p align="center">
+  <img src="./assets/img/2023-12-12-time-series-lstm-transformer/lstm_trans_dataset_size_res.png" width="300">
+</p>
 
-## 3. Timeline
+<p align="center">
+  <img src="./assets/img/2023-12-12-time-series-lstm-transformer/test_set_pred_40.png" width="700">
+</p>
 
-- Week 1 (11/09 - 11/14): Building a basic transformer model and an LSTM model that work to start with.
-- Week 2 (11/14 - 11/21): Finding datasets that each meet the different conditions stated above. Primarily making sure our LSTM model is able to produce good results since the LSTM acts as our benchmark.
-- Week 3 (11/21 - 11/28): Tuning and evaluating our transformer model on the same datasets to compare. In this process, it's very possible that we find different features of datasets that we think might make a starker difference between transformer and LSTM performance.
-- Week 4 (11/28 - 12/05): Analyzing the results of our two models and drawing conclusions from what we have observed.
-- Week 5 (12/05 - 12/12): Piecing everything together for the blog, also using this final week as a grace period to resolve any possible issues we might encounter.
+https://ai.stackexchange.com/questions/20075/why-does-the-transformer-do-better-than-rnn-and-lstm-in-long-range-context-depen this might be helpful for you, the second answer is more concise
 
-## 4. References
 
-[1] A. Ezen-Can, “A comparison of lstm and bert for small corpus,” arXiv preprint arXiv:2009.05451, 2020.
-[2] P. Bilokon and Y. Qiu, “Transformers versus lstms for electronic trading,” arXiv preprint arXiv:2309.11400, 2023.
-[3] A. Zeng, M.Chen, L. Zhang, and Q. Xu, “Are transformers effective for time series forecasting?,” arXiv preprint arXiv:2205.13504, 2022.
-[4] “Metric:mase.”
-[5] “Hourly energy consumption.”
+### 4.2 Amount of Noise in a Dataset
+
+### 4.3 Output Size
+
+## 5. Conclusion
+probably also wanna mention here that one drawback of transformers is that you need a multi-gpu machine in order for it to be parallelizable and train fast. without it, training time is much slower and might not be worth the tradeoffs
+
+<!-- ## 6. References
+<p>
+<a id="1">[1]</a> 
+A. Ezen-Can, “A comparison of lstm and bert for small corpus,” arXiv preprint arXiv:2009.05451, 2020.
+</p>
+<a id="2">[2]</a> 
+P. Bilokon and Y. Qiu, “Transformers versus lstms for electronic trading,” arXiv preprint arXiv:2309.11400, 2023.
+<p>
+<a id="3">[3]</a>
+R. Mulla, "Hourly Energy Consumption," https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption, 2018.
+</p>
+<p>
+<a id="4">[4]</a>
+A. Nikitin, "Time Series Augmentations," https://towardsdatascience.com/time-series-augmentations-16237134b29b#:~:text=via%20magnitude%20warping.-,Window%20Warping,-In%20this%20technique, 2019.
+</p>
+<p>
+<a id="5">[5]</a>
+G. Ammann, "Using LSTMs And Transformers
+To Forecast Short-term Residential
+Energy Consumption," https://arno.uvt.nl/show.cgi?fid=160767, 2022.
+</p> -->
