@@ -62,7 +62,7 @@ _styles: >
 ## Background
 One widely accepted intuition is that Convolutional Neural Networks (CNNs) that are trained for object classification, combine low-level features (e.g. edges) to gradually learn more complex and abstracted patterns that are useful in differentiating images. Stemming from this is the idea that neural networks can understand and use shape information to classify objects, as humans would. Previous works have termed this explanation the shape hypothesis.  As <d-cite key="kriegeskorte2015deep"></d-cite> puts it, *“the network acquires complex knowledge about the kinds of shapes associated with each category. [...] High-level units appear to learn representations of shapes occurring in natural images”* (p. 429). This notion also appears in other explanations, such as in <d-cite key="lecun2015deep"></d-cite> : Intermediate CNN layers recognize *“parts of familiar objects, and subsequent layers [...] detect objects as combinations of these parts”* (p. 436). 
 
-{% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/shapetexture.png" class="img-fluid" style="width:200px; height:150px;"%}
+{% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/shapetexture.png" class="img-fluid" style="width:100px; height:75px;"%}
 Figure 1. <d-cite key="geirhos2018imagenet"></d-cite> shows that CNNs trained on ImageNet data are biased towards predicting the category corresponding to the texture rather than shape.
 
 Yet it remains poorly understood how CNNs actually make their decisions, and how their recognition strategies differ from humans. Specifically, there is a major debate about the question of whether CNNs primarily rely on surface regularities of objects, or whether they are capable of exploiting the spatial arrangement of features, similar to humans. Studies have shown that the extent to which CNNs use global features ; shapes or spatial relationships of shapes, is heavily dependent on the dataset it is trained on.  <d-cite key="geirhos2018imagenet"></d-cite> shows that CNNs trained on ImageNet data are biased towards predicting the category corresponding to the texture rather than shape. <d-cite key="farahat2023novel"></d-cite> reveal that CNNs learn spatial arrangements of features only up to a intermediate level of granularity by comparing networks trained on Sketchy dataset, composed of sketches drawn by images of animals, and the Animals dataset, images of animals. 
@@ -80,7 +80,7 @@ The first way that the model is pushed to learn global features is by training i
 The hypothesis is that because of the scarsity of features, and absense of other local features such as texture, the model would inevitably have to learn global features that humans commonly associate to object categories, such as shape.
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/QuickDraw_example.png" class="img-fluid" style="width:300px; height:200px;"%}
-Figure 2. Example from circle and square category of [Quick, Draw! dataset](https://github.com/googlecreativelab/quickdraw-dataset) that is used in this project. 
+Figure 2. Example from circle and square category of [Quick, Draw! dataset](https://github.com/googlecreativelab/quickdraw-dataset) that are used in this project. 
 
 For the following experiments I use 100,000 instances each from the circle and square categories of the [Quick, Draw! dataset](https://github.com/googlecreativelab/quickdraw-dataset) that have been rendered into 28x28 grayscale bitmap in .npy format. The dataset is split 85% for training and 15% for validation. 
 
@@ -114,8 +114,8 @@ The hypothesis is that the size of the filters of each convolution layer affects
 
 I train models with augmented data of different degree of fragmentation. Lower degrees of fragmentation divide the shape into 2 fragments and with higher degree, the shape is divided into an increasing number of parts. I do this by using masks that create streaks going across the image each in the horizontal, vertical and two diagonal directions. As a result, we create circles and squares with dashed lines. 
 
-{% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/augmentation_fragmentation.png" class="img-fluid" style="width:300px; height:200px;"%}
-Augmentations with varying degrees of fragmentation.
+{% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/augmentation_fragmentation.png" class="img-fluid" style="width:100px; height:200px;"%}
+Figure 3. Augmentations with varying degrees of fragmentation.
 
 The hypothesis is that fragments of circles and squares may be similar, so as the network is trained to distinguish between two categories regardless, it has to gain an understanding of larger scale features ; how these line segments are composed. If the model successfully train on datasets that are highly fragmented, it is expected to acquire knowledge of global features. For instance, intermediate scale understanding interpretation of circles would be that the angle of line segments are gratually rotating. On the otherhand squares would have parallel line segments up to each corner where ther is a 90 degree change in the angle. 
 
@@ -124,7 +124,7 @@ The hypothesis is that fragments of circles and squares may be similar, so as th
 We add instances where the local features of the circle or square is preserved, but the global feature is absent and labeled them as an additional category, 'false'. We create this augmentation by masking half or 3/4 of the existing data. The intention here is to have the model learn to only categorize shapes when their global features are present. 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/augmentation_negative.png" class="img-fluid" style="width:300px; height:200px;"%}
-Augmentation with addition of 'false' category.
+Figure 4. Augmentation with addition of 'false' category.
 
 
 ## Results 
@@ -135,19 +135,19 @@ We first want to examine if the independent variables affect the model's trainin
 To test the networks ability to employ global features we borrow the approach of <d-cite key="baker2020local"></d-cite> that use "conflict examples". Conflict instances have the overall shape that aligns to its label, but the local features, such as stroke or texture do not. The premise is that it is easy for humans, that primarily use global information to differentiate shapes to successfully categorize these conflict sets. Therefore, it would be a good way to test if the trained CNNs use similar differentiating strategies as humans. 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/conflictset.png" class="img-fluid" %}
-Figure *. Three conflict sets that obscure local features to contradict the global feature and ground truth label.
+Figure 5. Three conflict sets that obscure local features to contradict the global feature and ground truth label.
 
 We create three series of conflict sets for circle and squares that obscure its most distinguishing local features. The first set obscures the corner conditions - circles with one to two angular corners and squares with chamfered corners are included in this set. The second obscures line conditions - circles with angular lines and squares with curvy lines are created for this set. The third series targets the composition of strokes -  instead of continuous lines, we use series of parallel lines of varying angles to form a circle or square. 
 
 ### Filter Variation
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/filter_training.png" class="img-fluid" %}
-Figure *. Training evalution for variations in filter size of the convolution layer.
+Figure 6. Training evalution for variations in filter size of the convolution layer.
 
 For each variation in filter size, the models trained to reach over 98.5% accuracy on the validation set. Contrary to our speculation, the filter size did not largely affect the models ability to learn the classification task. 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/filter_results.png" class="img-fluid" %}
-Figure *. Evaluation with conflict set for variations in filter size of the convolution layer. 
+Figure 7. Evaluation with conflict set for variations in filter size of the convolution layer. 
 
 Overall we observe that having a large size filter at the final layer increases the model's performance on the conflict set as with filter sequence 337 and 339. We can speculate that having consistantly smaller size filters in the earlier layers and only increasing it at the end (337, 339) is better than gradually increaseing the size (357, 379). However, this is not true all the time as models with consistant size filters performed relavitely well (333, 555). Starting with a larger size filter (555, 557, 579 compared to 333, 337, 379) also helped in performance. However, this also came with an exception where 339 performced better than 559. 
 
@@ -158,19 +158,19 @@ Overall we can see that the models have trouble classifying instances with incre
 Based on the results with filter variation, we choose the filter size 555 to that performed moderately well, but still has room for improvement for the next experiment with augmented training data. 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/augment_training.png" class="img-fluid" %}
-Figure *. Training evalution for variations in augmentation of training data.
+Figure 8. Training evalution for variations in augmentation of training data.
 
 All models trained to reach over 98% accuracy on the validation set. As we speculated, the model had more difficulty in training with the augmentation as opposed to without. With the additional third negative category, the model was easier to train. This is evident with the divide in the plot with datasets that were augmented with the negative category to have higher evaluation values than the baseline and those that were only augmented with fragmented data were below the baseline. 
 
 {% include figure.html path="assets/img/2023-11-09-how-cnns-learn-shapes/augment_results.png" class="img-fluid" %}
-Figure *. Evaluation with conflict set for variations in augmentation of training data. 
+Figure 9. Evaluation with conflict set for variations in augmentation of training data. 
 
 The performance of models trained with augmented data on the conflict set was worse than that trained only on the original data which proves our initial hypothesis that it would be possible to enforce the network to use global features with augmented data wrong. What is interesting is how difference augmentations affect the performance. Initially, we thought that with the increased degree of fragmentation in the augmentation, the model would learn global features better, and would perform better on the conflict set. However comparison among the augmentation variations, Aug 2 showed significanly poor performance. 
 Adding a 'false' category did not boost the performance either. What is interesting is that the misclassification does not include the false label. We speculate that the model has learned to look at how much of the image is occupied. 
 
 ## Conclusion
 
-Our experiments have shown that there isn't an obvious way to steer CNN networks to learn intended scale features with filter size variation and data augmentation. While it was difficult to find a strict correlation, the variation in performance across experiments shows that the independent variables do have an affect on the information that the network encodes, and what information reaches the end of the network to determine the output. The fact that trained models were unable to generalize to the conflict set reinforces the fact that encoding global features is difficult for CNNs and it would likely resort to classifying with smaller scale features, if there are apparent differences. 
+The experiments in this project have shown that there isn't an obvious way to steer CNN networks to learn intended scale features with filter size variation and data augmentation. While it was difficult to find a strict correlation, the variation in performance across experiments shows that the independent variables do have an affect on the information that the network encodes, and what information reaches the end of the network to determine the output. The fact that trained models were unable to generalize to the conflict set reinforces the fact that encoding global features is difficult for CNNs and it would likely resort to classifying with smaller scale features, if there are apparent differences. 
 
 While the project seeks to entangle factors that could affect what the CNN learns, the evaluation with conflict sets does not directly review how features are processed and learned within the network. Approaches such as visualizing the activation of each neuron or layer can be more affective in this and can reveal more about how to alter the network’s sensitivity to the global features.
 
