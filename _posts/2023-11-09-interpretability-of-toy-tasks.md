@@ -249,11 +249,6 @@ Motivated by <d-cite key="toymodels"></d-cite>, we use a standard MSE loss, wher
 
 Below we present each activation function, along with plots depicting how training results in superposition at varying degrees of sparsity.
 
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/grid_plot.png" class="img-fluid" %}
-    </div>
-</div>
 
 
 [STRUCTURE NOTES]
@@ -266,9 +261,7 @@ Similar activation shapes: ReLU/GeLU/SiLU (flat + linear-ish), Sigmoid/Tanh (S),
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% raw %}
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_relu.html" class="img-fluid" %}
-        {% endraw %}
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_relu.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -278,9 +271,7 @@ Similar to the results in <d-cite key="toymodels"></d-cite>, the ReLU model focu
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% raw %}
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_gelu.html" class="img-fluid" %}
-        {% endraw %}
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_gelu.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -289,9 +280,7 @@ GeLU have recently been popularized as they are the activation functions of choi
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% raw %}
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_silu.html" class="img-fluid" %}
-        {% endraw %}
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_silu.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -302,9 +291,7 @@ The GeLU and SiLU models exhibit similar kinds of superposition in their weight 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% raw %}
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_sigmoid.html" class="img-fluid" %}
-        {% endraw %}
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_sigmoid.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -312,9 +299,7 @@ The Sigmoid function is a smooth activation function with an output range of $(0
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% raw %}
-        {% include figure.html path="/assets/html/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_tanh.html" class="img-fluid" %}
-        {% endraw %}
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_tanh.png" class="img-fluid" %}
     </div>
 </div>
 
