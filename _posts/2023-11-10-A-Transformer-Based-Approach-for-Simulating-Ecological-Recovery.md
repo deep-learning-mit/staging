@@ -3,7 +3,7 @@ layout: distill
 title:  A Transformer-Based Approach for Simulating Ecological Recovery
 
 description: This project employs Transformers for a comprehensive spatial-temporal analysis of post-Mountaintop Removal landscape recovery, utilizing satellite imagery and DEMs. It focuses on integrating geomorphological changes to predict ecological succession. Advanced Transformer architectures will be used to enhance the interpretability of complex spatial features over time, aiming to create an accurate 3D simulation environment for interactive exploration and effective restoration planning.
-date: 2023-11-10
+date: 2023-12-12
 htmlwidgets: true
 
 # Anonymize when submitting
