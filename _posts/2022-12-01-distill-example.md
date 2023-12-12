@@ -1,6 +1,5 @@
 ---
 layout: distill
-# CHANGE TITLE LATER TO WHATEVER WE PUT ON THE PROPOSAL
 title: Modeling Elephantfish Communication through Deep RNNs
 description: Elephantfish represent a fascinating subject for study within the realms of bioacoustics and animal communication due to their unique use of electric fields for sensing and interaction. 
 date: 2022-12-01
