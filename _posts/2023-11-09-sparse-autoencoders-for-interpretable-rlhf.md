@@ -166,7 +166,10 @@ For more details on the training run, figures demonstrating the sparsity, $L^1$ 
   The reconstruction loss of the sparse autoencoder across the training run on Pythia 6.9B. Reconstruction loss initially rises while the $L^1$ coefficient is adjusted, due to the tradeoff between reconstruction and sparsity. Once the $L^1$ coefficient stabilizes, reconstruction loss slowly falls as the sparse autoencoder learns a more effective representation.
 </div>
 
-[[[FIND AT LEAST ONE INTERPRETABLE FEATURE AND INSERT SOME PICTURES SHOWING OUR ANALYSIS OF ITS INTERPRETATION]]]
+{% include figure.html path="assets/img/2022-11-09-sparse-autoencoders-for-interpretable-rlhf.md/SAE_6-9b_the_feature.png" class="img-fluid" %}
+<div class="caption">
+  The second most frequent feature (feature index $11928$) in the Pythia 6.9B sparse autoencoder activates on the token "·the". The table columns are as follows: $\text{str\_token}$ is the token at the position the sparse autoencoder activates. $\text{unique\_token}$ is the token and position; the position seems not to matter in this case. The $\text{context}$ consists of the surrounding words. The $\text{batch}$ indicates the batch of the $\text{wikitext}$ datset, $\text{wikitext-103-v1}$ subset that the token is in. The $\text{pos}$ is the position. The $\text{label}$ is the batch and position. And the $\text{feature}$ is $11928$'s activation on the particular token, sorted in descending order. We include the first 15 examples. Two of the tokens are "·of" and "·and", but the rest are "·the".
+</div>
 
 ### Fine-Tuning with a Sparse Autoencoder
 
