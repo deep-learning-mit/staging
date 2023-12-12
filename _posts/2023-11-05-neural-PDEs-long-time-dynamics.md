@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Neural PDEs for learning local dynamics and longer temporal rollouts
-description: 6.s898 deep learning project 
+description: 6.S898 deep learning project 
 date: 2023-11-05
 htmlwidgets: true
 
@@ -121,7 +121,10 @@ The predicted solutions look impressive and it seems like the dynamics of the mu
 ### Representation learning in the Fourier layers 
 You might be curious how the Fourier layers learn the Navier-Stokes dynamics - let's examine some weights in the SpectralConv3d layers (for the FNO3D). We take the magnitudes of the complex weights from a slice of each layer (4 Fourier layers were in the model). 
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/fourierlayers.png" class="img-fluid" %}
+<div style="text-align: center; margin-right: 10px;">
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/fourierlayers.png" class="img-fluid" %}
+    <p style="margin-top: 0px;">Visualizing weights in the Fourier layers</p>
+</div>
 
 There seems to be some global features that are learnt in these weights. By learning in the Fourier space, the Fourier layers capture sinusoidal functions that can generalise better for dynamics according to the dynamical system's decomposed frequency modes. For CNNs, we know that the convolutions in spatial domain would lead to the learning of more local features (such as edges of different shapes), as compared to more global features learnt in Fourier layers. 
 
