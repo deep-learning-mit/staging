@@ -10,6 +10,7 @@ authors:
    affiliations:
       name: MIT
  - name: Timothy Kostolansky
+   url: "https://tim0120.github.io/"
    affiliations:
       name: MIT
 
