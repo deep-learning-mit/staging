@@ -214,10 +214,11 @@ Below are the architectures of the base (linear) and experimental (non-linear) m
 | $$ x' = W^T h + b $$   | $$x' = f(W^T h + b)$$          |
 | $$x' = W^T Wx + b$$  | $$x' = f(W^T Wx + b)$$          |
 
-
-
-**Autoencoder image**
-
+<div class="row mt-3 l-page">
+    <div class="col-6 mx-auto mt-3 mt-md-0">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Autoencoder.png" class="img-fluid" %}
+    </div>
+</div>
 
 We create an autoencoder - compressing down to induce polysemanticity. This maps $x$ to a direction in a lower-dimensional space, represented by $$h = Wx$$. Each column of $W$ corresponds to a lower-dimensional representation of a feature in $x$. To reconstruct the original vector, $W^T$ is used, ensuring clear feature representation correspondence. This structure results in a symmetric matrix $W^TW$ and allows for clear visualization of the weights. They visually allow for the determination of the presence of superposition.
 
