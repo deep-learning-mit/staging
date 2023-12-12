@@ -86,7 +86,7 @@ where $\beta > 0$ trades off sparsity loss with reconstruction loss. With the sp
 
 ## Methods
 
-Our main experiment is to insert a sparse autoencoder into a transformer layer, train the sparse autoencoder, and then use the fused model to perform a new, more interpretable form of fine-tuning. <d-footnote>While we originally planned to investigate RLHF, we determined that existing libraries could not perform PPO (Proximal Policy Optimization) on custom model architectures such as our transformer fused with a sparse autoencoder. As a result, we chose to investigate fine-tuning instead of RLHF.</d-footnote>
+Our main experiment is to insert a sparse autoencoder into a transformer layer, train the sparse autoencoder, and then use the fused model to perform a new, more interpretable form of fine-tuning. <d-footnote>While we originally planned to investigate RLHF, we determined that existing libraries could not perform PPO (Proximal Policy Optimization) on custom model architectures such as our transformer fused with a sparse autoencoder. As a result, we chose to investigate fine-tuning instead of RLHF.</d-footnote> We run all experiments on a single A100 GPU through Google Colab Pro+.
 
 ### Inserting a Sparse Autoencoder in a Transformer
 
@@ -126,8 +126,6 @@ For our fine-tuning experiments, the sparse autoencoder we use is trained on Pyt
 $$\text{Question: What is }(2 * 7) + 2\text{? Answer:}$$
 
 We train with batch size $8$, learning rate $10^{-3}$, and weight decay $10^{-2}$ using the AdamW optimizer <d-cite key="loshchilov2018decoupled"></d-cite> over $10$ epochs with $200$ steps per epoch. The figure below shows the training loss as we fine-tune.
-
-[[IMG OF TRAINING LOSS]]
 
 ## Results
 
@@ -205,12 +203,14 @@ For a broader view of the dynamics of our interpretable fine-tuning, the two fig
 
 ## Discussion
 
-Our results on fine-tuning show that most sparse autoencoder features remain similar after fine-tuning. If the 
+One limitation of our fine-tuning experiments is that Pythia 70M is a small model for which there are fewer interpretable features. In addition, we inserted into Pythia 70M a sparse autoencoder trained to reconstruct activations in Pythia 70M Chess. Nonetheless, our fine-tuning results are promising. The majority of features are not significantly affected, but a few features at the tails are either significantly enhanced or inhibited. We found it fruitful to interpret these outlier features first, as they are a starting point for finding which sparse autoencoder features matter most for the fine-tuning dataset.
+
+Our results for training a sparse autoencoder on Pythia 6.9B were promising. Our sparse autoencoder learned interpretable features, such as the "the" feature. We remain uncertain of the best way to train a sparse autoencoder, especially how to resample dead features. However, one implication of our work is that research on sparse autoencoders is accessible to a wide array of researchers. We believe a systematic study of training techniques for sparse autoencoders could benefit the field.
 
 ## Conclusion
 
-Our work indicates that sparse autoencoders are a promising tool for machine learning interpretability. By inserting sparse autoencoders into transformer language models, we investigate how a novel form of fine-tuning can provide insight into changes in model behavior after fine-tuning. We find that our fine-tuning successfully modifies interpretable features in the sparse autoencoder space. Although our current work is limited because we only fine-tune Pythia 70M, future work can scale up model size, compute resources, and the number of tokens used to train the sparse autoencoder. Additionally, future work can extend from investigating direct fine-tuning to investigating the effects of RLHF performed with Proximal Policy Optimization (PPO).
+Our work indicates that sparse autoencoders are a promising tool for machine learning interpretability. By inserting sparse autoencoders into transformer language models, we investigate how a novel form of fine-tuning can provide insight into changes in model behavior after fine-tuning. We find that our fine-tuning successfully modifies interpretable features in the sparse autoencoder space. Given the rapid adoption of powerful, fine-tuned language models across industries, we believe our method for interpretable fine-tuning is an important contribution to understanding how fine-tuning affects model cognition. Although our current work is limited because we only fine-tune Pythia 70M, future work can scale up model size, compute resources, and the number of tokens used to train the sparse autoencoder. Additionally, future work can extend from direct fine-tuning to investigating the effects of RLHF performed with Proximal Policy Optimization (PPO).
 
 ## Acknowledgements
 
-We would like to thank Professor Isola, Professor Beery, and Dr. Bernstein for an introduction to fundamental perspectives in deep learning that will stay with us forever. Thank you to Logan Smith for invaluable early guidance on the questions we could explore related to sparse autoencoders. We are thankful for the AI Safety Student Team at Harvard (AISST) and MIT AI Alignment (MAIA) for lively office spaces and a supportive community.
+We would like to thank Professor Isola, Professor Beery, and Dr. Bernstein for an introduction to fundamental perspectives in deep learning that will stay with us forever. Thank you to Logan Smith for invaluable early guidance on the questions we could explore related to sparse autoencoders. We are thankful for the AI Safety Student Team at Harvard (AISST) and MIT AI Alignment (MAIA) for a supportive community of fellow researchers.
