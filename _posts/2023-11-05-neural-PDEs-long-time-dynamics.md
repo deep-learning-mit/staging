@@ -126,14 +126,14 @@ You might be curious how the Fourier layers learn the Navier-Stokes dynamics - l
 There seems to be some global features that are learnt in these weights. By learning in the Fourier space, the Fourier layers capture sinusoidal functions that can generalise better for dynamics according to the dynamical system's decomposed frequency modes. For CNNs, we know that the convolutions in spatial domain would lead to the learning of more local features (such as edges of different shapes), as compared to more global features learnt in Fourier layers. 
 
 ### On the importance of positional embeddings 
-In FNO implementations, besides the input data for the 2D + time domains, the authors also append positional encodings for both x and y dimensions so the model knows the location of each point in the 2D grid. The concatenated data (shape = (3, x, y, t)) is then passed through the Fourier layers and so on. It is important to understand that the positional embedding is very important to the model performance.  
+In FNO implementations, besides the input data for the 2D + time domains, the authors also append positional encodings for both x and y dimensions so the model knows the location of each point in the 2D grid. The concatenated data (shape = (B, 3, x, y)) is then passed through the Fourier layers and so on. It is important to understand that the positional embedding is very important to the model performance.  
 
 <div style="display: flex; justify-content: center; align-items: center;">
-    <div style="text-align: center; margin-right: 10px;"> <!-- Added margin for spacing between images -->
+    <div style="text-align: center; margin-right: 10px;">
         {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dxdt.png" class="img-fluid" %}
         <p style="margin-top: 5px;">Original with positional encoding</p>
     </div>
-    <div style="text-align: center; margin-left: 10px;"> <!-- Added margin for spacing between images -->
+    <div style="text-align: center; margin-left: 10px;">
         {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dxdt.png" class="img-fluid" %}
         <p style="margin-top: 5px;">No positional encoding</p>
     </div>
@@ -141,7 +141,7 @@ In FNO implementations, besides the input data for the 2D + time domains, the au
 
 We train the same FNO3D on the same data but this time without the positional encodings concatenated as the input. Simply removing these positional encodings for x and y domains cause the model to underperform. Here, we are comparing between FNO3D with and without positional encoding. FNO3D has a final relative test loss of 0.0106 but the test loss is 0.0167 without positional encodings. Inspecting the change of x over t for a sample test dataset, it then becomes more visible the differences in performances. Note that we also observe the data have well-defined sinusoidal functions in the dynamics.
 
-## Inability to capture local dynamics and long-term accuracies in time-dependent PDEs
+## Improving accuracies in predicting local dynamics and long-term rollouts in time-dependent PDEs
 While the FNO has worked accurately for the Navier-Stokes data example, it does not perform well on other PDEs, especially when local dynamics and long-term accuracies are important. Here, I introduce another PDE as an example - a coupled reaction heat-diffusion PDE with two dependent states. 
 
 $$
@@ -151,7 +151,7 @@ $$
 \end{gather}
 $$
 
-Based on the initial conditions of temperature (T) and degree of cure (alpha) and with Dirichlet boundary conditions on one end of the sample, the T and alpha propagate across the domain (here, the 1D case is examined). For certain material parameters and when initial conditions of T and alpha are varied, we can see that the dynamics can become chaotic after some time, we can visualize it below.
+Based on the initial conditions of temperature (T) and degree of cure (alpha) and with Dirichlet boundary conditions on one end of the sample, the T and alpha propagate across the domain (here, the 1D case is examined). For certain material parameters and when initial conditions of T and alpha are varied, we can see that the dynamics can become chaotic after some time - we can visualize it below. 
 
 <div class="l-body-outset">
   <iframe src="{{ 'assets/html/2023-11-05-neural-PDEs-long-time-dynamics/unstablefromp.html' | relative_url }}" frameborder='0' scrolling='no' height="750px" width="100%"></iframe>
@@ -160,14 +160,48 @@ Based on the initial conditions of temperature (T) and degree of cure (alpha) an
 Solution of the above coupled PDE with 2 dependent states, solved using FEM. Drag the slider!
 </div>
 
-Firstly, it can be harder for the Fourier layers to learn the local changes since the Fourier layers would only approximate kernels in the lower frequency modes and higher frequency modes are truncated away. Secondly, since numerical methods can be expensive, we want to use the first k steps (i.e. first 10 steps) of the true solution to predict the next N steps (as high as possible). Clearly, the prediction accuracies lower as we want higher resolution predictions for longer time steps as output. In an autoregressive training scheme, where the k input steps are used to predict the next step autoregressively until N steps are predicted on rollout, the losses will accumulate as we propagate more time steps forward. 
+For this dataset, we aim to use the first 10 time steps of the solution (heat diffusion from x=0) as input to a neural PDE to predict the next N time steps of the solution. With 10 steps, we predict the 11th step and the prediction is concatenated with the last 9 steps to predict the next time step and so on. We first generate the training data by solving the PDE numerically using the Finite Element Method using the FEniCS package. Specifically, we use mixed finite elements with the continuous Galerkin scheme and a nonlinear solver with an algebraic multigrid preconditioner. 
 
-To overcome these 2 problems, there have been attempts to generally improve the accuracies of neural PDE models and also training tricks proposed to improve long-term accuracies in rollout. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. 
+We use 1228 solutions for the training set and 308 solutions for the test set. The datasets are split into pairs of 10 trajectories, whereby the input data consists the solution of 10 time steps and the output data (to be predicted) consists the solution of the next 10 time steps. Since the neural PDE is trained to predict 10 to 1 time step, every batch is trained autoregressively and an L2 loss is taken for all 10 forward predictions before the sum is backpropagated in every batch. Likewise, the AdamW optimizer is used with an initial learning rate of 1e-4 and a cosine annealing scheduler. The models are trained for 300 epochs with a batch size of 16. 
+
+I initially tried the FNO1D implementation on my PDE dataset and notice that the errors accummulate with longer time rollouts using the trained model. FNO1D is used since we only have 1 spatial dimension in the 1D solution and the solutions are predicted recurrently, just like the use of FNO2D for the 2D Navier-Stokes example earlier. The FNO2D model was also used to convolve over both x and t. Both performances are not ideal within 1 cycle of forward prediction. 
+
+### RevIN and other training tricks to improve accuracies in longer temporal rollout
+
+To overcome this problem, there have been attempts to generally improve the accuracies of neural PDE models and also training tricks proposed to improve long-term accuracies in rollout. Using the FNO1D, I first tested out some training tricks, such as the pushforward and temporal bundling which are covered in the paper on message passing neural PDEs<d-cite key="brandstetter2022message"></d-cite>. Incorporating the reversible instance normalization layer (RevIN)<d-cite key="kim2022reversible"></d-cite> gives a more promising improvement. With ReVIN, the input solution is passed through the normalizing RevIN layer before the FNO1d and the output solution is denormalized through the RevIN layer. Some examples of these tricks for longer term robust forecasting are covered in this repo: https://github.com/Rui1521/Symmetry-Tutorial/blob/main/Tutorial_Symmetry.ipynb. 
+
+Using a trained FNO1D with a RevIN layer, here is its prediction on an unseen test set starting from the first 10 time steps as the input solution. The true solution is used to predict up till 50 more time steps forward (5 full cycles forward). While the temperature is predicted with decent accuracies for first cycle (10 steps forward), the errors accumulate over more steps.
+
+<div style="text-align: center; margin-left: 10px;"> 
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/fnorevin_fromp1dt156.gif" class="img-fluid" %}
+    <p style="margin-top: 2px;">FNO1d's prediction for unseen test set (id=156)</p> 
+</div>
+
+Generally, we attribute this to the fact that the Fourier layers may not be able to learn more local changes in the dynamics since the higher frequency modes in the Fourier series are truncated away. The global dynamics of the propagating front (heat diffusion along x) are captured reasonably well (the positional encodings probably also have a large part to play). We want to build on the FNO to improve predictions for longer temporal rollout especially for multiscale dynamical systems with both global and local changes. Ideally, we want to take an input of a few time steps from a more expensive numerical solver and pass it through a trained surrogate model to predict N time steps (with N being as high as possible). 
+
+
+<div style="text-align: center; margin-left: 10px;"> 
+    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/LKAfno_fromp1dt156.gif" class="img-fluid" %}
+    <p style="margin-top: 2px;">FNO1d + LKA's prediction for unseen test set (id=156)</p> 
+</div>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+  <div style="text-align: center; margin-left: 2px;"> 
+      {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/fnorevin_fromp1dt876.gif" class="img-fluid" %}
+      <p style="margin-top: 2px;">FNO1d's prediction for unseen test set (id=876)</p> 
+  </div>
+  <div style="text-align: center; margin-left: 2px;"> 
+      {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/LKAfno_fromp1dt876.gif" class="img-fluid" %}
+      <p style="margin-top: 2px;">FNO1d + LKA's prediction for unseen test set (id=876)</p> 
+  </div>
+</div>
 
 
 
 
-### Using ReVIN to normalize and denormalize the time series input for 1D PDEs 
+
+
+
 
 
 
