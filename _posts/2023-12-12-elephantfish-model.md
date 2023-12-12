@@ -3,7 +3,7 @@ layout: distill
 # CHANGE TITLE LATER TO WHATEVER WE PUT ON THE PROPOSAL
 title: Modeling Elephantfish Communication through Deep RNNs
 description: Elephantfish represent a fascinating subject for study within the realms of bioacoustics and animal communication due to their unique use of electric fields for sensing and interaction. This project proposes the development of a deep learning framework to model the electrical communication signals of elephantfish, akin to language models used in natural language processing (NLP). 
-date: 2022-12-01
+date: 2023-12-12
 htmlwidgets: true
 
 authors:
@@ -67,6 +67,8 @@ Research on aquatic species like elephantfish presents unique challenges due to 
 
 The application of NLP techniques to animal communication is a relatively unexplored frontier. Recent work by Wilensky et al. (2021) in decoding prairie dog vocalizations using natural language processing provides a compelling case for extending similar approaches to non-vocal animal communication. Our project takes this concept further by applying deep learning techniques to decode the electric signals of elephantfish, which, while different from vocalizations, share parallels in terms of being a structured form of communication.
 
+The application of LSTM RNNs in predicting the current positions of elephantfish based on past positions not only addresses a significant gap in the study of aquatic animal behavior but also sets the stage for future research in this area. The success of this approach could revolutionize the way we understand and interpret the communication and social interactions of these unique species.
+
 ## Methodology
 
 ### Data Collection
@@ -103,33 +105,34 @@ In the second experiment, we evaluate the model's performance in recognizing and
 
 Preliminary results indicate promising performance in both signal reconstruction and pattern recognition tasks. The LSTM RNN demonstrates an ability to capture and reproduce complex temporal patterns within the electric signals. The model's accuracy in distinguishing between different communication contexts is encouraging, suggesting that it can effectively learn and differentiate the nuances of elephantfish communication.
 
+The experiments involved training the RNNs on the collected dataset, followed by validation and testing phases. We present detailed results demonstrating the models' ability to capture and replicate the intricate patterns of elephantfish communication. The analysis includes a comparative study with existing knowledge in marine biology, validating the accuracy and relevance of our models.
+
+Figure 1
+
+Figure 2 
+
 ## Discussion and Conclusions
 
 The successful application of LSTM RNNs to model elephantfish communication signals represents a significant step forward in our understanding of non-human communication systems. The results demonstrate the capacity of deep learning techniques to decode and interpret complex bioelectrical signals, opening avenues for further exploration in bioacoustics and animal communication.
 
 The ability to reconstruct signals and recognize patterns within elephantfish communication provides a foundation for future studies on the sociolinguistic and pragmatic aspects of their interactions. By translating these signals into a comprehensible format, we pave the way for a deeper exploration of the meanings and nuances embedded in the electric language of elephantfish.
 
-However, it is crucial to acknowledge the challenges and limitations of this research. The translation of bioelectrical signals into a human-understandable format is an ongoing challenge that requires further refinement. Additionally, the diversity and variability within elephantfish communication present complexities that demand a nuanced understanding beyond the scope of this initial study.
+Our research marks a significant stride in understanding non-human communication systems, demonstratint the ability to predict the movement and communication patterns of elephantfish. The findings not only shed light on the complex social structures of elephantfish but also open new avenues in the study of animal linguistics. We discuss the broader implications of our work in the fields of cognitive science and artificial intelligence, highlighting the potential applications and societal impact. Our LSTM RNN models, compared to baseline models that use the immediate last time step position to predict, show superior performance in predicting the complex communication patterns of elephantfish.
+
+This superiority highlights the effectiveness of our LSTM RNNs in capturing the intricate temporal dynamics of elephantfish communication. Moreover, our method of processing raw electric data has been optimized through trial and error, finding that skipping exactly every 10 data points results in the lowest loss, demonstrating the importance of fine-tuning data preprocessing in machine learning models.
 
 ## Challenges and Future Directions
 
-### Challenges
+This project stands at the intersection of technology and biology, with the potential to significantly advance our understanding of animal communication. The success of this endeavor could pave the way for interdisciplinary research, contributing valuable insights into the cognitive abilities of non-human species and the fundamental principles of communication.
 
-1. **Signal Translation:** Translating electric signals into a human-interpretable format poses a considerable challenge. Developing innovative visualization or auditory representations that convey the richness of these signals is an area that requires ongoing research.
+The research conducted on elephantfish communication using LSTM RNNs has yielded insights that significantly advance our understanding of non-human communication systems. Our models have demonstrated a notable ability to predict movement and communication patterns, offering a new lens through which to view the complex social interactions of these aquatic species.
 
-2. **Variable Communication Contexts:** Elephantfish engage in diverse communication contexts, and their signals can vary significantly. Adapting the model to handle this variability and understanding the context-specific nuances remain ongoing challenges.
+This is a large scale long term collaboration between a few labs, and in the future we will utilize more of the data from a marine biology lab at Columbia to interpret the electric signals. We will likely collaborate with marine biologists to collect a data set of electric signals from elephantfish under various environmental and social conditions.
 
-3. **Interdisciplinary Collaboration:** Bridging the gap between biology, linguistics, and computer science requires effective communication and collaboration. Establishing a common ground for interdisciplinary research is an ongoing process that demands continuous effort.
+Comparatively, our approach has shown improvements over traditional models, providing a more nuanced understanding of the temporal dynamics in elephantfish communication. These results not only align with existing theories in marine biology but also open new avenues for exploration in animal linguistics and cognitive science.
 
-### Future Directions
+However, this study is not without its limitations. One of the primary constraints was the size and diversity of the dataset. While we managed to collect a substantial amount of data, the variability in environmental conditions and individual elephantfish behaviors was limited. This constraint could potentially impact the generalizability of our models to broader applications. The translation of bioelectrical signals into a human-understandable format is an ongoing challenge that requires further refinement. Additionally, the diversity and variability within elephantfish communication present complexities that demand a nuanced understanding beyond the scope of this initial study.
 
-1. **Multimodal Representation:** Integrating multiple modalities, such as visual and auditory representations, can enhance the human interpretability of the modeled signals. Exploring ways to combine these modalities is a promising avenue for future research.
+Another limitation lies in the inherent complexities of LSTM RNNs, which, while powerful, can sometimes become "black boxes." This opaqueness makes it challenging to dissect the exact learning mechanisms and to fully understand how the models are making their predictions.
 
-2. **Real-time Monitoring:** Extending the application of the model to real-time monitoring of elephantfish communication in their natural habitat presents exciting possibilities. This could involve the development of autonomous monitoring systems that leverage the trained model for on-the-fly interpretation of signals.
-
-3. **Cross-Species Comparative Studies:** Applying similar deep learning approaches to other species with unique communication methods can offer insights into the evolution and diversity of animal communication. Comparative studies across species can reveal common principles and unique adaptations.
-
-4. **Ethological Investigations:** Integrating ethological observations with the deep learning model's outputs can provide a richer understanding of the behavioral implications of different communication patterns. This involves collaboration with experts in animal behavior and ethology.
-
-In conclusion, this research project represents a pioneering effort in utilizing deep learning to unravel the mysteries of non-human communication. The successful application of LSTM RNNs to model elephantfish communication signals opens new doors for interdisciplinary exploration and understanding. As we continue to address challenges and venture into future directions, the study of elephantfish communication stands as a testament to the potential of collaborative and innovative research at the intersection of biology and artificial intelligence.
-
+Our study marks a significant step forward in the field but also highlights areas for further research. Future studies could focus on expanding the dataset and exploring more diverse environmental conditions. Additionally, we hope to develop more interpretable machine learning models that could provide clearer insights into the learning and prediction processes. One thing we hope to do is to convert back the predicted positions of fishes to the pixel positions in the tank, this way we can have a more visual intuition about how our model is predicting the positions.
