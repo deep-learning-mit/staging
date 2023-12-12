@@ -93,7 +93,7 @@ For this specific model, we use a 6 layer transformer with 5 self-attention head
 
 ### Data
 
-We use the CIFAR-10 and CIFAR-100 datasets for this research <d-cite key = "krizhevsky2009learning"></d-cite>. CIFAR-10 consists of 60,000 32x32 color images representing 10 different classes. These classes are airplanes, cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. They are evenly distributed, such that there are 6,000 images of each class. CIFAR-100 uses the same format, but instead has 100 evenly distributed classes. We split this data into training and test sets and tested the different forms of regularization. We found that our transformer model with no regularization could easily achieve near-zero error on both sets of training data, but only achieved around 60% in test accuracy for the CIFAR-100 dataset and around 30% accuracy on the CIFAR-100 dataset. Therefore, the model is overfitting to the training data and testing regularization methods on this dataset could help the model generalize more on the test data.
+We use the CIFAR-10 and CIFAR-100 datasets for this study <d-cite key = "krizhevsky2009learning"></d-cite>. CIFAR-10 consists of 60,000 32x32 color images representing 10 different classes. These classes are airplanes, cars, birds, cats, deer, dogs, frogs, horses, ships, and trucks. They are evenly distributed, such that there are 6,000 images of each class. CIFAR-100 uses the same format, but instead has 100 evenly distributed classes. We split this data into training and test sets and tested the different forms of regularization. We found that our transformer model with no regularization could easily achieve near-zero error on both sets of training data, but only achieved around 60% in test accuracy for the CIFAR-10 dataset and around 30% accuracy on the CIFAR-100 dataset. Therefore, the model is overfitting to the training data and testing regularization methods on this dataset could help the model generalize more on the test data.
 
 <div class="row mt-3">
    {% include figure.html path="assets/img/2023-11-06-attention-regularization/cifar_10_example.png" class="img-fluid" %}
@@ -133,7 +133,7 @@ We use $ \color{white} \gamma = 0.1 $ for our experiments. This adds a low level
 ##### Noise Injection
 
 
-Noise injection has been used to regularize fully connected neural networks, but we have not found any literature that proposes using noise injection to regularize self-attention layers. We propose two methodologies to add regularization and robustness to our model training. We inject noise with the following formula.
+Noise injection has been used to regularize fully connected neural networks, but we have not found any literature that proposes using noise injection to regularize self-attention layers. We propose two methodologies to add regularization and robustness to our model training. We inject noise into our input embeddings with the following formula.
 
 $ \color{white} x_{i,j}^{noised} = x_{i,j}+ \frac{1}{100} * median(x) * N(0,1) $
 
@@ -180,7 +180,7 @@ We begin by analyzing the training results on the CIFAR-10 dataset.
 <div class="caption">
    Training Accuracy on the CIFAR-10 Dataset
 </div>
-We see that most of the models, except for the dropout based models, achieve near zero error and perfect accuracy on the test set. Therefore, we see that the dropout term is stopping the model from perfectly memorizing the dataset but all other regularization techniques are not forcing the model to change the weights enough to prevent overfitting.
+We see that most of the models, except for the dropout based models, achieve near zero error and perfect accuracy on the test set. Therefore, we see that the dropout term is stopping the model from perfectly memorizing the dataset but all other regularization techniques are not forcing the model to change the weights enough to prevent perfect accuracy.
 
 
 <div class="row mt-3">
