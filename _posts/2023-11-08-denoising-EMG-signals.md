@@ -84,12 +84,10 @@ My methodology centered on designing and training an autoencoder architecture fo
 
 The output then passes through a series of linear layers with ReLU activations to compress the data into a 28-dimensional latent representation (versus 56 originally). Paired with the encoder is an LSTM-based decoder that sequentially generates the full reconstructed spectrogram by capturing temporal dynamics in the latent encoding. Specifically, two bidirectional LSTM blocks first extract forward and backward sequential dependencies. A final linear layer then projects this decoding to match the original spectrogram shape. Since spectrograms consist strictly of positive values, the decoder output is passed through a final ReLU layer as well to enforce non-negativity.
 
-For training, I used a custom loss function defined as a variant of mean absolute error (MAE), with additional multiplicative penalties for overestimations to strongly discourage noise injection. While mean squared error is conventionally used for regressors, I found that it failed to properly penalize deviations in the spectrogram context as values were restricted between zero and one. Moreover, initial models tended to overshoot guesses, spectrally spreading energy across additional erroneous frequency bands - a highly undesirable artifact for signal clarity. The custom loss thus applies much harsher penalties for such over-predictions proportional to their deviation magnitude.
+For training, I used a custom loss function defined as a variant of mean absolute error (MAE), with additional multiplicative penalties for overestimations to strongly discourage noise injection. While mean squared error (MSE) is conventionally used for regressors, I found that it failed to properly penalize deviations in the spectrogram context as values were restricted between zero and one. Moreover, initial models tended to overshoot guesses, spectrally spreading energy across additional erroneous frequency bands - a highly undesirable artifact for signal clarity. The custom loss thus applies much harsher penalties for such over-predictions proportional to their deviation magnitude. The purpose of the loss function is to compare the model’s output to the preprocessed signal, not the original raw input. This is what makes a denoising autoencoder different from a traditional autoencoder. So, this autoencoder is being tested on its ability to reconstruct the signal from a compressed latent representation and to ignore the noise removed by manual preprocessing of the signal.
 
 ## Results Analysis
 In terms of model optimization, I incrementally adapted components like attention heads, linear layers in the encoder, LSTM layers in the decoder, and loss function parameters to improve performance. Below are some results collected during experiments, with relevant hyperparameter values listed. For context, the first signal from the validation is visualized below. Note that all experiments were done on the same sample.
-
-Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -106,7 +104,7 @@ Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
     </div>
 </div>
 <div class="caption">
-    Diagrams are in the following order: raw spectrogram, preprocessed spectrogram, raw signal waveform, preprocessed signal waveform.
+    Diagrams are in the following order: raw signal waveform, preprocessed signal waveform, raw spectrogram, preprocessed spectrogram.
 </div>
 
 
@@ -114,7 +112,7 @@ Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
 
 MSE loss function:
 
-Applying mean squared error (MSE) during training resulted in substantial overpredictions within reconstructed spectrograms. As shown, the final time-domain trace from the poorly constrained model contains heavy ambient noise contamination spanning multiple frequency bands – an undesirable artifact significantly corrupting signal clarity and interpretation. This confirms the need to explicitly restrict amplification predictions to retain fidelity.
+Applying MSE during training resulted in substantial overpredictions within reconstructed spectrograms. As shown, the final time-domain trace from the poorly constrained model contains heavy ambient noise contamination spanning multiple frequency bands – an undesirable artifact significantly corrupting signal clarity and interpretation. This confirms the need to explicitly restrict amplification predictions to retain fidelity.
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
@@ -213,7 +211,9 @@ As expected, severely restricting the representational bottleneck to just 14 uni
 
 ## Conclusion
 
-Ultimately, this framework shows early promise as an interpretable tool for learning intrinsic spectrogram patterns and filtering noise corruption. The final model parameters include: four attention heads, two attention layers, two linear layers in the encoder, 35 dimensional latent space, 2 LSTM layers in the decoder, and a 2.25 overshooting penalty multiplier for the custom loss function. I arrived at these parameters after running the experiments described above. 
+This research presents foundational outcomes qualifying the early potential of an interpretable attention-based autoencoding framework for intrinsic physiological pattern extraction and noise suppression. Incrementally adapted model configurations, guided by empirical ablation studies, demonstrate promising capabilities in capturing key EMG spectrogram characteristics while filtering errant artifacts.
+
+The final model parameters include: four attention heads, two attention layers, two linear layers in the encoder, 35 dimensional latent space, two LSTM layers in the decoder, and a 2.25 overshooting penalty multiplier for the custom loss function. These parameters were identified to be optimal after running the experiments described above. 
 
 Results using same experimental set-up as in previous section:
 
@@ -226,7 +226,10 @@ Results using same experimental set-up as in previous section:
     </div>
 </div>
 
-In addition to further testing the parameters I looked at, more work could be done in selecting the values of training hyperparameters like the gradient clipping norm maximum and learning rate scheduler parameters. Both of these methods are supposed to help with gradient stability during training and are most helpful when performing training over hundreds, if not thousands, of iterations.
+When compared to the original sample, the output of my model succeeded in reproducing the signal with most of the relevant spikes, as determined by visual inspection. Note that the error is still quite large, but I believe that is an effect of the preprocessed signals still containing quite a lot of noise, since the manual filtering is not very strong. With smaller learning rate and more training iterations, the model’s output will resemble the preprocessed signal more closely.
 
-Moving forward, I aim to expand the dataset coverage, refine hyperparameter selection, and assess generalizability across subjects, gestures, and measurement conditions. Evaluating downstream gesture classification efficacy using the learned encodings would also better validate real-world viability.
+In addition to further testing the parameters selected above, more work could be done in selecting the values of training hyperparameters like the gradient clipping norm maximum and learning rate scheduler parameters. Both of these methods are supposed to help with gradient stability during training and are most helpful when performing training over hundreds, if not thousands, of iterations.
 
+While this project was able to produce a denoising autoencoder model that could be used to preprocess EMG signal data, another goal was to learn a latent representation that improves performance on downstream tasks. Extending this work by reproducing results from gesture recognition papers using the latent representation of EMG data instead of the normal representation. The latent representation is expected to improve performance because the attention module is expected to highlight all of the relevant parts of the signal and the linear module is expected to use the insights from the preceding attention module to condense the signal to its latent representation. This representation is impressive at removing artifacts from the signal, which means it probably contains the information needed for downstream tasks. Previous deep learning methods <d-cite key="transformergesture"></d-cite>  have shown success in recognizing gestures from the EMG signal directly, but this is the first time a denoising autoencoder’s latent representation has been utilized in achieving the same goals.
+
+In short, the findings support the potential of attention boosted autoencoders in overcoming challenges that have hindered widespread adoption of BCI due to noise from instruments. The results highlight the importance of combining new design approaches in deep learning with specific problem-related preferences to accurately capture physiological details.
