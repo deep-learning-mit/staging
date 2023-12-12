@@ -53,27 +53,11 @@ With the recent emergence of grokking, mechanistic interpretability research has
 
 Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas. For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
 
-
-[2103.01819] The Rediscovery Hypothesis: Language Models Need to Meet Linguistics - the rediscovery hypothesis
-
-
-
-
-**TODO**
-
-
-**WE should do a "hover" or indented explanation of what features are**
-
-
 In this work we:
-
 
 1. Explain Superposition, why it may occur, and why it is important
 2. Motivate a framework to easily study Superposition
 3. Study how activation functions affect Superposition
-
-
-
 
 ### Superposition
 Let us elaborate further. If you were to train some neural network and visualize the weights - chances are you would see some mess that looks like this:
