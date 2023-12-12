@@ -90,6 +90,7 @@ For training, I used a custom loss function defined as a variant of mean absolut
 In terms of model optimization, I incrementally adapted components like attention heads, linear layers in the encoder, LSTM layers in the decoder, and loss function parameters to improve performance. Below are some results collected during experiments, with relevant hyperparameter values listed. For context, the first signal from the validation is visualized below. Note that all experiments were done on the same sample.
 
 Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image13.jpg" class="img-fluid" %}
@@ -112,7 +113,9 @@ Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
 ### Loss Function
 
 MSE loss function:
+
 Applying mean squared error (MSE) during training resulted in substantial overpredictions within reconstructed spectrograms. As shown, the final time-domain trace from the poorly constrained model contains heavy ambient noise contamination spanning multiple frequency bands – an undesirable artifact significantly corrupting signal clarity and interpretation. This confirms the need to explicitly restrict amplification predictions to retain fidelity.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image18.png" class="img-fluid" %}
@@ -123,7 +126,9 @@ Applying mean squared error (MSE) during training resulted in substantial overpr
 </div>
 
 Custom Loss at 1.5:
+
 The custom loss variant with a penalty strength of 1.5 on positive deviations provides initial mitigations toward avoiding false noise injection. As evident for this setting however, while reconstruction quality exhibits cleaner sections, erratic artifacts still visibly persist in certain regions indicating room for improvement. Additionally, certain key activity spikes demonstrate misalignments suggestive of feature misrepresentation issues. This reconstruction is less noisy than the output when using MSE loss, but the large spike between samples 1500 and 1750 is still quite noisy.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image17.png" class="img-fluid" %}
@@ -134,7 +139,9 @@ The custom loss variant with a penalty strength of 1.5 on positive deviations pr
 </div>
 
 Custom Loss at 3.0:
+
 In contrast, a high 3.0 penalty parameter induces oversuppressions that completely smooths out nontrivial aspects of the true activations, retaining only the most prominent spike. This signifies that an over constrained optimization pressure to limit noise risks excessively diminishing important signal features. An appropriate balance remains to be found between both extremes.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image6.png" class="img-fluid" %}
@@ -147,10 +154,13 @@ In contrast, a high 3.0 penalty parameter induces oversuppressions that complete
 ### Increased Depth
 
 Additional LSTM layers:
+
 Attempting to append supplemental LSTM decoder layers resulted in models failing to learn any meaningful representations, instead outputting blank spectrograms devoid of structure. This occurrence highlights difficulties of vanishing or exploding gradients within recurrent networks. Addressing architectural constraints should be prioritized to add representational power.
 
 Additional Linear Layers:
+
 Increasing the number of linear encoder layers expects to smooth outputs from repeated feature compressions, improving noise resilience at the cost of losing signal details. However, experiments found that excessive linear layers suppressed the majority of outputs indicative of optimization issues - possibly vanishing gradients that diminish propagating relevant structures. 
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image20.png" class="img-fluid" %}
@@ -161,7 +171,9 @@ Increasing the number of linear encoder layers expects to smooth outputs from re
 </div>
 
 Doubled attention heads:
+
 Using eight attention heads over two layers was expected to extract more salient input features thanks to added representational capacities. However, counterintuitively, the resulting reconstructions surfaced only a single prominent activity spike with all other informative structure entirely smoothed out. This suggests difficulties in sufficiently balancing and coordinating the priorities of multiple simultaneous attention modules.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image11.png" class="img-fluid" %}
@@ -172,8 +184,11 @@ Using eight attention heads over two layers was expected to extract more salient
 </div>
 
 ### Latent Bottleneck
+
 Larger latent space:
+
 Expanding the dimensionality to a 42 dimension latent representation afforded more flexibility in encoding input dynamics. While this retained spike occurrences and positioning, relative amplitudes and relationships were still improperly reflected as evident by distorted magnitudes. This implies that simply allowing more latent capacity without additional structural guidance is insufficient for fully capturing intricate physiological details.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image19.png" class="img-fluid" %}
@@ -184,7 +199,9 @@ Expanding the dimensionality to a 42 dimension latent representation afforded mo
 </div>
 
 Smaller latent space:
+
 As expected, severely restricting the representational bottleneck to just 14 units forced aggressive data compression that fails to retain more than the most dominant input aspects. Consequently, the decoder could only partially reconstruct the presence of two key spikes without correctly inferring amplitudes or locations. All other fine signal details were entirely lost due to the heavy dimensionality restriction forcibly imposing information loss.
+
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image5.png" class="img-fluid" %}
@@ -195,6 +212,21 @@ As expected, severely restricting the representational bottleneck to just 14 uni
 </div>
 
 ## Conclusion
-The proposed study anticipates fostering a novel framework for preprocessing EMG signals, contributing to the advancement of practical BCI applications outside clinical environments. By addressing SNR challenges and enriching the learned representations through a sophisticated denoising auto-encoder with self-attention, this research holds promise for accelerating the development and adoption of robust, noninvasive BCI solutions for diverse real-world contexts.
 
+Ultimately, this framework shows early promise as an interpretable tool for learning intrinsic spectrogram patterns and filtering noise corruption. The final model parameters include: four attention heads, two attention layers, two linear layers in the encoder, 35 dimensional latent space, 2 LSTM layers in the decoder, and a 2.25 overshooting penalty multiplier for the custom loss function. I arrived at these parameters after running the experiments described above. 
+
+Results using same experimental set-up as in previous section:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image27.png" class="img-fluid" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image26.png" class="img-fluid" %}
+    </div>
+</div>
+
+In addition to further testing the parameters I looked at, more work could be done in selecting the values of training hyperparameters like the gradient clipping norm maximum and learning rate scheduler parameters. Both of these methods are supposed to help with gradient stability during training and are most helpful when performing training over hundreds, if not thousands, of iterations.
+
+Moving forward, I aim to expand the dataset coverage, refine hyperparameter selection, and assess generalizability across subjects, gestures, and measurement conditions. Evaluating downstream gesture classification efficacy using the learned encodings would also better validate real-world viability.
 
