@@ -1,6 +1,6 @@
+
 ---
 layout: distill
-# CHANGE TITLE LATER TO WHATEVER WE PUT ON THE PROPOSAL
 title: Modeling Elephantfish Communication through Deep RNNs
 description: Elephantfish represent a fascinating subject for study within the realms of bioacoustics and animal communication due to their unique use of electric fields for sensing and interaction. This project proposes the development of a deep learning framework to model the electrical communication signals of elephantfish, akin to language models used in natural language processing (NLP). 
 date: 2023-12-12
