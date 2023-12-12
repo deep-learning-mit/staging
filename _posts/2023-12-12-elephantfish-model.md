@@ -105,9 +105,13 @@ Preliminary results indicate promising performance in both signal reconstruction
 
 The experiments involved training the RNNs on the collected dataset, followed by validation and testing phases. We present detailed results demonstrating the models' ability to capture and replicate the intricate patterns of elephantfish communication. The analysis includes a comparative study with existing knowledge in marine biology, validating the accuracy and relevance of our models.
 
-Figure 1
+{% include figure.html path="assets/img/2023-12-12-elephantfish-model/figure 1.png" class="img-fluid" %}
 
-Figure 2 
+{% include figure.html path="assets/img/2023-12-12-elephantfish-model/figure 2 -- comparison epoch 10.png" class="img-fluid" %}
+
+{% include figure.html path="assets/img/2023-12-12-elephantfish-model/figure 3 feature distributions.png" class="img-fluid" %}
+
+{% include figure.html path="assets/img/2023-12-12-elephantfish-model/figure 4 feature conclusions heatmap.png" class="img-fluid" %}
 
 ## Discussion and Conclusions
 
@@ -117,7 +121,7 @@ The ability to reconstruct signals and recognize patterns within elephantfish co
 
 Our research marks a significant stride in understanding non-human communication systems, demonstratint the ability to predict the movement and communication patterns of elephantfish. The findings not only shed light on the complex social structures of elephantfish but also open new avenues in the study of animal linguistics. We discuss the broader implications of our work in the fields of cognitive science and artificial intelligence, highlighting the potential applications and societal impact. Our LSTM RNN models, compared to baseline models that use the immediate last time step position to predict, show superior performance in predicting the complex communication patterns of elephantfish.
 
-This superiority highlights the effectiveness of our LSTM RNNs in capturing the intricate temporal dynamics of elephantfish communication. Moreover, our method of processing raw electric data has been optimized through trial and error, finding that skipping exactly every 10 data points results in the lowest loss, demonstrating the importance of fine-tuning data preprocessing in machine learning models.
+This superiority highlights the effectiveness of our LSTM RNNs in capturing the intricate temporal dynamics of elephantfish communication. Moreover, our method of processing raw electric data has been optimized through trial and error, finding that skipping exactly every 5 data points results in the lowest loss, demonstrating the importance of fine-tuning data preprocessing in machine learning models.
 
 ## Challenges and Future Directions
 
