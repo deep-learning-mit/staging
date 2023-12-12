@@ -184,7 +184,10 @@ Since loss is not very descriptive in itself, we also visualize the model output
 </table>
 </p>
 
-Both models are shown to start off similarly, predicting very well with no noise. However, almost immediately we can see that the LSTM does not handle noise as well as the transformer. LSTM makes much noisier predictions with many more outliers. One possibility for this happening is ***HELP i actually have no idea why***
+Both models are shown to start off similarly, predicting very well with no noise. However, almost immediately we can see that the LSTM does not handle noise as well as the transformer. LSTM makes much noisier predictions with many more outliers. We suspect this occurs due to the implicit inductive bias of the memory feature in the LSTM module. Consider a time step $t$. The memory accrued up to point $t$ "weights" 
+the data seen in recent past time steps $t-1$, $t-2$, $\ldots$, much more so than the data seen relatively long ago. While this is an intuitive design for memory,  we can observe that this mechanism combines storing temporal information with token-specific information. In order to compete with a transformer, the LSTM model needs to be trained on significantly more data.
+
+The transformer on the other hand has the negative effects of its own inductive bias mitigated by its attention mechanism. Because the transformer has both a mechanism to account for temporal information and a mechanism to select the next associated token (attention module), and because they are separated, it is able to produce more "accurate" results.
 
 ### 4.3 Prediction Size
 Finally, we created and trained separate models with varying numbers of output classes to represent the prediction size. We trained on output sizes as percentages of our input size, in increments of 10% from 0% to 100%. Because our input sequence was a constant 10 and our data is given in hourly intervals, these percentages translated to have prediction horizons of 1hr, 2hrs, ..., 10hrs. Evaluating our models resulted in the following MSE loss trends. 
