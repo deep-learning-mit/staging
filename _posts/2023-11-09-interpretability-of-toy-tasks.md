@@ -10,6 +10,7 @@ authors:
    affiliations:
       name: MIT
  - name: Timothy Kostolansky
+   url: "https://tim0120.github.io/"
    affiliations:
       name: MIT
 
@@ -53,7 +54,6 @@ With the recent emergence of grokking, mechanistic interpretability research has
 Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas. For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
 
 In this work we:
-
 
 1. Explain Superposition, why it may occur, and why it is important
 2. Motivate a framework to easily study Superposition
@@ -271,7 +271,7 @@ In regimes of high sparsity (i.e., below $1-S=0.1$ on the phase diagram above) t
 
 ### GeLU/SiLU
 
-The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activation functions are very similar to one another, and as a result produced very similar experimental results. Both functions are akin to a "smoothed out" version of the ReLU function, i.e., they have no discontinuities. The GeLU has recently been popularized as the activation function of choice in many transformers, including BERT and GPT (LETS CITE THEM HERE). The GeLU is differentiable for all $x$ - and has a smoother curve than the SiLU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the SoLU. This may be the case after having many linear layers activation - but with a single layer this is not the case.
+The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activation functions are very similar to one another, and as a result produced very similar experimental results. Both functions are akin to a "smoothed out" version of the ReLU function, i.e., they have no discontinuities. The GeLU has recently been popularized as the activation function of choice in many transformers, including BERT <d-cite key="Devlin2019BERTPO"></d-cite> and GPT (LETS CITE THEM HERE). The GeLU is differentiable for all $x$ - and has a smoother curve than the SiLU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the SoLU. This may be the case after having many linear layers activation - but with a single layer this is not the case.
 
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
