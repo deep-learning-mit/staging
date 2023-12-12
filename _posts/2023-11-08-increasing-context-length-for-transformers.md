@@ -103,6 +103,22 @@ Numerous other algorithms for extending transformer context lengths have been pr
 ### Methodology
 To see what types of context reduction algorithms are effective, we propose and test our own efficient transformer. We investigate whether transformers using Gaussian-distributed fixed attention patterns can perform as well as standard transformers. For each self-attention layer, we sample a Gaussian random distribution to determine which elements of the attention matrix we should compute. We analyze this approach for the unidirectional language modeling case, where the goal is to predict the next token of a given input sequence.
 
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-08-increasing-context-length-for-transformers/gauss-attn-diag-1.png" class="img-fluid" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-08-increasing-context-length-for-transformers/gauss-attn-diag-2.png" class="img-fluid" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-08-increasing-context-length-for-transformers/gauss-attn-diag-3.png" class="img-fluid" %}
+    </div>
+</div>
+
+<div class="caption">
+  Examples of Gaussian attention masks with $c=5$ and inputs of length 10.
+</div>
+
 In language modeling, the most important context for predicting a new token often comes from examining the tokens that immediately precede it. Previous work has taken advantage of this pattern by employing fixed local attention patterns, such as the sliding window pattern used by BigBird. For token $i$, random samples from a truncated Gaussian distribution with mean $i$ and standard deviation $\sigma = \frac{\mu}{2} = \frac{i}{2}$<d-footnote>This means that 0 is two standard deviations from the mean $i$.</d-footnote> will produce values $j$ close to $i$ with high probability. This implies that we will likely calculate the attention scores for some local region of each token $i$, allowing the model to account for important local context connections.
 
 On the other hand, it may also be possible that some distant token $j$ has a large impact on the prediction of token $i$. For example, if you pass in a document in which the first sentence defines the overall purpose of the document, we might need to pay attention to this sentence even in later sections of the document. Fixed-pattern Gaussian attention allows for this possibility by calculating attention scores for $i$ and distant tokens $j$ with a lower but still nonzero probability. As a result, Gaussian attention offers some flexibility that may not be present in other fixed-pattern attention mechanisms, such as the sliding window technique.
