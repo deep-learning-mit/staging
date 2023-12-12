@@ -21,7 +21,7 @@ authors:
       name: MIT
 
 # must be the exact same name as your blogpost
-bibliography: 2023-12-12-LinearMode.bib  
+#bibliography: 2023-12-12-LinearMode.bib
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -32,6 +32,7 @@ toc:
   - name: Experiments with Linear Mode Connectivity
   - name: Pruning
   - name: Analysis and Conclusions
+  - name: References
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -135,6 +136,22 @@ Our results with pruning show that a standard compression algorithm, PLATON, is 
 
 Further work could be done to investigate linear mode connectivity from different levels of pretraining as initialization, which would shed light on when the optimization of transformers settles into a connected minimum (or when it doesn't). Further work on when linear mode connectivity arises, as well as experiments pruning the corresponding networks, would help determine if there is a connection between connectivity and the presence of lottery transformers. This would also be important for determining whether linear mode connectivity is a good indicator that transformers can be compressed more definitively. Additionally, as mentioned earlier, the existence of lottery networks in language models has already been investigated, and it would be interesting to see if this is related to linear mode connectivity as well.
 
+
+## References
+
+<p>Adilova, L., Andriushchenko, M., Kamp, M., Fischer, A., &amp; Jaggi, M. (2023). <i>Layer-wise Linear Mode Connectivity</i>.</p>
+
+<p>Frankle, J., Dziugaite, G. K., Roy, D. M., &amp; Carbin, M. (2020). <i>Linear Mode Connectivity and the Lottery Ticket Hypothesis</i>.</p>
+
+<p>Zhang, Q., Zuo, S., Liang, C., Bukharin, A., He, P., Chen, W., &amp; Zhao, T. (2022). PLATON: Pruning Large Transformer Models with Upper Confidence Bound of Weight Importance. In K. Chaudhuri, S. Jegelka, L. Song, C. Szepesvari, G. Niu, &amp; S. Sabato (Eds.), <i>Proceedings of the 39th International Conference on Machine Learning</i> (Vol. 162, pp. 26809–26823). PMLR. https://proceedings.mlr.press/v162/zhang22ao.html</p>
+
+<p>Kwon, W., Kim, S., Mahoney, M. W., Hassoun, J., Keutzer, K., &amp; Gholami, A. (2022). A fast post-training pruning framework for transformers. <i>Advances in Neural Information Processing Systems</i>, <i>35</i>, 24101–24116.</p>
+
+<p>Dosovitskiy, A., Beyer, L., Kolesnikov, A., Weissenborn, D., Zhai, X., Unterthiner, T., Dehghani, M., Minderer, M., Heigold, G., Gelly, S., Uszkoreit, J., &amp; Houlsby, N. (2021). <i>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</i>.</p>
+
+<p>Shen, X., Kong, Z., Qin, M., Dong, P., Yuan, G., Meng, X., Tang, H., Ma, X., &amp; Wang, Y. (2023). <i>Data Level Lottery Ticket Hypothesis for Vision Transformers</i>.</p>
+
+<p>Chen, T., Frankle, J., Chang, S., Liu, S., Zhang, Y., Wang, Z., &amp; Carbin, M. (2020). <i>The Lottery Ticket Hypothesis for Pre-trained BERT Networks</i>.</p>
 
 
 
