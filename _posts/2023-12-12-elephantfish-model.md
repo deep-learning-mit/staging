@@ -17,7 +17,7 @@ authors:
       name: Harvard
 
 # must be the exact same name as your blogpost
-bibliography: 2022-12-01-distill-example.bib  
+bibliography: 2023-12-12-elephantfish-model.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
