@@ -39,6 +39,7 @@ toc:
         subitems:
           - name: A Note on Sigmoid and Tanh
       - name: SoLU
+      - name: Bringing Them All Together
   - name: AI Safety
   - name: Conclusion
 
@@ -364,7 +365,7 @@ In our experiment, the SoLU model results in non-zero superposition of all featu
 
 Reflecting the plots above, the SoLU activation results in very polysemantic behavior. This function is not precisely fit for its task of recreating given vectors and likely results in using polysemanticity to attempt to pass information about inputs forward. Curiously, the SoLU moedls have preference for the more important feature in the low sparsity regime.
 
-
+### Bringing Them All Together
 
 <div class="l-page">
   <iframe src="{{ 'assets/html/2023-11-09-interpretability-of-toy-tasks/file.html' | relative_url }}" frameborder='0' scrolling='no' height="600px" width="100%"></iframe>
