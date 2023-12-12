@@ -93,16 +93,16 @@ Raw signal, preprocessed signal, raw spectrogram, preprocessed spectrogram:
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image13.jpg" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image13.png" class="img-fluid" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image7.jpg" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image7.png" class="img-fluid" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image10.jpg" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image10.png" class="img-fluid" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image9.jpg" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image9.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -219,10 +219,10 @@ Results using same experimental set-up as in previous section:
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image27.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image27.jpg" class="img-fluid" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image26.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-08-denoising-EMG-signals/image26.jpg" class="img-fluid" %}
     </div>
 </div>
 
