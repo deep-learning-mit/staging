@@ -92,4 +92,14 @@ Nonetheless, multi-modal foundation models have proven to be a useful tool acros
 
 
 
+Outline:
+Experiment 1: Raw experiment - given an image, can it generate a PDDL file with no other input?
+  - Likely not
+
+
+
+Figures:
+- Table for each of the three experiments for each of the three pictures
+- 
+
 ## Conclusion
