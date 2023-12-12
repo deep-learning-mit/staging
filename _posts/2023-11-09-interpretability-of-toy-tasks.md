@@ -282,8 +282,7 @@ The following is the phase diagram of the ReLU models:
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_relu.png" class="img-fluid" %}
     </div>
 </div>
-At high densities (i.e., low sparsities), the .... THIGNS
-This result mirrors the phase diagram in <d-cite key="toymodels"></d-cite> as expected.
+In regimes of high sparsity (i.e., below $1-S=0.1$ on the phase diagram above) the ReLU models are highly polysemantic for all relative feature importances, reflecting an inability to encode featues with a sparse signal. In regimes of low sparsity, the model generally embeds the more important of the two features. This result mirrors the phase diagram in <d-cite key="toymodels"></d-cite> as expected.
 
 ### GeLU/SiLU
 
