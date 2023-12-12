@@ -253,6 +253,9 @@ For the $n=2, m=1$ experiment, we show a phase diagram. This phase diagram shows
 The ReLU (Rectified Linear Units) activation function is a piecewise-linear function, a simple non-linearity that allows models to use superposition of features. ReLU was the only activation function used in <d-cite key="toymodels"></d-cite>, so our work with the ReLU function was primarily to verify the results from their work and create a baseline for our subsequent experiments.
 
 The following are the $W^TW$ matrices and feature-neuron mappings:
+<div class="caption">
+    ReLU
+</div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_relu.png" class="img-fluid" %}
@@ -277,10 +280,16 @@ In regimes of high sparsity (i.e., below $1-S=0.1$ on the phase diagram above) t
 
 The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activation functions are very similar to one another, and as a result produced very similar experimental results. Both functions are akin to a "smoothed out" version of the ReLU function, i.e., they have no discontinuities. The GeLU has recently been popularized as the activation function of choice in many transformers, including BERT <d-cite key="Devlin2019BERTPO"></d-cite> and GPT (LETS CITE THEM HERE). The GeLU is differentiable for all $x$ - and has a smoother curve than the SiLU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the SoLU. This may be the case after having many linear layers activation - but with a single layer this is not the case.
 
+<div class="caption">
+    GeLU
+</div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_gelu.png" class="img-fluid" %}
     </div>
+</div>
+<div class="caption">
+    SiLU
 </div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
@@ -308,7 +317,9 @@ The above phase diagrams of the GeLU and SiLU models show a marked difference fr
 ### Sigmoid
 
 The Sigmoid function is a smooth activation function with an output range of $(0, 1)$. This maps directly to the desired range of values that the model is trying to replicate.
-
+<div class="caption">
+    Sigmoid
+</div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_sigmoid.png" class="img-fluid" %}
@@ -331,7 +342,9 @@ Despite differences in the occurrence of polysemanticity, the ReLU and Sigmoid m
 ### Tanh
 
 The Tanh function is another smooth activation function, but it results in significantly different behavior from the Sigmoid (despite being a linear mapping of the Sigmoid). 
-
+<div class="caption">
+    Tanh
+</div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_tanh.png" class="img-fluid" %}
@@ -363,10 +376,12 @@ The SoLU (Softmax Linear Units) activation function is based on the work from <d
 $$ Solu(x) = x * softmax(x) $$
 SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from all the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, all the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in <d-cite key="elhage2022solu"></d-cite>. 
 
+<div class="caption">
+    SoLU
+</div>
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/Sparsity_super_solu.png" class="img-fluid" %}
-        
     </div>
 </div>
 
