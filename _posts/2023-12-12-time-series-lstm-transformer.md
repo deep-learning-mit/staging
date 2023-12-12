@@ -1,7 +1,7 @@
 ---
 layout: distill
-title: "LSTM vs Transformers for Time Series Modeling"
-description: A comparison study between LSTM and Transformer models in the context of time-series forecasting. 
+title: "Predicting the Future: LSTM vs Transformers for Time Series Modeling"
+description: A comparison analysis between LSTM and Transformer models in the context of time-series forecasting. While LSTMs have long been a cornerstone, the advent of Transformers has sparked significant interest due to their attention mechanisms. In this study, we pinpoint which particular features of time series datasets could lead transformer-based models to outperform LSTM models. 
 date: 2023-12-12
 htmlwidgets: true
 
@@ -47,9 +47,15 @@ toc:
 
 By Miranda Cai and Roderick Huang
 
-## 1. Introduction
-In the context of time series forecasting, comparing Long Short-Term Memory (LSTM) networks to Transformers is a fascinating exploration into the evolution of deep learning architectures. Despite having distinct strengths and approaches, both LSTM and transformer models have revolutionized natural language processing (NLP) and sequential data tasks.
+<div class="row">
+    <div style="text-align:center">
+        {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/intro_photo_time_series.webp" class="img-fluid rounded z-depth-1 w-100" %}
+    </div>
+</div>
 
+## 1. Introduction
+
+In the context of time series forecasting, comparing Long Short-Term Memory (LSTM) networks to Transformers is a fascinating exploration into the evolution of deep learning architectures. Despite having distinct strengths and approaches, both LSTM and transformer models have revolutionized natural language processing (NLP) and sequential data tasks.
 
 LSTMs, with their recurrent structure, were pioneers in capturing long-range dependencies in sequential data. While the accuracy of such models have been shown to be quite effective in many applications, training LSTM models takes a relatively long time because of the fact that they must remember all past observances. One faster alternative to LSTM models are transformers. Transformers are able to remember only the important bits of inputs using an attention-mechanism, and is also parallelizable making it much faster to train than recursive LSTMs that must be processed sequentially. 
 
@@ -64,7 +70,7 @@ With the growth of ChatGPT in the recent years, extensive research has been done
 ### 2.1 Effect of Dataset Size
 The size of a dataset plays an important role in the performance of an LSTM model versus a transformer model. A study <d-cite key="comparison"></d-cite> done in the NLP field compared a pre-trained BERT model with a bidirectional LSTM on different language dataset sizes. They experimentally showed that the LSTM accuracy was higher by 16.21% relative difference with 25% of the dataset versus 2.25% relative difference with 80% of the dataset. This makes sense since BERT is a robust transformer architecture that performs better with more data. As shown in the figure below from <d-cite key="comparison"></d-cite>, while LSTM outperformed BERT, the accuracy difference gets smaller as the perctange of training data used for training increases.
 <div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm mt-md-0 d-flex align-items-center justify-content-center">
         {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/dataset_size_research_fig.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
@@ -96,14 +102,16 @@ The dataset we will be using throughout this study is the Hourly Energy Consumpt
 
 We can utilize this dataset to predict energy consumption over the following features of a dataset.
 - **Size of a dataset**: As discussed in Section 2.1 <d-cite key="comparison"></d-cite>, the size of a dataset played an impact in measuring classification accuracy for NLP tasks. Since the energy dataset is numerical, it's important to test the same concept. We leveraged nearly 150,000 data points, progressively extracting subsets ranging from 10% to 90% of the dataset. For each subset, we trained the architectures, allowing us to explore their performance across varying data volumes.
-<p align="center">
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_0001.png" class="img-fluid rounded z-depth-1" %}
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_001.png" class="img-fluid rounded z-depth-1" %}
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_003.png" class="img-fluid rounded z-depth-1" %}
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_008.png" class="img-fluid rounded z-depth-1" %}
-</p>
 
-- **Amount of noise in the dataset**: As discussed in Section 2.2 <d-cite key="trading"></d-cite>, research was done to test LSTMs vs transformers on noisy stock data for various assets. We deemed the energy dataset to be relatively clean since it follows a predictable trend depending on the seasons of the year and time of the day. For example, there are higher energy levels during the winter and daytime hours. To test noise, we added incrementing levels of jittering / Gaussian noise <d-cite key="augmentations"></d-cite> to observe the effect of noisy data on LSTMs and transformers. Example augmentations with different variances are plotted above in blue against a portion of the original dataset in red.
+- **Amount of noise in the dataset**: As discussed in Section 2.2 <d-cite key="trading"></d-cite>, research was done to test LSTMs vs transformers on noisy stock data for various assets. We deemed the energy dataset to be relatively clean since it follows a predictable trend depending on the seasons of the year and time of the day. For example, there are higher energy levels during the winter and daytime hours. To test noise, we added incrementing levels of jittering / Gaussian noise <d-cite key="augmentations"></d-cite> to observe the effect of noisy data on LSTMs and transformers. Example augmentations with different variances are plotted below in blue against a portion of the original dataset in red.
+<div class="d-flex justify-content-center">
+  <div style="text-align:center">
+  {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_0001.png" class="img-fluid rounded center z-depth-1 w-75" %}
+  {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_001.png" class="img-fluid rounded z-depth-1 w-75" %}
+  {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_003.png" class="img-fluid rounded z-depth-1 w-75" %}
+  {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noise_variance_008.png" class="img-fluid rounded z-depth-1 w-75" %}
+  </div>
+</div>
 - **Output size**: As discussed in Section 2.3 <d-cite key="multistep"></d-cite>, there have been few studies measuring the effect of varying the forecasting length, and in the ones that do they still only output one class *at* the specified time into the future. In our novel experimentation, we aimed to generate an entire sequence of outputs *up until* the specified time into the future. We created models that would predict forecasting lengths of 10%, ..., 100% of our input sequence length of 10. To do so, we set the output size of our models to be equal to these forecasting lengths. This involved removing any final dense or convolutional layers.
 
 There were also certain parameters that we kept fixed throughout all variations of our models. The first was training on batches of data with sequence length 10. Second, we trained all of our LSTM models for 500 epochs and all of our transformer models for 10 epochs. These numbers were chosen with some fine-tuning to yield meaningful results while also allowing the training for so many individual models to be done in a reasonable amount of time. 
@@ -116,15 +124,17 @@ There were also certain parameters that we kept fixed throughout all variations 
 
 ### 4.1 Size of a Dataset
 Given the energy consumption dataset described in Section 3, we trained and evaluated an LSTM model and transformer model on progressively increasing subsets ranging from 10% to 90% of the dataset. The figure below shows the normalized mean squared error (MSE) loss for each subset of the dataset. 
-<p align="center">
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/lstm_trans_dataset_size_res.png" class="img-fluid rounded z-depth-1"%}
-</p>
+<div class="row mt-3">
+    <div class="d-flex flex-column justify-content-center" style="text-align:center">
+        {% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/lstm_trans_dataset_size_res.png" class="rounded z-depth-1 w-50" %}
+    </div>
+</div>
 The experimental results show that transformers have an improving trend as the size of the dataset increases while the LSTM has an unclear trend. Regardless of the size of the training dataset, the LSTM doesn’t have a consistent result for the testing set. 
 
 The LSTM architecture is extended of the RNN to preserve information over many timesteps. Capturing long-range dependencies requires propagating information through a long chain of dependencies so old observations are forgotten, otherwise known as the vanishing/exploding gradient problem. LSTMs attempt to solve this problem by having separate memory to learn when to forget past or current dependencies. Visually, LSTMs look like the following.    
-<p align="center">
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/rnn-lstm.png" class="img-fluid rounded z-depth-1" %}
-</p>
+<div align="center" style="text-align:center">
+{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/rnn-lstm.png" class="img-fluid rounded z-depth-1 w-75" %}
+</div>
 There exist additional gates for a sequence of inputs x^(t) where in addition to the sequence of hidden states h^(t), we also have cell states c^(t) for the aforementioned separate memory. While the LSTM architecture does provide an easier way to learn long-distance dependencies, it isn’t guaranteed to eradicate the vanishing/gradient problem. While the same is true for transformers, the transformer architecture addresses the vanishing/exploding gradient problem in a different way compared to LSTMs. Transformers use techniques like layer normalization, residual connections, and scaled dot-product attention to mitigate these problems.
 
 For time series dataset, the transformer architecture offers the benefit of the self-attention unit. In NLP, it’s typically used to compute similarity scores between words in a sentence. These attention mechanisms help capture relationships between different elements in a sequence, allowing them to learn dependencies regardless of their distance in the sequence. For time series data, transformers might offer advantages over LSTMs in certain scenarios, especially when dealing with longer sequences or when capturing complex relationships within the data such as seasonal changes in energy use.
@@ -143,9 +153,9 @@ For this experiment, the outlook of large datasets in time series applications f
 ### 4.2 Amount of Noise in a Dataset
 To test the performance of our models on simulated noisy data, we first trained our models on batches of the original clean dataset and then ran our evaluations on different levels of noisy data. Random noise was added according to Gaussian distributions with variances in {0.0, 0.0001, 0.001, 0.002, 0.003, 0.005, 0.008, 0.01} to create these data augmentations. Below is a comparison of the MSE loss for both models as a function of the injected noise variance.
 
-<p align="center">
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noisy_loss.png" class="img-fluid rounded z-depth-1" %}
-</p>
+<div style="text-align:center">
+{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/noisy_loss.png" class="img-fluid rounded z-depth-1 w-50" %}
+</div>
 
 Since loss is not very descriptive in itself, we also visualize the model output for some of these augmented datasets. Red is the true value while blue is predicted.
 
@@ -178,9 +188,9 @@ Both models are shown to start off similarly, predicting very well with no noise
 
 ### 4.3 Prediction Size
 Finally, we created and trained separate models with varying numbers of output classes to represent the prediction size. We trained on output sizes as percentages of our input size, in increments of 10% from 0% to 100%. Because our input sequence was a constant 10 and our data is given in hourly intervals, these percentages translated to have prediction horizons of 1hr, 2hrs, ..., 10hrs. Evaluating our models resulted in the following MSE loss trends. 
-<p align="center">
-{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/prediction_size_loss.png" class="img-fluid rounded z-depth-1" %}
-</p>
+<div style="text-align:center">
+{% include figure.html path="assets/img/2023-12-12-time-series-lstm-transformer/prediction_size_loss.png" class="img-fluid rounded z-depth-1 w-50" %}
+</div>
 
 Again, to get a better sense of why we see these results, we visualize the outputs. Since our outputs are sequences of data, to have a more clean visualization we plot only the last prediction in the sequence. Red is the true value while blue is predicted.
 <p align="center">
