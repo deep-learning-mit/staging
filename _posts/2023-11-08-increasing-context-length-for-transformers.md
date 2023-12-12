@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Increasing Context Length For Transformers
-description: How can we make self-attention more efficient?
+description: How can we make attention more efficient?
 date: 2023-11-08
 htmlwidgets: true
 
@@ -51,7 +51,7 @@ _styles: >
 
 Since its release on November 30, 2022, ChatGPT has assisted users around the world with a variety of document parsing and editing tasks. These tasks often require large input contexts, since the documents and texts passed into ChatGPT's source model, GPT-3.5, can be several pages long.
 
-Like many other language models, GPT-3.5 is a unidirectional transformer that uses the self-attention mechanism. But while self-attention is an extremely powerful mechanism, it's also expensive in its time and space complexity. Standard self-attention requires $O(n^2)$ operations in terms of the sequence length $n$, since the $QK^T$ term within the attention mechanism calculates and stores the attention of each of the $n$ tokens with $O(n)$ other tokens.
+Like many other language models, GPT-3.5 is a unidirectional transformer that uses the self-attention mechanism. But while self-attention is an extremely powerful mechanism, it is also expensive in its time and space complexity. Standard self-attention requires $O(n^2)$ operations in terms of the sequence length $n$, since the $QK^T$ term within the attention mechanism calculates and stores the attention of each of the $n$ tokens with $O(n)$ other tokens.
 
 Unfortunately, the $O(n^2)$ complexity makes long input contexts difficult for transformers to handle efficiently. Over the past few years, researchers have been investigating ways of mitigating the $O(n^2)$ factor. This remains an ongoing problem, with several papers released on the topic in 2023 alone.<d-cite key="xu2023retrieval"/><d-cite key="yang2023longqlora"/><d-cite key="peng2023yarn"/><d-cite key="yang2023revisiting"/><d-cite key="mohtashami2023landmark"/> In this post, we provide an overview of existing strategies for increasing context length for transformers. We also propose and investigate our own efficient self-attention algorithm, which we call Gaussian attention.
 
@@ -75,7 +75,7 @@ $$(i - j) \mod l = 0 \qquad \forall j \leq i,$$
 where $l$ is a parameter chosen to be close to $\sqrt{n}$. Since only $O(l)$ tokens are attended upon for each token $i$, this results in the $O(n \cdot l) = O(n\sqrt{n})$ runtime. Child et al. showed that the sparse transformer can be applied to a wide range of fields, including image, text, and music, where it can be used to possess audio sequences over 1 million timestamps long.
 
 #### Longformer
-Longformer<d-cite key="beltagy2020longformer"/> applies a dilated sliding window to capture local attention patterns and reduce overall attention cost to $O(n\cdot{w})$ for window size $w$. Across successive attention layers, gaps are introduced between different elements of the sliding window—thus expanding the receptive field to thousands of tokens even for small dilation factors. Longformer uses global tokens in order to allow the model to generalize to different language modeling tasks. These global tokens are analogous to the different input representations used by language models for different tasks; for example, BERT appends a ```<CLS>``` token to the start of every input in classification tasks. Despite using sparse attention contexts, Longformer was able to outperform state-of-the-art model RoBERTa on several long document benchmarks.
+Longformer<d-cite key="beltagy2020longformer"/> applies a dilated sliding window to capture local attention patterns and reduce overall attention cost to $O(n\cdot{w})$ for window size $w$. Across successive attention layers, gaps are placed between different elements of the sliding window—thus expanding the receptive field to thousands of tokens even for small dilation factors. In order to generalize to different language modeling tasks, Longformer introduces global tokens that attend upon every other token. These global tokens are analogous to the different input representations used by language models for different tasks; for example, BERT appends a ```<CLS>``` token to the start of every input in classification tasks. Despite using sparse attention contexts, Longformer was able to outperform state-of-the-art model RoBERTa on several long document benchmarks.
 
 #### BigBird
 BigBird<d-cite key="zaheer2021big"/> combines three different fixed attention patterns to achieve $O(n)$ complexity, being
@@ -124,7 +124,7 @@ Since we had limited training resources, we unfortunately couldn't test Gaussian
 
 We first tested whether models trained with limited Gaussian attention can achieve similar performance as models that were trained on full self-attention. We trained models with $c = 5$ and $c=10$ and compared them to the performance of the base model. For our base experiments, we used three self-attention heads per layer and six layers in total.
 
-Our evaluation metric for all models was next-token cross-entropy loss against a corpus of Shakespeare texts.Training is optimied with Adam and a learning rate of 0.0001.
+Our evaluation metric for all models was next-token cross-entropy loss against a corpus of Shakespeare texts.Training is optimized with Adam and a learning rate of 0.0001.
 
 Base experiment results are shown below.
 
@@ -152,7 +152,7 @@ In order to determine whether the Gaussian attention models are affected by inpu
 
 With the longer input contexts, all three models had worse performance when trained for the same number of epochs. However, both Gaussian models managed to achieve approximately the same loss as the original model. This again suggests that Gaussian attention is a valid approximation of the standard attention matrix.
 
-We further investigated whether the performance of the Gaussian models degraded rapidly when using a smaller number of layers and attention heads. Logically, increasing the number of attention heads would help mask bad attention patterns formed by the Gaussian sampling strategy. For example, although the sampling process selects tokens $j$ near token $i$ with high probability, it is possible that some attention head $x$ does not select the relevant tokens for a token $i$. With the addition of more attention heads, a different head may compensate for the bad head by operating on the correct tokens. Increasing the number of attention layers similarly increases the number of attention heads, where good heads can compensate for bad ones. However, experiments showed that even with one layer and one attention head, the Gaussian models were able to achieve approximately the same performance as the base model.
+We further investigated whether the performance of the Gaussian models degraded rapidly when using a smaller number of layers and attention heads. Logically, increasing the number of attention heads would help mask bad attention patterns formed by the Gaussian sampling strategy. For example, although the sampling process selects tokens $j$ near token $i$ with high probability, it is possible that some attention head $x$ does not select the relevant tokens for a token $i$. With the addition of more attention heads, a different head may compensate for the bad head by operating on the correct tokens. Increasing the number of attention layers similarly increases the number of attention heads, where good heads can compensate for bad ones. Experiments showed that even with one layer and one attention head, the Gaussian models were able to achieve approximately the same performance as the base model.
 
 | Model    | Input Type | Epochs | # Heads | # Layers | Training Loss | Validation Loss |
 |----------|------------|--------|---------|----------|---------------|-----------------|
@@ -167,7 +167,7 @@ We further investigated whether the performance of the Gaussian models degraded 
 | $c = 10$ | Long       | 80     | 1       | 6        | 5.6345        | 5.6666          |
 | $c = 10$ | Long       | 90     | 1       | 6        | 5.6237        | 5.6565          |
 
-However, we noticed that with fewer heads and layers, the base model trained at approximately the same rate as the Gaussian model. A smaller number of attention heads and attention layers implies that there are fewer parameters that need to be updated in order to learn the task; this typically means that training is faster for smaller models. As a result, it makes sense that a smaller model would benefit less from the increase in training speed that reduced attention context offers—since the model is so small already, any increase in training speed would be marginable.
+However, we noticed that with fewer heads and layers, the base model trained at approximately the same rate as the Gaussian model. A smaller number of attention heads and attention layers implies that fewer parameters need to be updated to learn the task; this typically means that training is faster for smaller models. As a result, it makes sense that a smaller model would benefit less from the increase in training speed that reduced attention context offers; since the model is so small, training is already fast and any decrease in training speed would be minor.
 
 To test the limitations of Gaussian attention, we experimented with extremely sparse attention patterns that selected only one token for each model.
 
@@ -185,8 +185,6 @@ To test the limitations of Gaussian attention, we experimented with extremely sp
 
 Although these models did not perform as well as the base transformer, we found that the token that was attended upon made a significant impact on the final loss. As shown in the table below, the models that employed a diagonal or Gaussian attention pattern performed significantly better than the model that used a vertical attention pattern on the first token. This suggests that local attention patterns were the most important ones for improving the outcome of our task; as a result, Gaussian attention may perform well specifically because it emphasizes the local attention context.
 
-
-
 | Model    | Epochs | # Layers | # Heads | Training Loss | Validation Loss |
 |----------|--------|----------|---------|---------------|-----------------|
 | Diagonal | 80     | 1        | 6       | 5.5089        | 5.5400          |
@@ -194,11 +192,11 @@ Although these models did not perform as well as the base transformer, we found 
 | Gaussian | 80     | 1        | 6       | 5.3231        | 5.3744          |
 
 #### Implications and Limitations
-Our experiments showed that Gaussian attention has potential as a context-reduction algorithm for improving transformer efficiency. We note that these experiments may not reflect the algorithm’s actual performance in real-world scenarios. Because we did not have the capacity to train a language model on the scale of BERT or GPT, we experimented only with much smaller models that processed much smaller contexts. As a result, our experimental results may not extend to larger models. Additionally, due to limited training time, we did not train any of the models we used for more than 100 epochs—with more training time, it is possible that the base transformers may outperform the modified ones. In order to generalize to larger models, Gaussian attention may need to be combined with other attention patterns, like global attention. More research is needed to fully understand its potential and shortcomings.
+Our experiments showed that Gaussian attention has potential as an algorithm for improving transformer efficiency and increasing context lengths. We note that these experiments may not reflect the algorithm’s actual performance in real-world scenarios. Because we did not have the capacity to train a language model on the scale of BERT or GPT, we experimented only with much smaller models that processed much smaller contexts. As a result, our experimental results may not extend to larger models. Additionally, due to limited training time, we did not train any of the models we used for more than 150 epochs; with more training time, it is possible that the base transformers may outperform the modified ones. In order to generalize to larger models, Gaussian attention may need to be combined with other attention patterns, like global attention. More research is needed to fully understand its potential and shortcomings.
 
 ## Conclusion
 
 Today, methods for increasing context length in transformers remains an important research topic. Although researchers have proposed numerous efficient transformers and self-attention algorithms, a concrete solution for increasing transformer context lengths has yet to be found. With recent developments in large language models, the number of tasks that transformers can be applied to is increasing rapidly. As a result, the search for an efficient transformer is more important than ever.
 
-Our work shows that Gaussian distributions can potentially be used to build fixed pattern attention masks. However, the performance of Gaussian attention masks in larger models remains to be confirmed and requires further study.
+Our work shows that Gaussian distributions can potentially be used to build fixed-pattern attention masks. However, the performance of Gaussian attention masks in larger models remains to be confirmed and requires further study.
 
