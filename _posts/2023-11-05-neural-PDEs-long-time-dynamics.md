@@ -78,7 +78,7 @@ Let's begin with examining whether a U-Net with convolutional layers can be used
 We can use the U-Net to learn the features from the input PDE solution frames and predict the solution in the next time step, treating the 2D solution as an image. As for the time component, the surrogate model takes the input solution from the previous k time steps to predict solution in the next k+1 time step. Then, the solution from the previous k-1 steps are concatenated with the predicted next-step solution as the input back into the model to predict the next step, and so on. In a nutshell, the model is trained to predict autoregressively. 
 
 <div style="text-align: center; margin-right: 10px;"> 
-    <div style="width: 50%; margin: auto;"> 
+    <div style="width: 70%; margin: auto;"> 
         {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/unet_train_test_loss.png" class="img-fluid" %}
     </div>
     <p style="margin-top: 5px;">Training curve for U-Net with average relative L2 train and test loss</p>
@@ -107,7 +107,7 @@ We reimplement and train the FNO2D model on the same train-test data splits for 
 The predicted solutions look impressive and it seems like the dynamics of the multiscale system are learnt well, particularly the global dynamics. Likewise, the FNO3D gives similar results. Instead of just convolutions over the 2D spatial domains, the time-domain is taken in for convolutions in the Fourier space as well. According to the authors, they find that the FNO3D gives better performance than the FNO2D for time-dependent PDEs. However, it uses way more parameters (6560681) compared to FNO2D (928661 parameters) - perhaps the FNO2D with recurrent time is sufficient for most problems.
 
 <div style="text-align: center; margin-right: 10px;"> 
-    <div style="width: 50%; margin: auto;"> 
+    <div style="width: 70%; margin: auto;"> 
         {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/train_test_loss.png" class="img-fluid" %}
     </div>
     <p style="margin-top: 5px;">Training curve for FNO3D with average relative L2 train and test loss</p>
@@ -118,37 +118,31 @@ The predicted solutions look impressive and it seems like the dynamics of the mu
     <p style="margin-top: 5px;">FNO3D's prediction of 2D Navier-Stokes for unseen test set (id=42)</p> 
 </div>
 
-
-### Representation learning: The learned representations in the Fourier layers 
-Next 
+### Representation learning in the Fourier layers 
+You might be curious how the Fourier layers learn the Navier-Stokes dynamics - let's examine some weights in the SpectralConv3d layers (for the FNO3D). We take the magnitudes of the complex weights from a slice of each layer (4 Fourier layers were in the model). 
 
 {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/fourierlayers.png" class="img-fluid" %}
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/convlayers.png" class="img-fluid" %}
+There seems to be some global features that are learnt in these weights. By learning in the Fourier space, the Fourier layers capture sinusoidal functions that can generalise better for dynamics according to the dynamical system's decomposed frequency modes. For CNNs, we know that the convolutions in spatial domain would lead to the learning of more local features (such as edges of different shapes), as compared to more global features learnt in Fourier layers. 
 
-How Fourier layers work in contrast with CNN layers, and why they can learn the underlying dynamics regardless of data resolution.
-
-### On the importance of positional encoding 
-
-<div style="display: flex; justify-content: center; align-items: center;">
-    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dxdt.png" class="img-fluid" %}
-    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dydt.png" class="img-fluid" %}
-</div>
-
-Removing positional encodings for x and y grids would make the performance worse compared to with positional encodings. 
+### On the importance of positional embeddings 
+In FNO implementations, besides the input data for the 2D + time domains, the authors also append positional encodings for both x and y dimensions so the model knows the location of each point in the 2D grid. The concatenated data (shape = (3, x, y, t)) is then passed through the Fourier layers and so on. It is important to understand that the positional embedding is very important to the model performance.  
 
 <div style="display: flex; justify-content: center; align-items: center;">
-    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dxdt.png" class="img-fluid" %}
-    {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dydt.png" class="img-fluid" %}
+    <div style="text-align: center; margin-right: 10px;"> <!-- Added margin for spacing between images -->
+        {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/show_dxdt.png" class="img-fluid" %}
+        <p style="margin-top: 5px;">Original with positional encoding</p>
+    </div>
+    <div style="text-align: center; margin-left: 10px;"> <!-- Added margin for spacing between images -->
+        {% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/noposencoding_dxdt.png" class="img-fluid" %}
+        <p style="margin-top: 5px;">No positional encoding</p>
+    </div>
 </div>
 
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/train_test_loss_noencoding.png" class="img-fluid" %}
-
-{% include figure.html path="assets/img/2023-11-05-neural-PDEs-long-time-dynamics/ns_noencode_pred42.gif" class="img-fluid" %}
-
+We train the same FNO3D on the same data but this time without the positional encodings concatenated as the input. Simply removing these positional encodings for x and y domains cause the model to underperform. Here, we are comparing between FNO3D with and without positional encoding. FNO3D has a final relative test loss of 0.0106 but the test loss is 0.0167 without positional encodings. Inspecting the change of x over t for a sample test dataset, it then becomes more visible the differences in performances. Note that we also observe the data have well-defined sinusoidal functions in the dynamics.
 
 ## Inability to capture local dynamics and long-term accuracies in time-dependent PDEs
-While the FNO has worked accurately for the Navier-Stokes data example, it does not perform well on other PDEs, especially when local dynamics and long-term accuracies are important. Here, I introduce another PDE - a coupled reaction heat-diffusion PDE with two dependent states. When the initial conditions of T and alpha are changed, the dynamics can become chaotic over time. 
+While the FNO has worked accurately for the Navier-Stokes data example, it does not perform well on other PDEs, especially when local dynamics and long-term accuracies are important. Here, I introduce another PDE as an example - a coupled reaction heat-diffusion PDE with two dependent states. 
 
 $$
 \begin{gather}
@@ -157,6 +151,8 @@ $$
 \end{gather}
 $$
 
+Based on the initial conditions of temperature (T) and degree of cure (alpha) and with Dirichlet boundary conditions on one end of the sample, the T and alpha propagate across the domain (here, the 1D case is examined). For certain material parameters and when initial conditions of T and alpha are varied, we can see that the dynamics can become chaotic after some time, we can visualize it below.
+
 <div class="l-body-outset">
   <iframe src="{{ 'assets/html/2023-11-05-neural-PDEs-long-time-dynamics/unstablefromp.html' | relative_url }}" frameborder='0' scrolling='no' height="750px" width="100%"></iframe>
 </div>
@@ -164,24 +160,19 @@ $$
 Solution of the above coupled PDE with 2 dependent states, solved using FEM. Drag the slider!
 </div>
 
-
 Firstly, it can be harder for the Fourier layers to learn the local changes since the Fourier layers would only approximate kernels in the lower frequency modes and higher frequency modes are truncated away. Secondly, since numerical methods can be expensive, we want to use the first k steps (i.e. first 10 steps) of the true solution to predict the next N steps (as high as possible). Clearly, the prediction accuracies lower as we want higher resolution predictions for longer time steps as output. In an autoregressive training scheme, where the k input steps are used to predict the next step autoregressively until N steps are predicted on rollout, the losses will accumulate as we propagate more time steps forward. 
 
 To overcome these 2 problems, there have been attempts to generally improve the accuracies of neural PDE models and also training tricks proposed to improve long-term accuracies in rollout. There were some techniques that were introduced in the paper on message passing neural PDEs <d-cite key="brandstetter2022message"></d-cite>, particularly the pushforward and the temporal bundling tricks. 
 
 
-I will first incorporate these techniques with the base FNO model to examine accuracies of long time dynamics. Next, I will examine if attention mechanisms introduced with transformer layers can help improve accuracies for lower frequency modes at longer time scales. These new model architectures would all be compared on the base dataset of Navier-Stokes equations (2D spatially with time dependence). 
+
 
 ### Using ReVIN to normalize and denormalize the time series input for 1D PDEs 
 
 
-### Improving long time-step rollout with temporal bundling and pushforward tricks 
 
-
-## Large Kernel Attention 
-
+## Large Kernel Attention after Fourier layers 
 
 
 
 ## Conclusion 
-By the end of the project, I hope to propose a new neural PDE approach with **(1) spatial convolutions in the Fourier space, (2) transformer layers for improved attention on local dynamics, and (3) pushforward and temporal bundling tricks to deal with predictions over long time scales**. 
