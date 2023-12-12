@@ -52,18 +52,6 @@ With the recent emergence of grokking, mechanistic interpretability research has
 
 Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas. For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
 
-
-[2103.01819] The Rediscovery Hypothesis: Language Models Need to Meet Linguistics - the rediscovery hypothesis
-
-
-
-
-**TODO**
-
-
-**WE should do a "hover" or indented explanation of what features are**
-
-
 In this work we:
 
 
@@ -72,9 +60,7 @@ In this work we:
 3. Study how activation functions affect Superposition
 
 
-
-
-### Superposition
+### Superposition and Previous Work
 Let us elaborate further. If you were to train some neural network and visualize the weights - chances are you would see some mess that looks like this:
 
 <div class="row mt-3">
@@ -89,15 +75,7 @@ You are likely looking at superposition!
 As hypothesized by <d-cite key="toymodels"></d-cite>, superposition is a phenomenon which occurs when the number of features being learned by a model is greater than the number of parameters in that model. In order to capture $n$ features with $m<n$ parameters, one can think of the neurons as "working overtime.” In other words, some of the neurons within a model encode information about more than one feature. The neuron exhibiting superposition operates as an information compressor. The caveat is that this compression is often unpredictable and hard to understand!
 
 
-In a linear model, i.e., one which maps inputs to outputs with only linear functions, there are fewer parameters than the features it tries to represent, so it can only represent the top $m$ features. How then do neural networks use compression and map back to $n>m$ features using only $m$ parameters? The answer is non-linearity. Below we can see how linear and non-linear (using ReLU) networks perform on [SOMETHING, NEED TO EXPLAIN]:
-
-
-**TODO** Diagram of linear on the left, and RELU on the right
-<div class="row mt-3">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/IDKWHATPHOTO.png" class="img-fluid" %}
-    </div>
-</div>
+In a linear model, i.e., one which maps inputs to outputs with only linear functions, there are fewer parameters than the features it tries to represent, so it can only represent the top $m$ features. How then do neural networks use compression and map back to $n>m$ features using only $m$ parameters? The answer is non-linearity. 
 
 So why do we care about Superposition? Why spend time studying this?
 
@@ -105,19 +83,26 @@ So why do we care about Superposition? Why spend time studying this?
 While it may seem tangential, Superposition sheds important insights on Large Language Models (LLMs)! While LLMs are billions of parameters large, this is still not enough for a one-to-one mapping to “features" on the internet. Therefore LLMs also MUST exhibit superposition in order to learn.
 
 
-**Something here about features on the internet and parameters in a model**
+<div class="row mt-3 l-page">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/feature_visual.png" class="img-fluid" %}
+    </div>
+</div>
+<div class="caption">
+    From <a href="https://distill.pub/2017/feature-visualization/">Distill Blog</a>, "Feature visualization allows us to see how GoogLeNet trained on the ImageNet dataset, builds up its understanding of images over many layers.
+</div>
 
 
-Previous research, as detailed in <d-cite key="toymodels"></d-cite>, has predominantly explored superposition within the confines of toy models utilizing the Rectified Linear Unit (ReLU) activation function \todo[]{TODO cite relu}. However, to extend these findings to contemporary neural networks, it is crucial to investigate the influence of different activation functions on superposition. Different activation functions provide different ways for a model to use superposition to its advantage.
+Previous research, as detailed in <d-cite key="toymodels"></d-cite>, has predominantly explored superposition within the confines of toy models utilizing the Rectified Linear Unit (ReLU) activation function. However, to extend these findings to contemporary neural networks, it is crucial to investigate the influence of different activation functions on superposition. Different activation functions provide different ways for a model to use superposition to its advantage.
 
 
 So you train a neural network - what happens at the neuron level?
 There are three possibilities. As the network trains each neuron has three choices:
 
 
-The neuron chooses not to encode the “features”
-The neuron chooses to dedicate itself to one feature
-The neuron chooses to encode multiple features
+1. The neuron chooses not to encode the “features”
+2. The neuron chooses to dedicate itself to one feature
+3. The neuron chooses to encode multiple features
 
 
 The neuron doesn’t choose to do anything - there is no free will - you are born into a loss landscape and an optimizer telling you what to do
@@ -274,7 +259,7 @@ The following are the $W^TW$ matrices and feature-neuron mappings:
 </div>
 
 As per the results in <d-cite key="toymodels"></d-cite>, the ReLU model focuses on the most significant features in the low sparsity regime (generally resulting in monosemanticity), while relying on superposition in the high sparsity regime (polysemanticity). With weaker signals for the most important features in the high sparsity regime, the model encodes multiple features in each neuron activation in order to minimize error of the sparse signals. Notably, the ReLU model uses antipodal pairs in the mapping of features in order to encode multiple features to single neurons. This can be seen as a light-colored diagonal entry within $W^T W$ and a corresponding dark-colored off-diagonal entry within the same column. This antipodal mapping of features is a method that the model uses to compress more than one feature to one neuron. This antipodal mapping is more interpretable than other kinds of polysemanticity which occurs in subsequently-described activation functions which “speckle” multiple features into a single neuron, making it more difficult to determine how the superposition occurs in that model.
-[SOMETHING ABOUT THE DRAWBACK OF RELU MODEL PERHAPS]
+
 
 The following is the phase diagram of the ReLU models:
 <div class="row mt-3 l-page">
@@ -360,7 +345,9 @@ Despite similarities in the S-like curvature of the Sigmoid and Tanh activation 
 
 ### SoLU
 
-The SoLU (Softmax Linear Units) activation function is based on the work from <d-cite key="elhage2022solu"></d-cite>. SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from all the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, all the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in <d-cite key="elhage2022solu"></d-cite>. 
+The SoLU (Softmax Linear Units) activation function is based on the work from <d-cite key="elhage2022solu"></d-cite>. 
+$$ Solu(x) = x * softmax(x) $$
+SoLU is a function for which the activation of each neuron is dependent on all the other neurons within its own layer. This is significantly different from all the other activations that we tested, as the activations of neurons with the other functions are independent of the other neurons within the same layer. In other words, all the other activation functions are univariate while the SoLU is multivariate. Similar to other approaches like L1 regularization, the SoLU amplifies neurons with relatively large pre-activations and de-amplifies neurons with relatively smaller pre-activations. This behavior pressures the model to be more monosemantic (and therefore more interpretable in some settings), as discussed in <d-cite key="elhage2022solu"></d-cite>. 
 
 <div class="row mt-3 l-page">
     <div class="col-sm mt-3 mt-md-0">
@@ -377,23 +364,12 @@ In our experiment, the SoLU model results in non-zero superposition of all featu
     </div>
 </div>
 
-Reflecting the plots above, the SoLU activation results in very polysemantic behavior. This function is not precisely fit for its task of recreating given vectors and likely results in using polysemanticity to attempt to pass information about inputs forward. Curiously, the SoLU moedls have preference for the more important feature in the low sparsity regime.
-
-
-## AI Safety 
-Interpretable models would be a useful tool for safe AI systems. It would be easy to understand why models made the decision they did and how they made it. As presented by <d-cite key="elhage2022solu"></d-cite>, the SoLU pushes models to mono semanticity in the transformer architecture, allowing increasing interpretability - however this forces some parts of the model into polysemanticity.
-
-
-Interpretability is not free!
-
-
-There is a prevailing concern that models labeled as 'interpretable' can be misleading. This stems from the notion that if a model is only partially transparent, revealing some aspects while concealing others, it could potentially lead to deception. i.e hiding elements through poly  semanticity.
-
-
+As seen in the heatmap plot above, the SoLU activation results in very polysemantic behavior. This function is not precisely fit for its task of recreating given vectors and likely results in using polysemanticity to attempt to pass information about inputs forward. Curiously, the SoLU models have preference for the more important feature in the low sparsity regime. 
 ## Conclusion
 
+Our investigation into the effects of various activation functions reveals that significant changes occur in model behavior depending on the chosen function. This finding underscores the ability to modulate the degree of superposition through the selection of activation functions, highlighting yet unexplored degrees of freedom in model design. This line of inquiry goes seamlessly with considerations of how neural networks are initialized and trained, suggesting these as promising future research directions.
 
-Our exploration into the realm of activation functions and their influence on superposition in neural networks goes beyond academic curiosity. It opens up new avenues in making neural network models more interpretable, transparent, and secure – aligning closely with the ever-important field of AI safety.
+Pursuing enhanced interpretability, however, does not come without its challenges. Specifically, striving for greater transparency and understand-ability in neural network models raises concerns about the potential for deception. Despite these challenges, our research moves us closer to achieving neural network models that are not only more interpretable but also more transparent and secure, marking significant progress in the field of AI safety and reliability.
 
 
 {% bibliography --cited %}
