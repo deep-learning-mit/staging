@@ -1,4 +1,3 @@
-
 ---
 layout: distill
 title: Modeling Elephantfish Communication through Deep RNNs
