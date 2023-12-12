@@ -1,8 +1,8 @@
 ---
 layout: distill
 title: 6-DOF estimation through visual place recognition
-description: A neural Visual Place Recognition solution is proposed which could help an agent with a downward-facing camera (such as a drone) to geolocate based on prior satellite imagery of terrain. The neural encoder infers extrinsic camera parameters from camera images, enabling estimation of 6 degrees of freedom (6-DOF), namely 3-space position and orientation. By encoding priors about satellite imagery in a neural network, the need for the agent to carry a satellite imagery dataset onboard is avoided.
-date: 2023-11-09
+description: A neural pose-estimation solution is implemented, which could help an agent with a downward-facing camera (such as a drone) to geolocate based on prior satellite imagery of terrain. The neural encoder infers extrinsic camera parameters from camera images, enabling estimation of 6 degrees of freedom (6-DOF), namely 3-space position and orientation. By encoding priors about satellite imagery in a neural network, the need for the agent to carry a satellite imagery dataset onboard is avoided.
+date: 2023-12-12
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -10,7 +10,7 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Andrew Feldman (Kerberos: abf149)
+  - name: Andrew Feldman
     url: "https://andrew-feldman.com/"
     affiliations:
       name: MIT
@@ -37,6 +37,14 @@ toc:
       - name: Training
       - name: Hyperparameters
       - name: Evaluation
+    - name: Implementation
+      subsections:
+      - Source image
+      - Dataloader
+      - DNN architecture
+      - Training setup
+    - name: Training results
+    - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -60,9 +68,9 @@ _styles: >
 
 # Introduction
 
-The goal of this project is to demonstrate how a drone or other platform with a downward-facing camera could perform approximate geolocation through visual place recognition, using a neural scene representation of existing satellite imagery.
+The goal of this project is to demonstrate how a drone or other platform with a downward-facing camera could perform approximate geolocation using a neural scene representation of existing satellite imagery. Note that the use of the term "Visual Place Recognition" in the title is a carryover from the proposal, but no longer applies to this project. Rather, the goal of this project is to implement 6-DOF pose-estimation.
 
-Visual place recognition<d-cite key="Schubert_2023"></d-cite> refers to the ability of an agent to recognize a location which it has not previously seen, by exploiting a system for cross-referencing live camera footage against some ground-truth of prior image data.
+Pose estimation <d-cite key="xiang2018posecnn"></d-cite> can refer to the ability of an agent to determine its 3D position and orientation based on visual or other sensor info.
 
 In this work, the goal is to compress the ground-truth image data into a neural model which maps live camera footage to geolocation coordinates.
 
@@ -74,12 +82,12 @@ Twitter user Stephan Sturges demonstrates his solution<d-cite key="Sturges_2023"
     </div>
 </div>
 <div class="caption">
-    Twitter user Stephan Sturges shows the results<d-cite key="Sturges_2023"></d-cite> of geolocation based on Visual Place Recognition.
+    Twitter user Stephan Sturges shows the results<d-cite key="Sturges_2023"></d-cite> of geolocation, purportedly based on Visual Place Recognition.
 </div>
 
-The author of the above tweet employs a reference database of images. It would be interesting to eliminate the need for a raw dataset.
+The author of the above tweet employs a reference database of images. It would be interesting to eliminate the need for a raw dataset. Whereas the author employs Visual Place Recognition, here I employ pose estimation techniques. Thus I do not seek to estimate predict place *labels*, but rather geolocated place *coordinates* for the camera, as well as the camera's orientation.
 
-Thus, this works seeks to develop a neural network which maps a terrain image from the agent's downward-facing camera, to a 6-DOF (position/rotation) representation of the agent in 3-space. Hopefully the neural network is more compact than the dataset itself - although aggressive DNN compression will not be a focus of this work.
+Thus, this works seeks to develop a neural network which maps a terrain image from the agent's downward-facing camera, to a 6-DOF (position/rotation) representation of the agent in 3-space.
 
 # Background
 
@@ -197,3 +205,97 @@ For a single epoch, measure the total MSE loss of the model's extrinsic paramete
 ## Feasibility
 
 Note that I am concurrently taking 6.s980 "Machine learning for inverse graphics" so I already have background in working with camera parameters, which should help me to complete this project on time.
+
+# Implementation
+
+## Source image
+
+DOF estimation was applied to a 2D aerial image<d-cite key="Taylor_2020"></d-cite>, shown below:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-09-dof-visual-place-recognition-satellite/sample_image.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Sample aerial image from <d-cite key="Taylor_2020"></d-cite>.
+</div>
+
+## Dataloader
+
+A dataloader was created which generates (1) generates a random extrinsic camera matrix as described above, in order to generate (2) visualization of the above source image from the perspective of the random camera matrix.
+
+More specifically, the dataloader generates *Euler Angles* in radians associated with with the camera matrix rotation, as well as a 3D offset representing the camera's position.
+
+You will notice that the images suffer from an artifact whereby the pixels are not adjacent to each other but rather have black space between them; a production implementation of this solution would require interpolation between pixels in order to produce a continuous image.
+
+An example of a single generated image is shown below; it is the original image, above, viewed from the perspective of a random camera matrix:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-09-dof-visual-place-recognition-satellite/dof_sample.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Single datapoint from data loader.
+</div>
+
+A batch of generated images is shown below:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-09-dof-visual-place-recognition-satellite/dof_grid.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    A batch from the data loader.
+</div>
+
+Again, you can see that owing to a lack of interpolation, the pixels are spread out, with black space between them.
+
+## DNN architecture
+
+The DNN architecture is an MLP with 6 hidden layers of width 512, 256 and 128. 
+
+The input is a 224x224 image with 3 color channels representing the view of the source image from an orientation determined by the (unknown) camera extrinsic parameters.
+
+The architecture outputs 6 logit values values corresponding to predictions of 3 Euler angles and 3 positional offsets for the camera extrinsic matrix.
+
+For this project, I experimented with the sinusoidal activation functions described in the SIREN<d-cite key="sitzmann2020implicit"></d-cite> paper. Sinusoidal activation functions, combined with MLPs, were previously shown to be more effective at capturing high-frequency information in radiance fields, compared to ReLU MLPs. I employed sinusoidal activation functions in this work in the hopes of more effectively capturing high-frequency variation in the relationship between camera extrinsic parameters and camera image pixels.
+
+One question which might arise is, if the DNN outputs logits, how do I account for the difference in statistical characteristics between the three Euler Angle outputs and the three translation vector outputs? I employed scikitlearn StandardScalers at both the input and the output in order to normalize image pixels and extrinsic camera matrix parameters, respectively. The use of normalization at the input is standard. The use of normalization at the output allows each dimension of the 6-logit output to learn a zero-mean, unit-variance distribution: the output StandardScaler converts from zero-mean, unit-variance to the estimated actual mean and variance of the target distribution. The way the output StandardScaler is computed is as follows: a batch of random data is sampled from the dataloader; mean and variance are computed; then a StandardScaler is designed such that its *inverse* maps from the computed mean and variance of the target extrinsics, to zero mean/unit-variance. Thus, run forward, the output StandardScaler will map from unit gaussian to the computed mean and variance.
+
+## Training setup
+
+I train for 80 epochs with an Adam optimizer and a learning rate of 0.00001.
+
+MSE loss is employed for training and evaluation. The extrinsic parameters predicted by the DNN are compared against the target (correct) extrinsic parameters which the dataloader used to generate the camera image of the scene. Recall from the previous section that, owing to the output StandardScaler, the DNN outputs 6 roughly zero-mean/unit-variance predicted camera extrinsic parameters. I chose to evaluate loss *relative to these zero-mean/unit-variance predictions*, prior to the output StandardScaler; the rationale being that I wanted each extrsinsic parameter to have equal weighting in the MSE loss computation, and not be biased by the mean/variance of the particular parameter. Thus, I use the output StandardScaler in *inverse* mode to normalize the target values to zero-mean/unit-variance. MSE loss is then computed between the DNN output logits, and these normalized target values.
+
+A side-effect of computing MSE against normalized values, is that it is effectively a relative measure: MSE tells me how large the variance in the error between predictions and target is, relative to the unit-variance of the normalized target values. Thus I expect that an MSE much less than one is a good heuristic for the quality of the estimate.
+
+# Training results
+
+The plot below shows that the DNN architecture was able to converge on low-MSE predictions of the extrinsic camera matrix:
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/2023-11-09-dof-visual-place-recognition-satellite/loss_plot.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Train and test MSE loss between the predicted and actual extrinsic camera matrix.
+</div>
+
+Note that the train and test curves overlap almost perfectly; this is because all datapoints generated by the dataloader are random, so in fact the model is constantly being trained on fresh data, and the resampling is really unnecessary.
+
+Since the final MSE is relatively small (0.020), and since (as described in the previous section) the MSE is effectively a relative measure of error, I believe the DNN is learning a relatively good estimate of camera extrinsics.
+
+# Conclusion
+
+Based on the low MSE attained during training, I believe I successfully trained a DNN to roughly estimate camera extrinsics from orientation-dependent camera views.
+
+There are many improvements which would be necessary in order to deploy this in production.
+
+For example, it would be better to use more detailed satellite imagery, preferably with stereoscopic views that effectively provide 3D information. Without having 3D information about the scene, it is hard to train the model to recognize how the scene will look from different angles. In my work, I used a 2D image and essentially assumed that the height of the geographic features in the image was negligible, such that I could approximate the 3D point-cloud as lying within a 2D plane. With stereoscopic satellite data, it could be possible to construct a truly 3D point-cloud, on which basis I could synthesize more accurate camera views during the training process.
+
+Also, as discussed in the Implementation section, it would likely be necessary to implement interpolation between the pixels when generating simulated camera views. Otherwise, the camera views during training would look nothing like what the camera would see in the real world.
