@@ -81,7 +81,7 @@ In a linear model, i.e., one which maps inputs to outputs with only linear funct
 So why do we care about Superposition? Why spend time studying this?
 
 
-While it may seem tangential, Superposition sheds important insights on Large Language Models (LLMs)! While LLMs are billions of parameters large, this is still not enough for a one-to-one mapping to “features" on the internet. Therefore LLMs also MUST exhibit superposition in order to learn.
+While it may seem tangential, Superposition sheds important insights on Large Language Models (LLMs)! While LLMs are billions of parameters large, this is still not enough for a one-to-one mapping to “features" on the internet. Therefore LLMs also MUST exhibit superposition in order to learn. We focus our current work on the $\textit{bottleneck superposition}$ regime, but <d-cite key="incidental"></d-cite> has shown that the picture is far more complicated than presented in <d-cite key="toymodels"></d-cite>. Namely, varying the initialization can change how superposition unfolds. To normalize across experiments, we initialize all weights using the Xavier norm, as outlined by \cite{xavier}.
 
 
 <div class="row mt-3 l-page">
@@ -113,7 +113,6 @@ In such linear models, each neuron is limited to representing only the most sign
 
 
 While ReLU bears similarity to the Gaussian Error Linear Unit (GeLU) used in modern GPT architectures, a deeper understanding of how different nonlinear activations impact superposition can provide crucial insights. Such understanding is key to unraveling the complex mechanisms through which neural networks utilize non-linearities, a cornerstone in the broader narrative of neural network interpretability.
-
 
 ### Monosemanticity and Polysemanticity
 To connect to existing literature (2) and (3) above are given the names monosemanticity and polysemanticity. We will also follow this notation going forward.
@@ -220,7 +219,7 @@ Below are the architectures of the base (linear) and experimental (non-linear) m
 **Autoencoder image**
 
 
-We create an autoencoder - compressing down to induce polysemanticity. This maps $x$ to a direction in a lower-dimensional space, represented by $$h = Wx$$. Each column of $W$ corresponds to a lower-dimensional representation of a feature in $x$. To reconstruct the original vector, $W^T$ is used, ensuring clear feature representation correspondence. This structure results in a symmetric matrix $W^TW$ and allows for clear visualization of the weights. They visually allow for the determination of the presence of superposition. All weight matricies are initialized with the Xavier initialization scheme <d-cite key="xavier"></d-cite>.
+We create an autoencoder - compressing down to induce polysemanticity. This maps $x$ to a direction in a lower-dimensional space, represented by $$h = Wx$$. Each column of $W$ corresponds to a lower-dimensional representation of a feature in $x$. To reconstruct the original vector, $W^T$ is used, ensuring clear feature representation correspondence. This structure results in a symmetric matrix $W^TW$ and allows for clear visualization of the weights. They visually allow for the determination of the presence of superposition.
 
 
 ### Loss
