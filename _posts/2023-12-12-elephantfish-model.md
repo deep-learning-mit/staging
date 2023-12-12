@@ -30,7 +30,6 @@ toc:
   - name: Experiments and Results
   - name: Discussion and Conclusions
   - name: Challenges and Future Directions
-
 ---
 
 ## Abstract
