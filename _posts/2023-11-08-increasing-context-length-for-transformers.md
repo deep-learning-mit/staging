@@ -22,6 +22,10 @@ bibliography: 2023-11-08-increasing-context-length-for-transformers.bib
 #     for hyperlinks within the post to work correctly.
 toc:
   - name: Introduction
+  - name: Related Work
+  - name: Methodology
+  - name: Experiments
+  - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -43,70 +47,76 @@ _styles: >
   }
 ---
 
-### Background
+### Introduction
 
-Since its release on November 30, 2022, users around the world have applied ChatGPT to a variety of document parsing and editing tasks. ChatGPT is good at summarizing research papers and proofreading emails and essays. These tasks often require large input contexts, since the documents and texts passed into ChatGPT can be several pages long.
+Since its release on November 30, 2022, ChatGPT has assisted users around the world with a variety of document parsing and editing tasks. These tasks often require large input contexts, since the documents and texts passed into ChatGPT's source model, GPT-3.5, can be several pages long.
 
-Like many other language models, GPT-3.5 is a unidirectional transformer that uses the self-attention mechanism. But while self-attention is an extremely powerful mechanism, it's also inefficient in its time and space complexity. Standard self-attention requires $O(n^2)$ operations in terms of the sequence length $n$. Why? The $QK^T$ term within the attention mechanism calculates and stores the attention of each of the $n$ tokens with $O(n)$ other tokens.
+Like many other language models, GPT-3.5 is a unidirectional transformer that uses the self-attention mechanism. But while self-attention is an extremely powerful mechanism, it's also inefficient in its time and space complexity. Standard self-attention requires $O(n^2)$ operations in terms of the sequence length $n$, since the $QK^T$ term within the attention mechanism calculates and stores the attention of each of the $n$ tokens with $O(n)$ other tokens.
 
 Unfortunately, the $O(n^2)$ complexity makes long input contexts difficult for transformers to handle efficiently. Over the past few years, researchers have been investigating ways of mitigating this $O(n^2)$ factor. In this post, we provide an overview of existing strategies for increasing context length for transformers. We also propose and investigate our own efficient self-attention algorithm, which we call Gaussian attention.
 
-## Related Work
+### Related Work
 
-In the past, large context lengths were handled using a simple partition scheme. Essentially, long inputs were split into fixed-length chunks and attention was computed separately for each such chunk. Then, for a chunk size of $b$, a sequence of length n requires only $O\left(\frac{n}{b} \cdot b^2\right) = O(nb)$ time to compute. However, this method has a major drawback in that information cannot be shared across partitioned blocks, leading to the fragmentation problem: the model lacks long-term dependencies and thus runs into cases where it lacks the necessary context to make accurate predictions.
+In the past, large context lengths were handled using a simple partition scheme. Essentially, long inputs were split into fixed-length chunks and attention was computed separately for each such chunk. Then, for chunk size $b$, a sequence of length $n$ requires only $O\left(\frac{n}{b} \cdot b^2\right) = O(nb)$ time to compute. However, this method has a major drawback in that information cannot be shared across partitioned blocks, leading to the fragmentation problem: the model lacks long-term dependencies and thus runs into cases where it lacks the necessary context to make accurate predictions.
 
 Modern methods for reducing context lengths in transformers generally try to avoid this problem by either introducing ways of sharing context across partitions or reducing self-attention calculation cost by using a simpler approximation. Models that fall into second category may utilize one of many different approximation techniques, such as sparse attention matrices, fixed attention patterns, and low-rank methods.<d-cite key="tay2022efficient"/><d-cite key="LIN2022111">
 
 #### Sparse Transformer
-In 2019, Child et al. proposed a sparse transformer that reduced attention calculation cost from $O(n^2)$ to $O(n\sqrt{n})$.<d-cite key="child2019generating"/> To achieve this, the sparse transformer uses a combination of strided and local patterns, where only attention values that are covered by the pattern are computed. 
+In 2019, Child et al. proposed a sparse transformer that reduced attention calculation cost from $O(n^2)$ to $O(n\sqrt{n})$.<d-cite key="child2019generating"/> To achieve this, the sparse transformer uses a combination of strided and local attention patterns. 
 {% include figure.html path="assets/img/2023-11-08-increasing-context-length-for-transformers/child-et-al.png" class="img-fluid" %}
 <div class="caption">
-  Standard attention matrix (left) vs. strided attention matrix (right). Only attention values that fall onto the blue squares are computed.
+  Standard attention matrix (left) vs. strided attention matrix (right). Only attention values for the blue squares are computed.
 </div>
 
 One attention head processes a local window of size $k$ surrounding the current token $i$, while a second attention processes tokens $j$ such that 
 
 $$(i - j) \mod l = 0 \qquad \forall j \leq i,$$
 
-where $l$ is a parameter chosen to be close to $\sqrt{n}$. Figure 2 contains a visualization of this process. Since only $O(l)$ tokens are attended upon for each token i, this results in the $O(n \cdot l) = O(n\sqrt{n})$ runtime. Child et al. showed that the sparse transformer can be applied to a wide range of fields, including image, text, and music, where it can be used to possess audio sequences over 1 million timestamps long.
+where $l$ is a parameter chosen to be close to $\sqrt{n}$. Since only $O(l)$ tokens are attended upon for each token $i$, this results in the $O(n \cdot l) = O(n\sqrt{n})$ runtime. Child et al. showed that the sparse transformer can be applied to a wide range of fields, including image, text, and music, where it can be used to possess audio sequences over 1 million timestamps long.
 
 #### Longformer
-Longformer<d-cite key="beltagy2020longformer"/> employs a similar approach as the sparse transformer. Longformer applies a dilated sliding window to capture local attention patterns. Across successive attention layers, gaps are introduced between different elements of the sliding window—thus expanding the receptive field to thousands of tokens even for small dilation factors. Longformer uses global tokens in order to allow the model to generalize to different language modeling tasks. These global tokens are analogous to the different input representations used by language models for different tasks; for example, Bert appends a ```<CLS>``` token to the start of every input in classification tasks. Despite its reduced context windows, Longformer was able to outperform state-of-the-art model RoBerta on several long document benchmarks.
+Longformer<d-cite key="beltagy2020longformer"/> employs a similar approach as the sparse transformer. Longformer applies a dilated sliding window to capture local attention patterns. Across successive attention layers, gaps are introduced between different elements of the sliding window—thus expanding the receptive field to thousands of tokens even for small dilation factors. Longformer uses global tokens in order to allow the model to generalize to different language modeling tasks. These global tokens are analogous to the different input representations used by language models for different tasks; for example, Bert appends a ```<CLS>``` token to the start of every input in classification tasks. Despite its reduced context windows, Longformer was able to outperform state-of-the-art model RoBERTa on several long document benchmarks.
 
 #### BigBird
-In 2020, Zaheer et al. released BigBird, which uses the combination of three different fixed attention patterns.<d-cite key="zaheer2021big"/> These are:
+In 2020, Zaheer et al. released BigBird, which combines three different fixed attention patterns.<d-cite key="zaheer2021big"/> These are:
 1. Global attention, consisting of tokens that attend upon every other token
 2. Local attention, consisting of a sliding window around each token 
 3. Random attention, consisting of randomly-selected tokens
 
-Zaheer et al. proved that sparse transformers are computationally equivalent to basic transformers with full attention. Theoretically, sparse transformers are capable of achieving everything that full transformers can achieve; this explains why they perform so well compared to basic transformers. Overall, the Big Bird architecture increased transformer context lengths by up to 8x.
+Zaheer et al. proved that certain sparse transformers are computationally equivalent to transformers with full attention. Theoretically, sparse transformers are capable of solving all tasks everything that full transformers can solve; this explains why sparse transformers are often a good approximation for full transformers. Overall, the Big Bird architecture increased maximum transformer context lengths by up to 8x.
 
 #### TransformerXL
-TransformerXL differs from the previously discussed models, as it doesn’t work by sparsifying the attention matrix.<d-cite key="dai2019transformerxl"/> Instead, it retains the classic partitioning scheme and attempts to overcome the fragmentation problem via a recurrence-based approach. Using the recurrence mechanism, hidden-state sequences are stored and cached so they can be used for additional context when the model processes the next statement. Overall, this architecture allows the network to use historical information to process new information. As a result, it can support longer-range dependencies without leading to context fragmentation. TransformerXL can operate on sequences up to 450% longer than those of vanilla transformers, while being up to 1800 times faster. When released in 2019, TransformerXL improved the SOTA results on the datasets text8, Penn Treebank, and WikiText-103.
+TransformerXL differs from the previously discussed models, as it doesn’t work by sparsifying the attention matrix.<d-cite key="dai2019transformerxl"/> Instead, it retains the classic partitioning scheme and attempts to overcome the fragmentation problem via a recurrence-based approach. Using the recurrence mechanism, hidden-state sequences are stored and cached so they can be used for additional context when the model processes the next statement. Overall, this architecture allows the network to use historical information to process new information. As a result, it can support longer-range dependencies without leading to context fragmentation. TransformerXL can operate on sequences up to 450% longer than those of vanilla transformers, while being up to 1800 times faster. When released in 2019, TransformerXL improved the SOTA results on the datasets `text8`, `Penn Treebank`, and `WikiText-103`.
 
 #### Landmark Tokens
-More recently, Mohtashami et al. have proposed using landmark tokens to determine which tokens should be attended to.<d-cite key="mohtashami2023landmark"/> They propose dividing the given input into a series of fixed-length blocks and associating each with a landmark token. In particular, their architecture is designed so that a high attention score on any individual token within a block also leads to a high attention score on the block’s “representative vector”—which is the landmark token itself. Then, during inference, the transformer retrieves the k blocks corresponding to the $k$ highest-valued landmark tokens and then attend only upon the tokens in this block. Mohtashami et al. claim that this architecture can extend the context length of Llama to more than 32k tokens, allowing it to support inputs of the same length as GPT-4.
+More recently, Mohtashami et al. have suggested using landmark tokens to determine which tokens should be attended to.<d-cite key="mohtashami2023landmark"/> They proposed dividing the given input into a series of fixed-length blocks and associating each with a landmark token. In particular, their architecture is designed so that a high attention score on any individual token within a block also leads to a high attention score on the block’s “representative vector”—which is the landmark token itself. Then, during inference, the transformer retrieves the $k$ blocks corresponding to the $k$ highest-valued landmark tokens and attends only upon the tokens in this block. Mohtashami et al. claimed that this architecture can extend the context length of Llama to more than 32k tokens, allowing it to support inputs of the same length as GPT-4.
 
 #### VisionTransfomer
 Most of the models discussed above apply specifically to transformers used for language modeling. However, algorithms for reducing attention complexity have been successfully used for other tasks as well. For example, VisionTransformer managed to achieve SOTA performance while limiting the attention context to a 16x16 patch around each pixel.<d-cite key="dosovitskiy2021image"/>
 
 #### Hardware Methods
-Aside from algorithm-based techniques, there have also been attempts to make basic transformer  algorithms run faster on existing hardware. Although sparse attention algorithms may have better time complexity, they may not achieve practical speedups due to hardware inefficiencies. In order to achieve practical speedups on transformer training, Dao et al. propose FlashAttention, an I/O-aware attention algorithm that implements the basic attention computation.<d-cite key="dao2022flashattention"/> FlashAttention achieves speedups of up to 15% on Bert-Large, showing that efficient transformers do not necessarily need to use approximate attention algorithms.
+Aside from algorithm-based techniques, there have also been attempts to make basic transformer  algorithms run faster on existing hardware. Although sparse attention algorithms may have better time complexity, they may not achieve practical speedups due to hardware inefficiencies. In order to achieve practical speedups on transformer training, Dao et al. proposed FlashAttention, an I/O-aware attention algorithm that implements the basic attention computation.<d-cite key="dao2022flashattention"/> FlashAttention achieves speedups of up to 15% on Bert-Large, showing that efficient transformers do not necessarily need to use approximate attention algorithms.
 
-## Methodology
+### Methodology
 To see what types of context reduction algorithms are effective, we propose and test our own efficient transformer. We investigate whether transformers using Gaussian-distributed fixed attention patterns can perform as well as standard transformers. For each self-attention layer, we sample a Gaussian random distribution to determine which elements of the attention matrix we should compute. We analyze this approach for the unidirectional language modeling case, where the goal is to predict the next token of a given input sequence.
 
-In language modeling, the most important context for predicting a new token often comes from examining the tokens that immediately precede it. Previous work has taken advantage of this pattern by employing fixed local attention patterns, such as the sliding window used by BigBird. For token $i$, random samples from a truncated Gaussian distribution with mean $i$ and standard deviation $\sigma = \frac{\mu}{2} = \frac{i}{2}$<d-footnote>This means that 0 is two standard deviations from the mean $i$.</d-footnote> will produce values $j$ close to $i$ with relatively high probability. This implies that we will likely calculate the attention scores for some local region of each token $i$, allowing the model to account for important local context connections. This is essentially the same logic that is used by models that emphasize local attention patterns, just expanded to a random process instead.
+In language modeling, the most important context for predicting a new token often comes from examining the tokens that immediately precede it. Previous work has taken advantage of this pattern by employing fixed local attention patterns, such as the sliding window pattern used by BigBird. For token $i$, random samples from a truncated Gaussian distribution with mean $i$ and standard deviation $\sigma = \frac{\mu}{2} = \frac{i}{2}$<d-footnote>This means that 0 is two standard deviations from the mean $i$.</d-footnote> will produce values $j$ close to $i$ with relatively high probability. This implies that we will likely calculate the attention scores for some local region of each token $i$, allowing the model to account for important local context connections.
 
-On the other hand, it may also be possible that some distant token $j$ has a large impact on the prediction of token $i$. For example, if you pass in a document in which the first sentence defines the overall purpose of the document, we might need to pay attention to this first sentence even in later sentences. Fixed-pattern Gaussian attention allows for this possibility by calculating attention scores for $i$ and distant tokens $j$ with a lower but still nonzero probability. As a result, Gaussian attention offers some flexibility that may not be present in other fixed-pattern attention mechanisms, such as the sliding window technique.
+On the other hand, it may also be possible that some distant token $j$ has a large impact on the prediction of token $i$. For example, if you pass in a document in which the first sentence defines the overall purpose of the document, we might need to pay attention to this sentence even in later sections of the document. Fixed-pattern Gaussian attention allows for this possibility by calculating attention scores for $i$ and distant tokens $j$ with a lower but still nonzero probability. As a result, Gaussian attention offers some flexibility that may not be present in other fixed-pattern attention mechanisms, such as the sliding window technique.
 
 #### Algorithm
-The model takes a hyperparameter $c$, where $c$ is the number of tokens that each token attends upon. For every token $i$ in each self-attention layer, we select $c$ tokens from the Gaussian distribution N, where N is truncated at $0$ and $i$. Since our task focuses on the casual language modeling case, a token $i$ computes attention scores only for tokens $j<i$. Truncation ensures that every $i$ attends to exactly $\min(c, i-c)$ tokens.<d-footnote>If $c$ is greater than the number of tokens in range $[0,i]$, the result is to sample every taken from $[0,i]$.</d-footnote> To match sampled random numbers with actual token indexes, we cast each random number $x$ to index $i = \lfloor{x}\rfloor$. In the case of duplicate indexes, we assign each duplicate index to the nearest unused index in range $[0,i]$. This algorithm is summarized below.
-**Insert Algorithm here**
+The model takes a hyperparameter $c$, where $c$ is the number of tokens that each token attends upon. For every token $i$ in each self-attention layer, we select $c$ tokens from the Gaussian distribution $\mathcal{N}(i, i/2)$, where $\mathcal{N}$ is truncated at $0$ and $i$. Since our task focuses on the casual language modeling case, a token $i$ computes attention scores only for tokens $j<i$. Truncation ensures that every $i$ attends to exactly $\min(c, i)$ tokens.<d-footnote>If $c$ is greater than the number of tokens in range $[0,i]$, the result is to sample every taken from $[0,i]$.</d-footnote> To match sampled random numbers with actual token indexes, we cast each random number $x$ to index $i = \lfloor{x}\rfloor$. In the case of duplicate indexes, we assign each duplicate index to the nearest unused index in range $[0,i]$. This algorithm is summarized below.
+```
+for each token i:
+  sample min(c, i) values from N(i, i/2)
+  create list of indices by flooring every sampled value
+  remove duplicates assigning duplicates to the nearest unused index
+  # such an assigment always exists by pigeonhole principle
+```
 
 For each token $i$, we set all attention values for tokens which are not selected to zero. As a result, each token attends only on at most $c$ tokens, leading to an overall cost of $O(c \cdot n) = O(n)$ for constant $c$.
 
-## Experiments
+### Experiments
 Since we only had limited training resources available, we unfortunately couldn't test Gaussian attention on large models like BERT or GPT. Instead, we used a toy study involving small models with smaller inputs—this leads to some additional considerations in analyzing our results, which we'll address later.
 
 We first tested whether models trained with limited Gaussian attention can achieve similar performance as models that were trained on full self-attention. We trained models with $c = 5$ and $c=10$ and compared them to the performance of the base model. For our base experiments, we used three self-attention heads per layer and six layers in total.
@@ -123,7 +133,7 @@ Our evaluation metric for all models was next-token cross-entropy loss against a
 
 {% include figure.html path="assets/img/2023-11-08-increasing-context-length-for-transformers/train-vs-val-loss.png" class="img-fluid" style="width:150px; height:100px;" %}
 
-We found that both the $c=5$ and $c=10$ models were able to achieve similar performance as the base model, which suggests that Gaussian attention may be a good approximation for full attention. Interestingly, both Gaussian models required significantly fewer epochs to reach the same perforamce as the base model. Both Gaussian models also demonstrated faster separation between training and validation losses. We hypothesize that the smaller attention context helps focus learning on more relevant tokens, which lowers the number of training epochs needed. As a result, the model is able to learn the language modeling task more quickly, leading to faster overfitting.
+We found that both the $c=5$ and $c=10$ models were able to achieve similar performance as the base model, which suggests that Gaussian attention may be a good approximation for full attention. Interestingly, both Gaussian models required significantly fewer epochs to reach the same perforamce as the base model. Both Gaussian models also demonstrated faster separation between training and validation losses. We hypothesize that the smaller attention context helps focus learning on more relevant tokens, which lowers the number of training epochs needed. As a result, the model is able to learn the language modeling task more rapidly, leading to faster overfitting.
 
 In order to determine whether the Gaussian attention models are affected by input length, we also tested the same setups with longer inputs. Our base experiments used relatively small inputs, each corresponding to one piece of dialogue in a Shakespeare script. On average, these inputs were approximately 30 tokens long; with $c = 5$, the selected context may be more than $\frac{1}{6}$ of the total tokens. To make $c$ a smaller fraction of the input length, we modified the dataset instead to create inputs with an average length of 100 tokens. We summarize the results in the table below.
 
