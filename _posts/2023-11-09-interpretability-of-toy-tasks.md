@@ -365,6 +365,17 @@ In our experiment, the SoLU model results in non-zero superposition of all featu
 Reflecting the plots above, the SoLU activation results in very polysemantic behavior. This function is not precisely fit for its task of recreating given vectors and likely results in using polysemanticity to attempt to pass information about inputs forward. Curiously, the SoLU moedls have preference for the more important feature in the low sparsity regime.
 
 
+
+<div class="l-page">
+  <iframe src="{{ 'assets/html/2023-11-09-interpretability-of-toy-tasks/file.html' | relative_url }}" frameborder='0' scrolling='no' height="600px" width="100%"></iframe>
+</div>
+
+The diagram above depicts a variation on the two experiments explained thus far. In this experiment $n=200$ features were compressed to $m=20$ features and the loss function was tweaked to give uniform importance $I_i = 1$ to all features. This was done to determine how each activation functions compresses features in different sparsity regimes without the influence of feature importance.
+
+On the y axis, the plot depicts a metric (dimensions per feature) that measures the number of dimensions a model dedicates to each feature. In other words, a point with a y-value near 1 represents a model that dedicates one dimension of its embedding space to one feature, whereas a point with a y-value near 0.25 represents a model that represents four features at each dimension.
+
+The plots are generally consistent with the analysis from the previous experiments. Many of the activations result in superposition in the low-density/high-sparsity regime, and increases in sparsity result in increases in the polysemanticity of the model (i.e., the dimensions per feature decreases). Consistent with the other experiments, SiLU and GELU perform very similarly. The Sigmoid and SoLU activations pack nearly 20 features per dimension at high sparsities. The Tanh activation exhibits behavior similar to the linaer model, neatly packing one dimension with one feature, a result that is mirrored in the previous experiments. Similar to the results in <d-cite key="toymodels"></d-cite>, we see "sticky" behavior of the ReLU activation function at 1 and 0.5 dimensions per feature. This can be explained by the phenomenon of "antipodal pairs" discussed in <d-cite key="toymodels"></d-cite>. None of the other activation functions that we tested exhibit this behavior. 
+
 ## AI Safety 
 Interpretable models would be a useful tool for safe AI systems. It would be easy to understand why models made the decision they did and how they made it. As presented by <d-cite key="elhage2022solu"></d-cite>, the SoLU pushes models to mono semanticity in the transformer architecture, allowing increasing interpretability - however this forces some parts of the model into polysemanticity.
 
