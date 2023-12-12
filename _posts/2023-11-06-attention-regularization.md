@@ -12,7 +12,7 @@ htmlwidgets: true
 
 
 authors:
- - name: Anonymous
+ - name: Jamison Meindl
 
 
 # must be the exact same name as your blogpost
