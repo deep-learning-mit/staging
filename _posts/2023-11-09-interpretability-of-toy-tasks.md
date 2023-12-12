@@ -267,6 +267,9 @@ The following is the phase diagram of the ReLU models:
     <div class="col-6 mx-auto mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_relu.png" class="img-fluid" %}
     </div>
+    <div class="col-6 mx-auto mt-3 mt-md-0 d-flex align-items-center">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/legend.png" class="img-fluid" %}
+    </div>
 </div>
 In regimes of high sparsity (i.e., below $1-S=0.1$ on the phase diagram above) the ReLU models are highly polysemantic for all relative feature importances, reflecting an inability to encode featues with a sparse signal. In regimes of low sparsity, the model generally embeds the more important of the two features. This result mirrors the phase diagram in <d-cite key="toymodels"></d-cite> as expected.
 
@@ -292,13 +295,17 @@ The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activatio
 </div>
 
 The GeLU and SiLU models exhibit similar kinds of superposition in their weight matrices. With increasing sparsity, superposition of features does happen, but it is more “strict” than the ReLU model, generally mapping at most two features to any single neuron. In each of the polysemantic neurons, though, there is one feature that dominates, suggesting that these activation functions enforce sparsity in their activations. There are also many antipodal pairs of features within these models, reiterating the behavior that exists in the ReLU models (also found in <d-cite key="toymodels"></d-cite>).
-
-<div class="row mt-3 l-page">
-    <div class="col-sm mt-3 mt-md-0">
+<div class="row mt-0 l-page">
+    <div class="col-sm mt-2 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_gelu.png" class="img-fluid" %}
     </div>
-    <div class="col-sm mt-3 mt-md-0">
+    <div class="col-sm mt-2 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_silu.png" class="img-fluid" %}
+    </div>
+</div>
+<div class="row mt-0 l-page">
+    <div class="col-6 mx-auto mt-2 mt-md-0 d-flex align-items-center">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/legend.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -323,6 +330,9 @@ The Sigmoid model exhibits superposition in all neurons as soon as the  sparsity
     <div class="col-6 mx-auto mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_sigmoid.png" class="img-fluid" %}
     </div>
+    <div class="col-6 mx-auto mt-3 mt-md-0 d-flex align-items-center">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/legend.png" class="img-fluid" %}
+    </div>
 </div>
 Despite differences in the occurrence of polysemanticity, the ReLU and Sigmoid models exhibit very similar phase diagrams, reflecting an inability to encode multiple features at sparsities above $S=0.9$ (i.e., below $1-S=0.1$ on the phase diagram). As discussed above, this may be caused by the vanilla sigmoid activation's inability to "reach" target values close to 0 or 1.
 
@@ -344,6 +354,9 @@ With the Tanh activation funciton, the models prioritize the most important feat
 <div class="row mt-3 l-page">
     <div class="col-6 mx-auto mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_tanh.png" class="img-fluid" %}
+    </div>
+    <div class="col-6 mx-auto mt-3 mt-md-0 d-flex align-items-center">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/legend.png" class="img-fluid" %}
     </div>
 </div>
 
@@ -374,6 +387,9 @@ In our experiment, the SoLU model results in non-zero superposition of all featu
 <div class="row mt-3 l-page">
     <div class="col-6 mx-auto mt-3 mt-md-0">
         {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/phase_51_solu.png" class="img-fluid" %}
+    </div>
+    <div class="col-6 mx-auto mt-3 mt-md-0 d-flex align-items-center">
+        {% include figure.html path="/assets/img/2023-11-09-interpretability-of-toy-tasks/legend.png" class="img-fluid" %}
     </div>
 </div>
 
