@@ -144,7 +144,7 @@ To set up this experiment, we need to create a dataset that allows for superposi
 ### Features
 
 
-Features are the salient “things” that a neural network learns in order to differentiate inputs.
+Features are the salient “things” that a neural network learns in order to differentiate inputs <d-cite key="features"></d-cite>,.
 
 
 Technically, features are the properties which neural networks try to extract from data during learning in order to compress inputs to useful representations during inference. Although features can map to human-understandable concepts (e.g., dog ears), features can also map to properties of the data that are not apparent to naive decoding by the human brain. In order to experiment with superposition, we need to encode features in a way that we can understand. In other words, we do not want our experimental model to learn features that we are unaware of. This would make it hard for us to interpret how the model maps features in the data to embeddings within its parameters, consequently obscuring how superposition works. To this aim, we must generate features within the training set for our model which are simple and understandable to us a priori. Similar to <d-cite key="toymodels"></d-cite>, we use as each input a vector with entries drawn independently from a uniform distribution over $[0, 1]$. Making each entry independent of the others enforces that each entry is its own (artificial) feature with no correlation to the other features.
@@ -221,10 +221,7 @@ Below are the architectures of the base (linear) and experimental (non-linear) m
     </div>
 </div>
 
-We create an autoencoder - compressing down to induce polysemanticity. This maps $x$ to a direction in a lower-dimensional space, represented by $$h = Wx$$. Each column of $W$ corresponds to a lower-dimensional representation of a feature in $x$. To reconstruct the original vector, $W^T$ is used, ensuring clear feature representation correspondence. This structure results in a symmetric matrix $W^TW$ and allows for clear visualization of the weights. They visually allow for the determination of the presence of superposition.
-
-
-**EXAMPLE OF WTW**
+We create an autoencoder - compressing down to induce polysemanticity. This maps $x$ to a direction in a lower-dimensional space, represented by $$h = Wx$$. Each column of $W$ corresponds to a lower-dimensional representation of a feature in $x$. To reconstruct the original vector, $W^T$ is used, ensuring clear feature representation correspondence. This structure results in a symmetric matrix $W^TW$ and allows for clear visualization of the weights. They visually allow for the determination of the presence of superposition. All weight matricies are initialized with the Xavier initialization scheme <d-cite key="xavier"></d-cite>.
 
 
 ### Loss
@@ -279,7 +276,7 @@ In regimes of high sparsity (i.e., below $1-S=0.1$ on the phase diagram above) t
 
 ### GeLU/SiLU
 
-The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activation functions are very similar to one another, and as a result produced very similar experimental results. Both functions are akin to a "smoothed out" version of the ReLU function, i.e., they have no discontinuities. The GeLU has recently been popularized as the activation function of choice in many transformers, including BERT <d-cite key="Devlin2019BERTPO"></d-cite> and GPT (LETS CITE THEM HERE). The GeLU is differentiable for all $x$ - and has a smoother curve than the SiLU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the SoLU. This may be the case after having many linear layers activation - but with a single layer this is not the case.
+The GeLU (Gaussian Error Linear Units) and SiLU (Sigmoid Linear Units) activation functions are very similar to one another, and as a result produced very similar experimental results. Both functions are akin to a "smoothed out" version of the ReLU function, i.e., they have no discontinuities. The GeLU has recently been popularized as the activation function of choice in many transformers, including BERT <d-cite key="Devlin2019BERTPO"></d-cite> and GPT <d-cite key="gpt"></d-cite>. The GeLU is differentiable for all $x$ - and has a smoother curve than the SiLU (Swish) activation. <d-cite key="elhage2022solu"></d-cite> found that in the setting of transformers, the GeLU was less interpretable than the SoLU. This may be the case after having many linear layers activation - but with a single layer this is not the case.
 
 <div class="caption">
     GeLU
@@ -416,7 +413,7 @@ The plots are generally consistent with the analysis from the previous experimen
 
 Our investigation into the effects of various activation functions reveals that significant changes occur in model behavior depending on the chosen function. This finding underscores the ability to modulate the degree of superposition through the selection of activation functions, highlighting yet unexplored degrees of freedom in model design. This line of inquiry goes seamlessly with considerations of how neural networks are initialized and trained, suggesting these as promising future research directions.
 
-Pursuing enhanced interpretability, however, does not come without its challenges. Specifically, striving for greater transparency and understand-ability in neural network models raises concerns about the potential for deception. Despite these challenges, our research moves us closer to achieving neural network models that are not only more interpretable but also more transparent and secure, marking significant progress in the field of AI safety and reliability.
+Pursuing enhanced interpretability, however, does not come without its challenges. Specifically, striving for transparency and understand-ability in neural network models raises concerns about the potential for deception. Despite these challenges, our research moves us closer to achieving neural network models that are not only more interpretable but also more transparent and secure, marking significant progress in the field of AI safety and reliability.
 
 
 {% bibliography --cited %}
