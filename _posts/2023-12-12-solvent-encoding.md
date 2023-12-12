@@ -29,7 +29,7 @@ toc:
   - name: Result
   - name: Conclusion
   - name: Prospective works 
-  - name: Referrence
+  - name: Reference
   - name: Data
 
 
@@ -99,7 +99,7 @@ In navigating these findings, it becomes evident that the pursuit of a comprehen
 ## Prospective works 
 Due to the complex nature of solvent-solvate interactions, a more rigorous splitting strategy that takes into account the distributions of different solvent molecules within the training, testing, and validation sets may be needed. Additionally, random splitting and cross-validation could be potential methods for improving the generality of the model. Finally, owing to the limited computational resources, this project only trained the model with default hyperparameters (such as batch size, layer width, number of tokens, etc.). Hyperparameter optimization can also be performed to gain a better understanding of the model's capabilities.
 
-## Referrence
+## Reference
 1. Analyzing Learned Molecular Representations for Property Prediction <https://pubs.acs.org/doi/10.1021/acs.jcim.9b00237> 
 
 2. Pharmacophoric-constrained heterogeneous graph transformer model for molecular property prediction <https://www.nature.com/articles/s42004-023-00857-x>
