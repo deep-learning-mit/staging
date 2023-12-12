@@ -20,7 +20,7 @@ authors:
       name: MIT
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-08-project-blog.bib  
+bibliography: 2023-11-08-representationengineering-incontextlearning.bib  
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -53,7 +53,7 @@ _styles: >
 ## Background
 Emerging capabilities in deep neural networks are not well understood, one of which is the concept of “situational awareness,” an emergent LLM capability where they understand whether they are in training, testing, or deployment. This behavior can emerge from the fact that training datasets contain articles about LLMs, AI model training, testing, and deployment. If an LLM were to possess “situation awareness,” it might give misleading results on safety tests before deployment or deceptively align to human feedback in fine-tuning. Understanding and evaluating LLM’s capability of “situational awareness” can increase LLM’s safety and usefulness. 
 
-Because “situational awareness” is a loaded concept, [Berglund et al. (2023)](https://arxiv.org/pdf/2309.00667.pdf) study a proxy capability that they coin “sophisticated out-of-context reasoning” (SOC), where LLMs utilize data from pre-training/fine-tuning corpora during inference on an unrelated piece of text without specifically being prompted to do so. Specifically, they finetune LLMs to mimic a chatbot to, say, answer the questions in German by only giving them the description that it speaks only German but not German text. Here, the model is evaluated on a task where it needs to perform much more sophisticated reasoning than direct retrieval from the training set.
+Because “situational awareness” is a loaded concept,<d-cite key = "berglund2023measuring"></d-cite> [Berglund et al. (2023)](https://arxiv.org/pdf/2309.00667.pdf) study a proxy capability that they coin “sophisticated out-of-context reasoning” (SOC), where LLMs utilize data from pre-training/fine-tuning corpora during inference on an unrelated piece of text without specifically being prompted to do so. Specifically, they finetune LLMs to mimic a chatbot to, say, answer the questions in German by only giving them the description that it speaks only German but not German text. Here, the model is evaluated on a task where it needs to perform much more sophisticated reasoning than direct retrieval from the training set.
 
 Another inspiring field of work is to understand and interpret the mechanistic internals of deep learning models. One such inspiring work is Zou et al. (2023)’s paper on Representation Engineering (RepE), where they construct a set of training text stimuli to elicit LLM’s beliefs, split them into pairs, and use PCA to find a reading vector to transform the model representation then when given new tests. This approach allows us to elicit readings of representation and control such representation. Similarly, [Meng et al. (2023)](https://arxiv.org/pdf/2210.07229.pdf) present ways to edit memory in Transformers about certain representations. 
 ## Motivation
