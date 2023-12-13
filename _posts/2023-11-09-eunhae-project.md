@@ -214,7 +214,6 @@ Moreover, in order to observe the effect of model width on performance, I also t
 
 I use saliency maps to visualize “attention” of the networks. Saliency maps are known to be useful for understanding which parts of the input image are most influential for the model's predictions. By visualizing the specific areas of an image that a CNN considers important for classification, saliency maps provide insights into the internal representation and decision-making process of the network<d-cite key="simonyan2014deep"></d-cite>.
 
-{% include figure.html path="assets/img/2023-11-09-eunhae-project/resnet18_naive.png" class="img-fluid" caption="Image: Example of saliency map used in this study"%}
 
 # Experiment
 
