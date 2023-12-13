@@ -53,7 +53,7 @@ _styles: >
 ---
 
 # Abstract
-Recently, there has been a breakthrough in image manipulation using Contrastive Language-Image Pretraining (CLIP). Recent work shows that GANs combined with CLIP can translate the images to unseen domains <d-cite key="gal2021stylegannada"></d-cite>. However, in many cases these manipulations destroy the important information that user might want to learn (e.g., labels). Recently, there was a paper showing image manipulation leveraging a combination of diffusion models and CLIP <d-cite key="kim2022diffusionclip"></d-cite>. We leverage the method proposed in DiffusionCLIP paper to perform semi-supervised domain adaptation having limited labeled data. GitHub project page: ____
+Recently, there has been a breakthrough in image manipulation using Contrastive Language-Image Pretraining (CLIP). Recent work shows that GANs combined with CLIP can translate the images to unseen domains <d-cite key="gal2021stylegannada"></d-cite>. However, in many cases these manipulations destroy the important information that user might want to learn (e.g., labels). Recently, there was a paper showing image manipulation leveraging a combination of diffusion models and CLIP <d-cite key="kim2022diffusionclip"></d-cite>. We leverage the method proposed in DiffusionCLIP paper to perform semi-supervised domain adaptation having limited labeled data. GitHub project page: https://github.com/babiakua/semi_supervised_domain_adapt.
 
 # Introduction & Background
 ## Diffusion models
