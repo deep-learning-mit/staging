@@ -1,3 +1,18 @@
+@techreport{boiarskyDeepDiveSingleCell2023,
+  type = {preprint},
+  title = {A Deep Dive into Single-Cell RNA Sequencing Foundation Models},
+  author = {Boiarsky, Rebecca and Singh, Nalini and Buendia, Alejandro and Getz, Gad and Sontag, David},
+  year = {2023},
+  month = oct,
+  institution = {Genomics},
+  doi = {10.1101/2023.10.19.563100},
+  urldate = {2023-12-11},
+  abstract = {Large-scale foundation models, which are pre-trained on massive, unlabeled datasets and subsequently fine-tuned on specific tasks, have recently achieved unparalleled success on a wide array of applications, including in healthcare and biology. In this paper, we explore two foundation models recently developed for single-cell RNA sequencing data, scBERT and scGPT. Focusing on the fine-tuning task of cell type annotation, we explore the relative performance of pre-trained models compared to a simple baseline, L1-regularized logistic regression, including in the few-shot setting. We perform ablation studies to understand whether pretraining improves model performance and to better understand the difficulty of the pre-training task in scBERT. Finally, using scBERT as an example, we demonstrate the potential sensitivity of fine-tuning to hyperparameter settings and parameter initializations. Taken together, our results highlight the importance of rigorously testing foundation models against well established baselines, establishing challenging fine-tuning tasks on which to benchmark foundation models, and performing deep introspection into the embeddings learned by the model in order to more effectively harness these models to transform single-cell data analysis. Code is available at https://github.com/clinicalml/sc-foundation-eval.},
+  langid = {english},
+  keywords = {6.S898 project},
+  file = {/Users/rcalef/Zotero/storage/RXF2LT4V/Boiarsky et al. - 2023 - A Deep Dive into Single-Cell RNA Sequencing Founda.pdf}
+}
+
 @misc{chenGeneptSimpleHardtoBeat2023,
   title = {Genept: A Simple but Hard-to-Beat Foundation Model for Genes and Cells Built from Chatgpt},
   shorttitle = {Genept},
@@ -9,13 +24,30 @@
   publisher = {bioRxiv},
   doi = {10.1101/2023.10.16.562533},
   urldate = {2023-11-03},
-  abstract = {There has been significant recent progress in leveraging large-scale gene expression data to develop foundation models for single-cell transcriptomes such as Geneformer [1], scGPT [2], and scBERT [3]. These models infer gene functions and interrelations from the gene expression profiles of millions of cells, which requires extensive data curation and resource-intensive training. Here, we explore a much simpler alternative by leveraging ChatGPT embeddings of genes based on literature. Our proposal, GenePT, uses NCBI text descriptions of individual genes with GPT-3.5 to generate gene embeddings. From there, GenePT generates single-cell embeddings in two ways: (i) by averaging the gene embeddings, weighted by each gene's expression level; or (ii) by creating a sentence embedding for each cell, using gene names ordered by the expression level. Without the need for dataset curation and additional pretraining, GenePT is efficient and easy to use. On many downstream tasks used to evaluate recent single-cell foundation models \textemdash{} e.g., classifying gene properties and cell types \textemdash{} GenePT achieves comparable, and often better, performance than Geneformer and other methods. GenePT demonstrates that large language model embedding of literature is a simple and effective path for biological foundation models.},
+  abstract = {There has been significant recent progress in leveraging large-scale gene expression data to develop foundation models for single-cell transcriptomes such as Geneformer [1], scGPT [2], and scBERT [3]. These models infer gene functions and interrelations from the gene expression profiles of millions of cells, which requires extensive data curation and resource-intensive training. Here, we explore a much simpler alternative by leveraging ChatGPT embeddings of genes based on literature. Our proposal, GenePT, uses NCBI text descriptions of individual genes with GPT-3.5 to generate gene embeddings. From there, GenePT generates single-cell embeddings in two ways: (i) by averaging the gene embeddings, weighted by each gene's expression level; or (ii) by creating a sentence embedding for each cell, using gene names ordered by the expression level. Without the need for dataset curation and additional pretraining, GenePT is efficient and easy to use. On many downstream tasks used to evaluate recent single-cell foundation models {\textemdash} e.g., classifying gene properties and cell types {\textemdash} GenePT achieves comparable, and often better, performance than Geneformer and other methods. GenePT demonstrates that large language model embedding of literature is a simple and effective path for biological foundation models.},
   archiveprefix = {bioRxiv},
   chapter = {New Results},
-  copyright = {\textcopyright{} 2023, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial-NoDerivs 4.0 International), CC BY-NC-ND 4.0, as described at http://creativecommons.org/licenses/by-nc-nd/4.0/},
+  copyright = {{\textcopyright} 2023, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial-NoDerivs 4.0 International), CC BY-NC-ND 4.0, as described at http://creativecommons.org/licenses/by-nc-nd/4.0/},
   langid = {english},
   keywords = {6.S898 project},
   file = {/Users/rcalef/Zotero/storage/RB3JFP9K/Chen and Zou - 2023 - Genept A Simple but Hard-to-Beat Foundation Model.pdf}
+}
+
+@article{consortiumTabulaSapiensMultipleorgan2022,
+  title = {The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans},
+  shorttitle = {The Tabula Sapiens},
+  author = {Consortium*, The Tabula Sapiens and Jones, Robert C. and Karkanias, Jim and Krasnow, Mark A. and Pisco, Angela Oliveira and Quake, Stephen R. and Salzman, Julia and Yosef, Nir and Bulthaup, Bryan and Brown, Phillip and Harper, William and Hemenez, Marisa and Ponnusamy, Ravikumar and Salehi, Ahmad and Sanagavarapu, Bhavani A. and Spallino, Eileen and Aaron, Ksenia A. and Concepcion, Waldo and Gardner, James M. and Kelly, Burnett and Neidlinger, Nikole and Wang, Zifa and Crasta, Sheela and Kolluru, Saroja and Morri, Maurizio and Pisco, Angela Oliveira and Tan, Serena Y. and Travaglini, Kyle J. and Xu, Chenling and {Alc{\'a}ntara-Hern{\'a}ndez}, Marcela and Almanzar, Nicole and Antony, Jane and Beyersdorf, Benjamin and Burhan, Deviana and Calcuttawala, Kruti and Carter, Matthew M. and Chan, Charles K. F. and Chang, Charles A. and Chang, Stephen and Colville, Alex and Crasta, Sheela and Culver, Rebecca N. and Cvijovi{\'c}, Ivana and D'Amato, Gaetano and Ezran, Camille and Galdos, Francisco X. and Gillich, Astrid and Goodyer, William R. and Hang, Yan and Hayashi, Alyssa and Houshdaran, Sahar and Huang, Xianxi and Irwin, Juan C. and Jang, SoRi and Juanico, Julia Vallve and Kershner, Aaron M. and Kim, Soochi and Kiss, Bernhard and Kolluru, Saroja and Kong, William and Kumar, Maya E. and Kuo, Angera H. and Leylek, Rebecca and Li, Baoxiang and Loeb, Gabriel B. and Lu, Wan-Jin and Mantri, Sruthi and Markovic, Maxim and McAlpine, Patrick L. and de Morree, Antoine and Morri, Maurizio and Mrouj, Karim and Mukherjee, Shravani and Muser, Tyler and Neuh{\"o}fer, Patrick and Nguyen, Thi D. and Perez, Kimberly and Phansalkar, Ragini and Pisco, Angela Oliveira and Puluca, Nazan and Qi, Zhen and Rao, Poorvi and {Raquer-McKay}, Hayley and Schaum, Nicholas and Scott, Bronwyn and Seddighzadeh, Bobak and Segal, Joe and Sen, Sushmita and Sikandar, Shaheen and Spencer, Sean P. and Steffes, Lea C. and Subramaniam, Varun R. and Swarup, Aditi and Swift, Michael and Travaglini, Kyle J. and Treuren, Will Van and Trimm, Emily and Veizades, Stefan and Vijayakumar, Sivakamasundari and Vo, Kim Chi and Vorperian, Sevahn K. and Wang, Wanxin and Weinstein, Hannah N. W. and Winkler, Juliane and Wu, Timothy T. H. and Xie, Jamie and Yung, Andrea R. and Zhang, Yue and Detweiler, Angela M. and Mekonen, Honey and Neff, Norma F. and Sit, Rene V. and Tan, Michelle and Yan, Jia and Bean, Gregory R. and Charu, Vivek and Forg{\'o}, Erna and Martin, Brock A. and Ozawa, Michael G. and Silva, Oscar and Tan, Serena Y. and Toland, Angus and Vemuri, Venkata N. P. and Afik, Shaked and Awayan, Kyle and Botvinnik, Olga Borisovna and Byrne, Ashley and Chen, Michelle and Dehghannasiri, Roozbeh and Detweiler, Angela M. and Gayoso, Adam and Granados, Alejandro A. and Li, Qiqing and Mahmoudabadi, Gita and McGeever, Aaron and de Morree, Antoine and Olivieri, Julia Eve and Park, Madeline and Pisco, Angela Oliveira and Ravikumar, Neha and Salzman, Julia and Stanley, Geoff and Swift, Michael and Tan, Michelle and Tan, Weilun and Tarashansky, Alexander J. and Vanheusden, Rohan and Vorperian, Sevahn K. and Wang, Peter and Wang, Sheng and Xing, Galen and Xu, Chenling and Yosef, Nir and {Alc{\'a}ntara-Hern{\'a}ndez}, Marcela and Antony, Jane and Chan, Charles K. F. and Chang, Charles A. and Colville, Alex and Crasta, Sheela and Culver, Rebecca and Dethlefsen, Les and Ezran, Camille and Gillich, Astrid and Hang, Yan and Ho, Po-Yi and Irwin, Juan C. and Jang, SoRi and Kershner, Aaron M. and Kong, William and Kumar, Maya E. and Kuo, Angera H. and Leylek, Rebecca and Liu, Shixuan and Loeb, Gabriel B. and Lu, Wan-Jin and Maltzman, Jonathan S. and Metzger, Ross J. and de Morree, Antoine and Neuh{\"o}fer, Patrick and Perez, Kimberly and Phansalkar, Ragini and Qi, Zhen and Rao, Poorvi and {Raquer-McKay}, Hayley and Sasagawa, Koki and Scott, Bronwyn and Sinha, Rahul and Song, Hanbing and Spencer, Sean P. and Swarup, Aditi and Swift, Michael and Travaglini, Kyle J. and Trimm, Emily and Veizades, Stefan and Vijayakumar, Sivakamasundari and Wang, Bruce and Wang, Wanxin and Winkler, Juliane and Xie, Jamie and Yung, Andrea R. and Artandi, Steven E. and Beachy, Philip A. and Clarke, Michael F. and Giudice, Linda C. and Huang, Franklin W. and Huang, Kerwyn Casey and Idoyaga, Juliana and Kim, Seung K. and Krasnow, Mark and Kuo, Christin S. and Nguyen, Patricia and Quake, Stephen R. and Rando, Thomas A. and {Red-Horse}, Kristy and Reiter, Jeremy and Relman, David A. and Sonnenburg, Justin L. and Wang, Bruce and Wu, Albert and Wu, Sean M. and {Wyss-Coray}, Tony},
+  year = {2022},
+  month = may,
+  journal = {Science},
+  publisher = {American Association for the Advancement of Science},
+  doi = {10.1126/science.abl4896},
+  urldate = {2023-12-12},
+  abstract = {Single-cell transcriptomics provides a molecularly defined phenotypic reference of human cell types that spans 24 human tissues and organs.},
+  copyright = {Copyright {\textcopyright} 2022 The Authors, some rights reserved; exclusive licensee American Association for the Advancement of Science. No claim to original U.S. Government Works},
+  langid = {english},
+  keywords = {6.S898 project},
+  file = {/Users/rcalef/Zotero/storage/ZXJZPCWW/Consortium et al. - 2022 - The Tabula Sapiens A multiple-organ, single-cell .pdf}
 }
 
 @misc{cuiScGPTBuildingFoundation2023,
@@ -32,10 +64,28 @@
   abstract = {Generative pre-trained models have achieved remarkable success in various domains such as natural language processing and computer vision. Specifically, the combination of large-scale diverse datasets and pre-trained transformers has emerged as a promising approach for developing foundation models. While texts are made up of words, cells can be characterized by genes. This analogy inspires us to explore the potential of foundation models for cell and gene biology. By leveraging the exponentially growing single-cell sequencing data, we present the first attempt to construct a single-cell foundation model through generative pre-training on over 10 million cells. We demonstrate that the generative pre-trained transformer, scGPT, effectively captures meaningful biological insights into genes and cells. Furthermore, the model can be readily finetuned to achieve state-of-the-art performance across a variety of downstream tasks, including multi-batch integration, multi-omic integration, cell-type annotation, genetic perturbation prediction, and gene network inference. The scGPT codebase is publicly available at https://github.com/bowang-lab/scGPT.},
   archiveprefix = {bioRxiv},
   chapter = {New Results},
-  copyright = {\textcopyright{} 2023, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial-NoDerivs 4.0 International), CC BY-NC-ND 4.0, as described at http://creativecommons.org/licenses/by-nc-nd/4.0/},
+  copyright = {{\textcopyright} 2023, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution-NonCommercial-NoDerivs 4.0 International), CC BY-NC-ND 4.0, as described at http://creativecommons.org/licenses/by-nc-nd/4.0/},
   langid = {english},
   keywords = {6.S898 project},
   file = {/Users/rcalef/Zotero/storage/2S6TRQIB/Cui et al. - 2023 - scGPT Towards Building a Foundation Model for Sin.pdf}
+}
+
+@article{furusawaZipfLawGene2003,
+  title = {Zipf's law in gene expression},
+  author = {Furusawa, Chikara and Kaneko, Kunihiko},
+  year = {2003},
+  month = feb,
+  journal = {Physical Review Letters},
+  volume = {90},
+  number = {8},
+  pages = {088102},
+  issn = {0031-9007},
+  doi = {10.1103/PhysRevLett.90.088102},
+  abstract = {Using data from gene expression databases on various organisms and tissues, including yeast, nematodes, human normal and cancer tissues, and embryonic stem cells, we found that the abundances of expressed genes exhibit a power-law distribution with an exponent close to -1; i.e., they obey Zipf's law. Furthermore, by simulations of a simple model with an intracellular reaction network, we found that Zipf's law of chemical abundance is a universal feature of cells where such a network optimizes the efficiency and faithfulness of self-reproduction. These findings provide novel insights into the nature of the organization of reaction dynamics in living cells.},
+  langid = {english},
+  pmid = {12633463},
+  keywords = {6.S898 project,Animals,Caenorhabditis elegans,Computer Simulation,Gene Expression Regulation,Humans,{Models, Genetic},Neoplasms,Rats,Saccharomyces cerevisiae,Stem Cells},
+  file = {/Users/rcalef/Zotero/storage/M4A4WZXB/Furusawa and Kaneko - 2003 - Zipf's law in gene expression.pdf}
 }
 
 @article{gunawanIntroductionRepresentationLearning2023,
@@ -112,7 +162,7 @@
   issn = {1474-760X},
   doi = {10.1186/s13059-020-1926-6},
   urldate = {2023-11-08},
-  abstract = {The recent boom in microfluidics and combinatorial indexing strategies, combined with low sequencing costs, has empowered single-cell sequencing technology. Thousands\textemdash or even millions\textemdash of cells analyzed in a single experiment amount to a data revolution in single-cell biology and pose unique data science problems. Here, we outline eleven challenges that will be central to bringing this emerging field of single-cell data science forward. For each challenge, we highlight motivating research questions, review prior work, and formulate open problems. This compendium is for established researchers, newcomers, and students alike, highlighting interesting and rewarding problems for the coming years.},
+  abstract = {The recent boom in microfluidics and combinatorial indexing strategies, combined with low sequencing costs, has empowered single-cell sequencing technology. Thousands{\textemdash}or even millions{\textemdash}of cells analyzed in a single experiment amount to a data revolution in single-cell biology and pose unique data science problems. Here, we outline eleven challenges that will be central to bringing this emerging field of single-cell data science forward. For each challenge, we highlight motivating research questions, review prior work, and formulate open problems. This compendium is for established researchers, newcomers, and students alike, highlighting interesting and rewarding problems for the coming years.},
   keywords = {6.S898 project},
   file = {/Users/rcalef/Zotero/storage/DT2NV9J8/Lähnemann et al. - 2020 - Eleven grand challenges in single-cell data scienc.pdf}
 }
@@ -212,6 +262,24 @@
   file = {/Users/rcalef/Zotero/storage/IFBR7EZY/Mathys et al. - 2023 - Single-cell atlas reveals correlates of high cogni.pdf}
 }
 
+@misc{mcinnesUMAPUniformManifold2020,
+  title = {UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction},
+  shorttitle = {UMAP},
+  author = {McInnes, Leland and Healy, John and Melville, James},
+  year = {2020},
+  month = sep,
+  number = {arXiv:1802.03426},
+  eprint = {1802.03426},
+  primaryclass = {cs, stat},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1802.03426},
+  urldate = {2023-12-12},
+  abstract = {UMAP (Uniform Manifold Approximation and Projection) is a novel manifold learning technique for dimension reduction. UMAP is constructed from a theoretical framework based in Riemannian geometry and algebraic topology. The result is a practical scalable algorithm that applies to real world data. The UMAP algorithm is competitive with t-SNE for visualization quality, and arguably preserves more of the global structure with superior run time performance. Furthermore, UMAP has no computational restrictions on embedding dimension, making it viable as a general purpose dimension reduction technique for machine learning.},
+  archiveprefix = {arxiv},
+  keywords = {6.S898 project,Computer Science - Computational Geometry,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/rcalef/Zotero/storage/8XQ59IUS/McInnes et al. - 2020 - UMAP Uniform Manifold Approximation and Projectio.pdf}
+}
+
 @article{panMicrofluidicsFacilitatesDevelopment2022,
   title = {Microfluidics Facilitates the Development of Single-Cell RNA Sequencing},
   author = {Pan, Yating and Cao, Wenjian and Mu, Ying and Zhu, Qiangyuan},
@@ -230,6 +298,25 @@
   langid = {english},
   keywords = {6.S898 project,droplet,microfluidics,microwell,scRNA-seq},
   file = {/Users/rcalef/Zotero/storage/3WW3SVGB/Pan et al. - 2022 - Microfluidics Facilitates the Development of Singl.pdf}
+}
+
+@article{stuartComprehensiveIntegrationSingleCell2019,
+  title = {Comprehensive Integration of Single-Cell Data},
+  author = {Stuart, Tim and Butler, Andrew and Hoffman, Paul and Hafemeister, Christoph and Papalexi, Efthymia and Mauck, William M. and Hao, Yuhan and Stoeckius, Marlon and Smibert, Peter and Satija, Rahul},
+  year = {2019},
+  month = jun,
+  journal = {Cell},
+  volume = {177},
+  number = {7},
+  pages = {1888-1902.e21},
+  publisher = {Elsevier},
+  issn = {0092-8674, 1097-4172},
+  doi = {10.1016/j.cell.2019.05.031},
+  urldate = {2023-12-12},
+  langid = {english},
+  pmid = {31178118},
+  keywords = {6.S898 project,integration,multi-modal,scATAC-seq,scRNA-seq,single cell,single-cell ATAC sequencing,single-cell RNA sequencing},
+  file = {/Users/rcalef/Zotero/storage/3FZZYNS5/Stuart et al. - 2019 - Comprehensive Integration of Single-Cell Data.pdf}
 }
 
 @article{theodorisTransferLearningEnables2023,
@@ -252,6 +339,45 @@
   file = {/Users/rcalef/Zotero/storage/D399P6II/Theodoris et al. - 2023 - Transfer learning enables predictions in network b.pdf}
 }
 
+@misc{virshupAnndataAnnotatedData2021,
+  title = {anndata: Annotated data},
+  shorttitle = {anndata},
+  author = {Virshup, Isaac and Rybakov, Sergei and Theis, Fabian J. and Angerer, Philipp and Wolf, F. Alexander},
+  year = {2021},
+  month = dec,
+  primaryclass = {New Results},
+  pages = {2021.12.16.473007},
+  publisher = {bioRxiv},
+  doi = {10.1101/2021.12.16.473007},
+  urldate = {2023-12-12},
+  abstract = {anndata is a Python package for handling annotated data matrices in memory and on disk (github.com/theislab/anndata), positioned between pandas and xarray. anndata offers a broad range of computationally efficient features including, among others, sparse data support, lazy operations, and a PyTorch interface. Statement of need Generating insight from high-dimensional data matrices typically works through training models that annotate observations and variables via low-dimensional representations. In exploratory data analysis, this involves iterative training and analysis using original and learned annotations and task-associated representations. anndata offers a canonical data structure for book-keeping these, which is neither addressed by pandas (McKinney, 2010), nor xarray (Hoyer \& Hamman, 2017), nor commonly-used modeling packages like scikit-learn (Pedregosa et al., 2011).},
+  archiveprefix = {bioRxiv},
+  chapter = {New Results},
+  copyright = {{\textcopyright} 2021, Posted by Cold Spring Harbor Laboratory. This pre-print is available under a Creative Commons License (Attribution 4.0 International), CC BY 4.0, as described at http://creativecommons.org/licenses/by/4.0/},
+  langid = {english},
+  keywords = {6.S898 project},
+  file = {/Users/rcalef/Zotero/storage/U93QFEEQ/Virshup et al. - 2021 - anndata Annotated data.pdf}
+}
+
+@article{virshupScverseProjectProvides2023,
+  title = {The scverse project provides a computational ecosystem for single-cell omics data analysis},
+  author = {Virshup, Isaac and Bredikhin, Danila and Heumos, Lukas and Palla, Giovanni and Sturm, Gregor and Gayoso, Adam and Kats, Ilia and Koutrouli, Mikaela and Berger, Bonnie and Pe'er, Dana and Regev, Aviv and Teichmann, Sarah A. and Finotello, Francesca and Wolf, F. Alexander and Yosef, Nir and Stegle, Oliver and Theis, Fabian J.},
+  year = {2023},
+  month = may,
+  journal = {Nature Biotechnology},
+  volume = {41},
+  number = {5},
+  pages = {604--606},
+  publisher = {Nature Publishing Group},
+  issn = {1546-1696},
+  doi = {10.1038/s41587-023-01733-8},
+  urldate = {2023-12-12},
+  copyright = {2023 The Author(s), under exclusive licence to Springer Nature America, Inc.},
+  langid = {english},
+  keywords = {6.S898 project,Bioinformatics,Computational platforms and environments,Machine learning,Software},
+  file = {/Users/rcalef/Zotero/storage/XWUF5XLM/Virshup et al. - 2023 - The scverse project provides a computational ecosy.pdf}
+}
+
 @misc{yangGeneCompassDecipheringUniversal2023,
   title = {GeneCompass: Deciphering Universal Gene Regulatory Mechanisms with Knowledge-Informed Cross-Species Foundation Model},
   shorttitle = {GeneCompass},
@@ -266,7 +392,7 @@
   abstract = {Deciphering the universal gene regulatory mechanisms in diverse organisms holds great potential to advance our knowledge of fundamental life process and facilitate research on clinical applications. However, the traditional research paradigm primarily focuses on individual model organisms, resulting in limited collection and integration of complex features on various cell types across species. Recent breakthroughs in single-cell sequencing and advancements in deep learning techniques present an unprecedented opportunity to tackle this challenge. In this study, we developed GeneCompass, the first knowledge-informed, cross-species foundation model pre-trained on an extensive dataset of over 120 million single-cell transcriptomes from human and mouse. During pre-training, GeneCompass effectively integrates four types of biological prior knowledge to enhance the understanding of gene regulatory mechanisms in a self-supervised manner. Fine-tuning towards multiple downstream tasks, GeneCompass outperforms competing state-of-the-art models in multiple tasks on single species and unlocks new realms of cross-species biological investigation. Overall, GeneCompass marks a milestone in advancing knowledge of universal gene regulatory mechanisms and accelerating the discovery of key cell fate regulators and candidate targets for drug development.},
   archiveprefix = {bioRxiv},
   chapter = {New Results},
-  copyright = {\textcopyright{} 2023, Posted by Cold Spring Harbor Laboratory. The copyright holder for this pre-print is the author. All rights reserved. The material may not be redistributed, re-used or adapted without the author's permission.},
+  copyright = {{\textcopyright} 2023, Posted by Cold Spring Harbor Laboratory. The copyright holder for this pre-print is the author. All rights reserved. The material may not be redistributed, re-used or adapted without the author's permission.},
   langid = {english},
   keywords = {6.S898 project},
   file = {/Users/rcalef/Zotero/storage/3WUJ2ZV7/Yang et al. - 2023 - GeneCompass Deciphering Universal Gene Regulatory.pdf}
@@ -285,7 +411,7 @@
   issn = {2522-5839},
   doi = {10.1038/s42256-022-00534-z},
   urldate = {2023-11-06},
-  abstract = {Annotating cell types on the basis of single-cell RNA-seq data is a prerequisite for research on disease progress and tumour microenvironments. Here we show that existing annotation methods typically suffer from a lack of curated marker gene lists, improper handling of batch effects and difficulty in leveraging the latent gene\textendash gene interaction information, impairing their generalization and robustness. We developed a pretrained deep neural network-based model, single-cell bidirectional encoder representations from transformers (scBERT), to overcome the challenges. Following BERT's approach to pretraining and fine-tuning, scBERT attains a general understanding of gene\textendash gene interactions by being pretrained on huge amounts of unlabelled scRNA-seq data; it is then transferred to the cell type annotation task of unseen and user-specific scRNA-seq data for supervised fine-tuning. Extensive and rigorous benchmark studies validated the superior performance of scBERT on cell type annotation, novel cell type discovery, robustness to batch effects and model interpretability.},
+  abstract = {Annotating cell types on the basis of single-cell RNA-seq data is a prerequisite for research on disease progress and tumour microenvironments. Here we show that existing annotation methods typically suffer from a lack of curated marker gene lists, improper handling of batch effects and difficulty in leveraging the latent gene{\textendash}gene interaction information, impairing their generalization and robustness. We developed a pretrained deep neural network-based model, single-cell bidirectional encoder representations from transformers (scBERT), to overcome the challenges. Following BERT's approach to pretraining and fine-tuning, scBERT attains a general understanding of gene{\textendash}gene interactions by being pretrained on huge amounts of unlabelled scRNA-seq data; it is then transferred to the cell type annotation task of unseen and user-specific scRNA-seq data for supervised fine-tuning. Extensive and rigorous benchmark studies validated the superior performance of scBERT on cell type annotation, novel cell type discovery, robustness to batch effects and model interpretability.},
   copyright = {2022 The Author(s), under exclusive licence to Springer Nature Limited},
   langid = {english},
   keywords = {6.S898 project,Bioinformatics,Classification and taxonomy,Gene expression},
