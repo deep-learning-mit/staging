@@ -360,7 +360,7 @@ While we understand our work is limited due to time and compute constraints and 
 
 If successful, this research direction could be a powerful tool to understand mechanistically why in-context learning emerges and potentially use model editing to achieve better State-of-the-Art results on LLMs in specific benchmark evaluation scenarios with model editing. Even with our current results that demonstrate more success in suppressing the Context Vector than amplifying it, i.e. suppressing such behaviors than boosting it, this can have implications on works that try to perform model unlearning and impact the robustness of LLMs. 
 
-## Implications & Future Work
+## Future Work
 
 Through ablating with the random vector in the embedding space, it is unfortunate that controlling for the particular Context Vector we found is not particularly different from other vectors, despite it showing some promises on suppressing the results. We hope to run further ablation studies to confirm that suppressing the Context Vector is only suppressing the in-context learning behaviors of the specific behaviors and does not have other side effects.
 
@@ -368,4 +368,4 @@ Through ablating with the random vector in the embedding space, it is unfortunat
 
 Regarding our current setup of the contrasting prompts of telling the model to pay attention or not pay attention to the concept, we can further explore the space of contrasting prompts. Directly related to our work, we would also like to explore the other type of experiment setup in Zou et al. (2023)<d-cite key="zou2023representation"></d-cite>; unlike the data pair setup where we ask the model to pay attention to the examples or ignore them, we can ask the model to "think hard about the context/structure of the question" and elicit neural activities that way.
 
-We are also interested in exploring vectors that control step-by-step reasoning and in general, intelligence. The phrases "Let's think step by step" <d-cite key="kojima2023stepbystep"></d-cite> or "Take a deep breath and work on this problem step-by-step" <d-cite key = "yang2023deepbreath"></d-cite> are powerful phrases that elicit chain-of-thought reasoning and improve model performance. Could we engineer activation transformations that improve these model's performance even more than and without the need for prompting? 
+We are also interested in exploring vectors that control step-by-step reasoning and in general, intelligence. The phrases "Let's think step by step" <d-cite key="kojima2023stepbystep"></d-cite> or "Take a deep breath and work on this problem step-by-step" <d-cite key = "yang2023deepbreath"></d-cite> are powerful phrases that elicit chain-of-thought reasoning and improve model performance. Could we engineer activation transformations that improve these models' performance even more than and without the need for prompting? 
