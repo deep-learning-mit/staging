@@ -80,12 +80,12 @@ There is already prior literature on the connections between these three classes
 
 2. MLP $\iff$ Gaussian Processes: The connection for infinitely-wide one-layer neural networks was introduced in <d-cite key="neal1996priors"></d-cite> and for deep networks in <d-cite key="lee2017deep"></d-cite>. This comes from the observation that if the weights are sampled Gaussian i.i.d., then the Central Limit Theorem states that as the width approaches infinity, the output is also Gaussian. We also went over this briefly in class.
 
-3. Gaussian Processes $\iff$ Kernel Regression: This connection is a bit harder. Other than the obvious fact that they both use kernels and the "kernel trick," I could not really find a resource that established a clear connection between the two other than through the intermediary of MLPs. In this project, this is one link that I will try to explicitly establish.
+3. Gaussian Processes $\iff$ Kernel Regression: Other than the obvious fact that they both use kernels and the "kernel trick," I could not really find a resource that established a clear connection between the two other than through the intermediary of MLPs. In this project, this is one link that I will try to explicitly establish.
 
 Other relevant prior works I reviewed include:
 - The formalization of the double descent curve in <d-cite key="belkin2019reconciling">, which uprooted our previous understanding of the bias-variance tradeoff and the notion that models should not overfit. This also motivates the use of infinite-wide neural networks (extreme overparameterization) for prediction tasks. Otherwise, conventional wisdom would say that these models overfit.
 - Why is this problem even interesting? This paper <d-cite key="radhakrishnan2022simple"> shows that kernels achieve competitive performance for important matrix completion tasks, so neural networks are not necessarily the only solution to many tasks of interest.
-- The lecture notes from [this IAP class](https://web.mit.edu/modernml/course/). I used some of the notation, definitions, and theorems from the lecture notes to write this post, but I also worked through some of the math on my own (e.g. the overparameterized linear regression proof for general $\eta$, proving that $X^\dagger$ minimizes $\ell_2$ norm, etc.).
+- The lecture notes from [this IAP class](https://web.mit.edu/modernml/course/). I used some of the notation, definitions, and theorems from the lecture notes to write this post, but I also worked through some of the math on my own (e.g. the overparameterized linear regression proof for general $\eta$ and $w^{(0)}$, proving that $X^\dagger$ minimizes $\ell_2$ norm, etc.).
 - I also used [this blog](https://lilianweng.github.io/posts/2022-09-08-ntk/) to better understand the intuition behind NTKs.
 
 The gaps in prior knowledge I want to tackle include (1) the explicit connection between GPs and kernel regression and (2) how sparsity of kernel regression can help explain the generalization abilities of neural networks.
@@ -174,7 +174,7 @@ $$\|\tilde{w}\|_2^2 = \|\tilde{w} - w + w\|_2^2 = \|\tilde{w} - w\|_2^2 + \|w\|_
 
 This characterization is consistent when $n = d$, $n < d$, and $n > d$. If $n = d$, then $X^\dagger = (X^\top X)^{-1} X^\top = X^{-1}(X^{\top})^{-1} X^\top = X^{-1}$. When $n > d$ and the rank of $X$ is $d$, then when $\nabla_w \mathcal{L}(w) = 0$, then $(y-wX)X^\top = 0 \implies w = yX^\top(XX^\top)^{-1}$. $XX^\top \in \mathbb{R}^{d \times d}$ is invertible since $X$ is full rank, so $w = yX^\top(XX^\top)^{-1} =y(X^\top X)^{-1}X^\top = yX^\dagger$.
 
-We are particularly interested in the overparameterized regime, i.e. when $n > d$. The results above show that when $w^{(0)} = 0$, even though there are an infinite number of $w$ that satisfy, $y = Xw$, gradient descent converges to the minimum $\ell_2$-norm solution, $w = yX^\dagger$. This sparsity may help prevent overparameterization even when there are enough parameters to fully memorize the input data.
+We are particularly interested in the overparameterized regime, i.e. when $n > d$. The results above show that when $w^{(0)} = 0$, even though there are an infinite number of $w$ that satisfy $y = Xw$, gradient descent converges to the minimum $\ell_2$-norm solution, $w = yX^\dagger$. This sparsity may help prevent overparameterization even when there are enough parameters to fully memorize the input data.
 
 Why is this analysis helpful? This characterization may help us understand the solution obtained by kernel regression, which can be viewed as just linear regression on a nonlinear, high-dimensional space.
 
@@ -317,7 +317,7 @@ To summarize, these are the implications of the NN-Kernel Regression-GP Connecti
 ### Limitations
 A major limitation of this current work is that I evaluated overparameterized neural networks only through the lens of kernels/GPs. It would be interesting to try to understand the successes of neural networks through other metrics, such as evaluating test risk as width increases. Furthemore, it would also be interesting to characterize what happens when depth, rather than just width, increases. Another interesting next step would be expanding this analysis to understanding overparameterization of other architectures, such as CNNs and transformers, and their connections to kernel regression and Gaussian Processes. 
 
-Understanding neural networks through the lens of the NTK and Gaussian processes deepens our appreciation of the foundational principles in machine learning. It unifies two seemingly disparate areas: the powerful yet often opaque world of deep learning, the straightforward approach of kernel regression, and the rigorous, probabilistic framework of Gaussian processes. This confluence not only enriches our theoretical understanding but also paves the way for novel methodologies and insights in the practical application of machine learning algorithms.
+Understanding neural networks through the lens of the NTK and Gaussian processes deepens our appreciation of the foundational principles in machine learning. It unifies three seemingly disparate areas: the powerful yet often opaque world of deep learning, the straightforward approach of kernel regression, and the rigorous, probabilistic framework of Gaussian processes. This confluence not only enriches our theoretical understanding but also paves the way for novel methodologies and insights in the practical application of machine learning algorithms.
 
 
 
