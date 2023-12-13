@@ -1,8 +1,7 @@
 ---
 layout: distill
-title: The Neural Tangent Kernel, Gaussian Processes, and Overparameterization
-description: Your blog post's abstract.
-  This is an example of a distill-style blog post and the main elements it supports.
+title: Overparameterization of Neural Networks through Kernel Regression and Gaussian Processes
+description: In this work, we will explore the successes of overparameterization of neural networks through evaluating the relationship between the Neural Tangent Kernel (NTK), MLPs, and Gaussian processes.
 date: 2023-12-11
 htmlwidgets: true
 
@@ -17,6 +16,7 @@ authors:
       name: IAS, Princeton
   - name: Boris Podolsky
     url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
+    affiliations:
     affiliations:
       name: IAS, Princeton
   - name: Nathan Rosen
