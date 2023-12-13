@@ -168,11 +168,19 @@ We then perform PCA on the difference of the activations of the two instructions
 
 **Correlation graph and its explanation** 
 
-We use t-SNE to visualize the difference in the embedding space on the inputs of the 30 datasets across 32 different layers and report the results below. 
+We use t-SNE to visualize the difference in the embedding space on the inputs of the 30 datasets across 32 different layers and report the results below.
 
-![t-SNE of the difference in the embedding space, color coded by dataset](/assets/2023-11-08-representationengineering-incontextlearning/tsne_data.png)
+<!-- <figure>
+  <img src="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_data.png" class="img-fluid" alt="Description of the first image">
+  <figcaption>Caption for the first image</figcaption>
+</figure> -->
 
-![t-SNE of the difference in the embedding space, color coded by layers](/assets/2023-11-08-representationengineering-incontextlearning/tsne_layers.png)
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_data.png" class="img-fluid" %}
+<div class="caption">
+  t-SNE plot of 
+</div>
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_layers.png" class="img-fluid" %}
 
 As shown in the figure, we find that the vectors are clustered by dataset, indicating that the Context Vectors are dataset-specific. There are no clear patterns across dataset or between different layers of the Context Vectors, further indicating that in-context learning activates different parts of the model's latent space with information about different types of tasks. 
 
