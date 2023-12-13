@@ -1,13 +1,13 @@
 # Super Resolution: Multi-Objective Training for Optimizing a Single Objective
 ### Julian Powers
 ## Introduction
-Super-resolution (SR) refers to image processing techniques which enhance the quality of low-resolution images [2]. Recently deep learning based SR has been applied to the field fluid dynamics to recreate chaotic turbulent flows from low-resolution experimental or numerical data [3]. For some loss function $$\mathcal{L}$$, the goal is to find weights $$\theta^*$$ such that
+Super-resolution (SR) refers to image processing techniques which enhance the quality of low-resolution images [2]. Recently deep learning based SR has been applied to the field fluid dynamics to recreate chaotic turbulent flows from low-resolution experimental or numerical data [3]. For some loss function $\mathcal{L}$, the goal is to find weights $\theta^*$ such that
 
 $$\begin{aligned}
-	\theta^* = \text{argmin}_\theta\; \mathcal{L}(\bold{u_H},f(\bold{u_L};\bold{\theta}))
+	\theta^* = \text{argmin}_\theta\; \mathcal{L}(\mathbf{u_H},f(\mathbf{u_L};\mathbf{\theta}))
 \end{aligned}$$
 
-where $$\bf u_H$$ is the reference high resolution data field and $$\bf u_L$$ is the corresponding coarsened low resolution data input to the neural network $$f$$ (see the figure below).
+where $\bf u_H$ is the reference high resolution data field and $\bf u_L$ is the corresponding coarsened low resolution data input to the neural network $f$ (see the figure below).
 
 ![Super-resolution reconstruction of turbulent vorticity field using physics-based neural network. Adapted from [2].](/assets/img/2023-12-12-physics_loss/fig1.png)
 
@@ -15,12 +15,12 @@ where $$\bf u_H$$ is the reference high resolution data field and $$\bf u_L$$ is
 
 
 
-Doing so can aid our understanding of flow physics [3]. Many have already applied deep learning to this problem, applying a variety of methods. The performance of the resulting networks depends heavily on the loss function used to train the network. Looking to improve upon the standard $$L_2$$ loss function, some have introduced physics-based loss function that incorporates physical laws that the real flow must obey. For example [2] use the following type of form: 
+Doing so can aid our understanding of flow physics [3]. Many have already applied deep learning to this problem, applying a variety of methods. The performance of the resulting networks depends heavily on the loss function used to train the network. Looking to improve upon the standard $L_2$ loss function, some have introduced physics-based loss function that incorporates physical laws that the real flow must obey. For example [2] use the following type of form: 
 
 
 
 $$\begin{aligned}
-	\mathcal{L} &= \beta_0||\bold{u_H}-f(\bold{u_L})||_2 + \beta_1 ||p_1(\bold{u_H})-p_1(f(\bold{u_L}))||_2 +  \beta_2 ||p_2(\bold{u_H})-p_2(f(\bold{u_L}))||_2 + ... 
+	\mathcal{L} &= \beta_0||\mathbf{u_H}-f(\mathbf{u_L})||_2 + \beta_1 ||p_1(\mathbf{u_H})-p_1(f(\mathbf{u_L}))||_2 +  \beta_2 ||p_2(\mathbf{u_H})-p_2(f(\mathbf{u_L}))||_2 + ... 
 \end{aligned}$$ 
 
 
@@ -60,7 +60,7 @@ The network is a three layer fully connected network with hidden sizes $[1024,10
 The multi-objective loss function 
 
 $$\begin{aligned}
-	\mathcal{L} &= \mathcal{L}_0 + \mathcal{L}_1 + \mathcal{L}_2+... \\&= \beta_0||\bold{u_H}-f(\bold{u_L})||_2 + \beta_1 ||p_1(\bold{u_H})-p_1(f(\bold{u_L}))||_2 +  \beta_2 ||p_2(\bold{u_H})-p_2(f(\bold{u_L}))||_2 + ... 
+	\mathcal{L} &= \mathcal{L}_0 + \mathcal{L}_1 + \mathcal{L}_2+... \\&= \beta_0||\mathbf{u_H}-f(\mathbf{u_L})||_2 + \beta_1 ||p_1(\mathbf{u_H})-p_1(f(\mathbf{u_L}))||_2 +  \beta_2 ||p_2(\mathbf{u_H})-p_2(f(\mathbf{u_L}))||_2 + ... 
 \end{aligned}$$
 
 presents a unique training challenge. Many turbulence super-resolution studies to date set the weights $\beta_i$ by trial and error in an attempt to produce 'nice' results [3]. This approach is sub-optimal because the best values of $\beta_i$ are dependent on the units and orders of magnitude of the objectives $p_i$.  Also, the best choice for the weights may change depending on the stage of training. For example, it may be best to put more emphasis on the reconstruction loss $\mathcal{L}_0$ during the first stages of training and then shift emphasis to other losses to refine the model during the latter stages. In addition to these considerations [5] observed that for physics informed neural networks fixed weights tended to induce training instability as the multiple objectives compete with one another. 
@@ -89,9 +89,9 @@ There are many more details in [5], but essentially the $\beta_i^{bal}(t)$ term 
 
 We tried training on a variety of two-objective loss functions of the form 
 
-$\mathcal{L} = \beta_0||\bold{u_H}-f(\bold{u_L})||_2 + \beta_1 ||p_1(\bold{u_H})-p_1(f(\bold{u_L}))||_2$ 
+$\mathcal{L} = \beta_0||\mathbf{u_H}-f(\mathbf{u_L})||_2 + \beta_1 ||p_1(\mathbf{u_H})-p_1(f(\mathbf{u_L}))||_2$ 
 
-where the $p_1$ objective was taken to be Fourier transform $\mathcal{F}$, spatial derivative $\frac{d}{dx}$, standard deviation $\sigma(\cdot)$, mean $\mathbb{E}_x(\cdot)$, absolute value$|\cdot| $, or functional compositions of the aforementioned. Compared to training on the standard single objective reconstruction loss $\mathcal{L}= \mathcal{L}_0 = \beta_0||\bold{u_H}-f(\bold{u_L})||_2$ , only the two-objective loss with Fourier transform loss gave significant improvements in training performance. All other auxiliary objectives gave marginal or negative results. Composing the Fourier transform with other properties was detrimental. The following table summarizes the training ($\alpha =0.9,\; \mathcal{T}=1$):
+where the $p_1$ objective was taken to be Fourier transform $\mathcal{F}$, spatial derivative $\frac{d}{dx}$, standard deviation $\sigma(\cdot)$, mean $\mathbb{E}_x(\cdot)$, absolute value$|\cdot| $, or functional compositions of the aforementioned. Compared to training on the standard single objective reconstruction loss $\mathcal{L}= \mathcal{L}_0 = \beta_0||\mathbf{u_H}-f(\mathbf{u_L})||_2$ , only the two-objective loss with Fourier transform loss gave significant improvements in training performance. All other auxiliary objectives gave marginal or negative results. Composing the Fourier transform with other properties was detrimental. The following table summarizes the training ($\alpha =0.9,\; \mathcal{T}=1$):
 
 
 
