@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Site settings
 # -----------------------------------------------------------------------------
-
+port: 8080
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
 first_name: abc
 middle_name: b
