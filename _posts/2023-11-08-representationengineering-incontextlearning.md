@@ -60,9 +60,7 @@ We attempt to explore the phenomenon of in-context learning by leveraging anothe
 
 We propose to use methods in Zou et al. (2023) <d-cite key="zou2023representation"></d-cite> to evaluate in-context learning. There has not been previous attempts to examine the model internals holistically in a LLM while it is performing in-context learning. We expose such neural activations by constructing stimulus through artificial examples of in-context learning on binary classication tasks. We find a reading vector that shows high neural activity after the model is stimulated with the context pairs; such a "Context Vector" indicates the context the models draws from. While we hoped to find certain universal mechanisms across different datasets, we find that the Context Vector is dataset-specific and confirm previous hypotheses that in-context learning retrieves information from different parts of the model's latent space.
 
-We then explore the results of controlling the activations along the "Context Vector" direction, in the hope that editing the activitions would further boost the performance on top of in-context learning. We compare the model outputs on the classification datasets in a zero-shot setting and a setting of natural in-context learning, with the "Context Vector" amplified, and suppressed. We found that such model weight editing accomplish XXX. 
-
-While we find boosting performance through such editing to be challenging and sometimes finicky to tune, we find the results to be promising on editing weights to suppress the context that the model draws from and drastically reducing the performance. We hope that this work can serve as a stepping stone to further understand the phenomenon of in-context learning and how to leverage it to improve LLMs.
+We then explore the results of controlling the activations along the "Context Vector" direction, in the hope that editing the activitions would further boost the performance on top of in-context learning. We compare the model outputs on the classification datasets in a zero-shot setting and a setting of natural in-context learning, with the "Context Vector" amplified, and suppressed. While we find boosting performance through such editing to be challenging and sometimes finicky to tune, we find the results to be promising on editing weights to suppress the context that the model draws from and drastically reducing the performance. 
  
 ## Background & Related Work
 
@@ -280,3 +278,19 @@ A hyperparameter which we denote $\alpha$ scales the size of $v$. If our reading
 ### Projection
 
 
+
+
+
+# Conclusion
+
+While we understand our work is limited due to time and compute constraints and did not achieve the results we hoped for, we tried our best to explore this research direction of finding a Context Vector that corresponds to the in-context learning behaviors and experiments of using it to control model outputs. 
+
+## Implications
+
+If successful, this research direction could be a powerful tool to understand mechanistically why in-context learning emerges and potentially use model editing to achieve better State-of-the-Art results on LLMs in specific benchmark evaluation scenarios with model editing. Even with our current results that demonstrate more success in suppressing the Context Vector than amplifying it, i.e. suppressing such behaviors than boosting it, this can have implications on works that try to perform model unlearning and impact the robustness of LLMs. 
+
+## Implications & Future Work
+
+Through ablating with the random vector in the embedding space, it is unfortunate that controlling for the particular Context Vector we found is not particularly different from other vectors, despite it showing some promises on suppressing the results. We hope to run further ablation studies to confirm that suppressing the Context Vector is only suppressing the in-context learning behaviors of the specific behaviors and does not have other side effects.
+
+Directly related to our work, we would also like to explore the other type of experiment setup in Zou et al. (2023)<d-cite key="zou2023representation"></d-cite>; unlike the data pair setup where we ask the model to pay attention to the examples or ignore them, we can ask the model to `think hard about the context/structure of the question` and elicit neural activities that way. 
