@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: "Reasoning with Maps: Assessing Spatial Comprehension on Maps in Pre-trained Models"
-description: Map reasoning is an intuitive skill for humans and a fundamental skill with important applications in many domains. In this project, we aim to evaluate the capabilities of contemporary state-of-the-art Large Vision-Language Models (LVLMs) for reasoning on maps and comparing their capabilities with human participants on the coregistration task. We additionally propose and release a novel dataset to serve as an initial benchmark for map reasoning capabilities. We run an extensive analysis on the performance of open-source LVLMs showing that they struggle to achieve good performance on our dataset. Additionally, we show that the coregistration is intuitive to human participants that were able to achieve close to perfect accuracy in a time-constrained manner.
+description: Map reasoning is an intuitive skill for humans and a fundamental skill with important applications in many domains. In this project, we aim to evaluate the capabilities of contemporary state-of-the-art Large Vision-Language Models (LVLMs) for reasoning on maps and comparing their capabilities with human participants on the coregistration task. We additionally propose and release a novel dataset to serve as an initial benchmark for map reasoning capabilities. We run an extensive analysis on the performance of open-source LVLMs showing that they struggle to achieve good performance on our dataset. Additionally, we show that coregistration is intuitive to human participants that were able to achieve close to perfect accuracy in a time-constrained manner.
 date: 2023-12-12
 htmlwidgets: true
 
