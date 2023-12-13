@@ -1,6 +1,6 @@
 ---
 layout: distill
-title: A Comparative Study on Long Sequence Time-Series Data of transformer on long sequence time series data
+title: A Comparative Study of transformer on long sequence time series data
 description: This study evaluates Transformer models in traffic flow prediction. Focusing on long sequence time-series data, it evaluates the balance between computational efficiency and accuracy, suggesting potential combinations of methods for improved forecasting.
 date: 2023-12-12
 htmlwidgets: true
