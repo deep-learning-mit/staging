@@ -1,6 +1,7 @@
 ---
 layout: distill
 title: Injecting Node Information via Embedding Initializations
+
 description: Graph Neural Networks (GNNs) have revolutionized our approach to complex data structures, enabling a deeper understanding of relationships and patterns that traditional neural networks might miss. This project looks into the potential of embedding initializations in GNNs, particularly in the context of molecular function prediction and protein retrieval tasks. By investigating the effect of intentional, information-rich initializations versus random initializations, we aim to enhance the learning efficiency and accuracy of GNNs in these domains. Our study focuses on a precision medicine knowledge graph (PrimeKG) and employs TxGNN, a GNN model initially designed for disease-drug link prediction, repurposed for protein-molecular function link prediction. We explore the impact of using ESM embeddings for protein nodes, hypothesizing that these embeddings could provide structural information not explicitly present in the graph data. Through comparisons of the latent spaces and performances, we look to see the effectiveness of these embeddings in improving the model's predictive powe of protein function. 
 date: 2023-12-12
 htmlwidgets: true
@@ -36,6 +37,7 @@ toc:
   - name: Discussion
 
 
+
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
 # If you use this post as a template, delete this _styles block.
@@ -55,8 +57,6 @@ _styles: >
     font-size: 16px;
   }
 ---
-
-
 ## Introduction
 Graph Neural Networks (GNNs) have emerged as a transformative tool in machine learning, with the ability to capture the complex structures and relationships inherent in data. In molecular property prediction, for example, GNNs are great at encoding the atomic structure and intermolecular forces into high-dimensional embeddings, leading to more accurate predictions of chemical properties and drug efficacy. GNNs have also be used in traffic time prediction problems, physics simulations and social media analysis applications. Through message-passing and updating, GNNs are capable of learning embeddings that encode informations of node neighbors and long-distance complex connections – that we, as humans, may not be able to make. The quality of the embeddings is not only important for the accuracy of the task the GNN is trained on, but quality node embeddings can be used through transfer learning – enabling models trained on one task to adapt and excel in another. The importance of good embeddings in GNNs is why we want to look closer at embedding initializations and if we can inject additional information – not present in the graph – to result in better learned embeddings after training.
 
