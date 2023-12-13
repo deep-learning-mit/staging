@@ -28,6 +28,13 @@ toc:
     subsections:
     - name: Dataset
     - name: Experimentation
+    - name: Evaluation Metrics
+  - name: Results
+    subsections:
+    - name: Superiority in Extracting Nodes
+    - name: Difficulties with Edge Dectection
+    - name: Outside information
+  - name: Conclusions and Future Steps
 ---
 
 ## Introduction
