@@ -172,14 +172,14 @@ A few patterns can be noticed. First, for both matrices, models in the bottom ri
 Figure 7
 {% include figure.html path="/assets/img/2023-11-09-Structural_vs_Data_Inductive_Bias/figure_4_map.jpg" class="img-fluid" %}
 
-Diving further, in figure X, we visualize the attention weights to better compare different levels of induced bias. It seems that the performance increases as we add more local heads, but it ends up fading and not capturing the important characteristics of the data. In the 50k samples scenario it can be noticed that with more local heads, the attention spots converge to small parts of the image where there is no information about the object in it. 
+Diving further, in figure 7, we visualize the attention weights to better compare different levels of induced bias. It seems that the performance increases as we add more local heads, but it ends up fading and not capturing the important characteristics of the data. In the 50k samples scenario it can be noticed that with more local heads, the attention spots converge to small parts of the image where there is no information about the object in it. 
 
 Figure 8
 {% include figure.html path="/assets/img/2023-11-09-Structural_vs_Data_Inductive_Bias/figure_6_local_map.jpg" class="img-fluid" %}
 
-Moreso, in this above figure, it can be noticed that when local heads are used, it identifies correctly smaller details of the image. In this case, with all heads being global, it is hard to identify the three different cows in the middle image, but when some local heads are used, we can capture them. 
+Moreso, in figure 8, it can be noticed that when local heads are used, it identifies correctly smaller details of the image. In this case, with all heads being global, it is hard to identify the three different cows in the middle image, but when some local heads are used, we can capture them. 
 
-In summary, the major result of this experiment is that some models in the 10k samples sub-experiment produced better results than the base model. This is promising and validates our hypothesis from before. Though no combination produced better results in the 50k samples sub-experiment, we showed in Figure X that having local attentions can still be beneficial as it is able to capture some details that the baseline model misses.  
+In summary, the major result of this experiment is that some models in the 10k samples sub-experiment produced better results than the base model. This is promising and validates our hypothesis from before. Though no combination produced better results in the 50k samples sub-experiment, we showed in Figure 8 that having local attentions can still be beneficial as it is able to capture some details that the baseline model misses.  
 
 ### Experiment 3 ### 
 From the second experiment, we were then intrigued to see how some of the better performing models do under different number of base samples than just 10k and 50k. So, we pick three combinations (2 local heads for 2 layers, 1 local head for 2 layers, 3 local heads for 1 layer) and tested their performance against the baseline model and baseline + data augmentation for different number of base training samples from 5000 to 50k. Below are the results and analysis. 
