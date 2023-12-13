@@ -237,120 +237,108 @@ $$
 
 The first represents a constant perturbation so it supposedly transforms the representation to become more of a certain quality. The second amplifies the direction according to which side it is on, so it makes the representation more extreme. The third removes the quality from the representation by subtracting the projection. 
 
-
-
-
 We explore all these methods to control Mistral-7b-instruct. We do our experiments on the `rotten_tomato`, `sick`, `hate_speech18`, and `glue-wnli` in-context-learning datasets consisting of input-output pairings where outputs have two possible correct options -- positive or negative contradiction or entailment, hate or noHate, and entailment or not_entailment (for `sick`, it originally contains a third option of `neutral` which we remove since our framework requires two classes).
 
 Given learned representations with the same configuration as our representation reading, we construct a test set from the same dataset as training. The test set has $16$ examples, each with one demonstration followed by a question. We evaluate correctness by having the LLM generate $10$ tokens and checking if the correct answer is contained in the output and the incorrect answer is not contained in the output, without being sensitive to case. This ensures correct evaluation so that an answer of no_entailment does not evaluate as correct for having entailment inside of it if entailment is the right answer.
 
-
 A hyperparameter which we denote $\alpha$ scales the size of $v$. If our Context Vector is $r$, sign value is $s$, then we have $v = \alpha \cdot  r \cdot s$. We vary $\alpha \in \{ 0, 0.25, 0.5, 1, 2, 5, 10}$, and also take the negative of $\alpha$, which we label as positive and negative respectively.
 
-
-
-
-
-
-### Results for Addition
-For rotten tomatoes, we see the expected performance gap of positive over negative, though positive does worse than no control. Moreover, we see in glue-wnli and sick, the negative control actually does better than positive control. In Hate Speech 18, we see the desired result.
-
-
+### Results for Control with Addition
+For rotten tomatoes, we see the expected performance gap of positive over negative, though positive does worse than no control. Moreover, we see in glue-wnli and sick, the negative control actually does better than positive control. In hate_speech18, we see the desired result.
 
 Despite modifying the layers that we controlled, based upon observing the layers at which the Context Vectors had the most correlation to the trained concept, we cannot find a set of layers to control that works **consistently** across all four datasets, though we can find layers that work for one dataset.
 
-
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_tomato.png" class="img-fluid" %}
 <div class="caption">
-  Rotten tomatoes.
+  The accuracy of the model on the `rotten_tomatoes` dataset with amplification or suppression of the Context Vector using Addition. The x-axis is the coefficient of amplification, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_sick.png" class="img-fluid" %}
 <div class="caption">
-  Sick. 
+  The accuracy of the model on the `sick` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Addition</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_hate_speech.png" class="img-fluid" %}
 <div class="caption">
-  Hate Speech 18.
+  The accuracy of the model on the `hate_spe` dataset with amplification (positive) or suppression (negative) of the Context Vector using <bold>Addition</bold>. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_glue.png" class="img-fluid" %}
 <div class="caption">
-  Glue-wnli.
+ The accuracy of the model on the `glue_wnli` dataset with amplification (positive) or suppression (negative) of the Context Vector using <bold>Addition</bold>. 
 </div>
 
-### Results for Amplification
-Note the result depends on the absolute value of $\alpha$ so the positive and negative graphs converge. The affect of amplification is quite smooth relative to addition in the sense that there is a consistent downward trend in performance. This could be because amplification amplifies existing signals and this gets stronger as $\alpha$ increases.
+### Results for Control with Amplification
+Note the result depends on the absolute value of $\alpha$ so the positive and negative graphs converge. The affect of amplification is quite smooth relative to addition in the sense that there is a consistent downward trend in performance for both amplification and suppression. This could be because amplification amplifies existing signals and this gets stronger as $\alpha$ increases.
 
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/piecewise_tomato.png" class="img-fluid" %}
 <div class="caption">
-  Rotten tomatoes.
+  The accuracy of the model on the `rotten_tomatoes` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Amplification</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/piecewise_sick.png" class="img-fluid" %}
 <div class="caption">
-  Sick.
+  The accuracy of the model on the `sick` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Amplification</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/piecewise_hate_speech.png" class="img-fluid" %}
 <div class="caption">
-  Hate Speech 18. 
+  The accuracy of the model on the `hate_speech18` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Amplification</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/piecewise_glue.png" class="img-fluid" %}
 <div class="caption">
-  Glue-wnli.
+  The accuracy of the model on the `glue_wnli` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Amplification</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
-### Results for Projection
+### Results for Control with Projection
 We can see that projection consistently decreases performance, which is expected as we can imagine projection as erasing the idea that the model needs to pay attention to these examples. Having positive or negative sign of $\alpha$ does not affect projection.
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/proj_tomato.png" class="img-fluid" %}
 <div class="caption">
-  Rotten tomatoes.
+  The accuracy of the model on the `rotten_tomatoes` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Projection</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/proj_sick.png" class="img-fluid" %}
 <div class="caption">
-  Sick.
+  The accuracy of the model on the `sick` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Projection</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/proj_hate_speech.png" class="img-fluid" %}
 <div class="caption">
-  Hate Speech 18.
+  The accuracy of the model on the `hate_speech18` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Projection</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/proj_glue.png" class="img-fluid" %}
 <div class="caption">
-  Glue-wnli.
+  The accuracy of the model on the `glue_wnli` dataset with amplification (positive) or suppression (negative) of the Context Vector using  <bold>Projection</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 ### Ablation Studies
 
-A key question is whether the Context Vectors are truly special. Especially because much of our results do not work, we would like to assess the "noise level." By sampling a random unit vector from $4096$-dimensional space, the hidden dimension of Mistral-7b-instruct, for each layer and using that for control, we get the following results.
+A key question is whether the Context Vectors are truly special. Especially because much of our results do not work, we would like to assess the "noise level." By sampling a random unit vector from $4096$-dimensional space, the hidden dimension of `Mistral-7b-instruct`, for each layer and using that for control, we get the following results.
 
 
 If we take the negative of all the Context Vectors, the graphs for positive and negative $\alpha$'s would switch. The fact that in our random sample we see such a large gap in the Glue-wnli graph indicates that there is quite a lot of noise. Moreover, if we take the negative of our particular randomly sampled vector, we obtain a Context Vector for Glue-wnli that is **extremely good** at controlling in-context-learning. The large landscape of $4096$-dimensional space is an exciting mystery.
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/random_tomato.png" class="img-fluid" %}
 <div class="caption">
-  Rotten tomatoes.
+  The accuracy of the model on the `rotten_tomatoes` dataset with amplification (positive) or suppression (negative) of a random vector using  <bold>Addition</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/random_sick.png" class="img-fluid" %}
 <div class="caption">
-  Sick.
+  The accuracy of the model on the `sick` dataset with amplification (positive) or suppression (negative) of a random vector using  <bold>Addition</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/random_hate_speech.png" class="img-fluid" %}
 <div class="caption">
-  Hate Speech 18.
+  The accuracy of the model on the `hate_speech18` dataset with amplification (positive) or suppression (negative) of a random vector using  <bold>Addition</bold>. The x-axis is the alpha value, and the y-axis is the accuracy. 
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/random_glue.png" class="img-fluid" %}
 <div class="caption">
-  Glue-wnli.
+  The accuracy of the model on the `glue_wnli` dataset with amplification (positive) or suppression (negative) of a random vector using  <bold>Addition</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
 
 
