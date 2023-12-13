@@ -2,7 +2,7 @@
 layout: distill
 title: Ensemble Learning for Mitigating Double Descent
 description: Exploring when and why Double Descent occurs, and how to mitigate it through Ensemble Learning.
-date: 2023-11-08
+date: 2023-12-12
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -241,7 +241,7 @@ Notice that the loss curve is more or less linear in the number of parameters, a
 
 ### L2-Boost Tree
 
-L2 Boosting is quite similar to the AdaBoost model, except for L2 Boosting, as models are built sequentially, each new model in the boosting algorithm aims to minimize the L2 loss. Like before, we first increase the number of boosting trees which form a forest in the L2-Boost model, then the number of forests across which we average using majority voting. The results can be seen below. Each tree is constrained to have no more than 10 leaves. 
+L2 Boosting is quite similar to the AdaBoost model, except for L2 Boosting, as models are built sequentially, each new model in the boosting algorithm aims to minimize the L2 loss<d-cite key="article"></d-cite><d-cite key="10.1214/aos/1013203451"></d-cite>. Like before, we first increase the number of boosting trees which form a forest in the L2-Boost model, then the number of forests across which we average using majority voting. The results can be seen below. Each tree is constrained to have no more than 10 leaves. 
 
 Notice how the classification loss begins to fall, then rises up again, then falls once more when we average across more forests to lower minimums than before. This result was consistent across multiple runs of this experiment, suggesting that double descent is real for L2-Boosted Tree Ensembles. 
 
