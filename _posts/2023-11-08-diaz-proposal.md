@@ -2,7 +2,7 @@
 layout: distill
 title: 'Optimizations of Transformers for Small-scale Performance'
 description: 'CNNs generally outperform ViTs in scenarios with limited training data. However, the narrative switches when the available training data is extensive. To bridge this gap and improve upon existing ViT methods, we explore how we can leverage recent progress in the transformer block and exploit the known structure of pre-trained ViTs.'
-date: 2023-11-15
+date: 2023-12-10
 htmlwidgets: true
 
 authors:
