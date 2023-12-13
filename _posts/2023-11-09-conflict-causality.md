@@ -93,9 +93,11 @@ On this journey, the projects key contributions are:
 
 4. **Developing Domain-Specific Performance Metrics**: In environments where additional, domain-specific labeled test data is scarce, the project proposes an intuitive method to derive relevant performance metrics. This approach not only aligns the evaluation more closely with the domain of interest but also provides a practical solution for researchers working in resource-constrained settings.
 
+
 ## Literature Background
 
 ### Qualitative Research on Conflicts
+
 
 Qualitative research has long been a cornerstone in the study of political conflicts. This body of work, now well-established, emphasizes the unique nature of each conflict, advocating for a nuanced, context-specific approach to understanding the drivers and dynamics of conflicts. Researchers in this domain have developed a robust understanding of the various pathways that lead to conflicts, highlighting the importance of cultural, historical, and socio-political factors in shaping these trajectories. While rich in detail and depth, this approach often faces challenges in scalability and systematic analysis across diverse conflict scenarios.
 
@@ -262,3 +264,4 @@ Despite the promising results, our project is not without its limitations, which
 5. **Integration with Other Data Sources**: Expanding the dataset beyond news articles to include social media, governmental reports, or academic literature could provide a more holistic view of conflict narratives and their causal relations.
 
 In conclusion, our project represents a significant step forward in the intersection of natural language processing and conflict research. By addressing these limitations and building on our foundational work, future research can continue to push the boundaries of what is possible in this exciting and ever-evolving field.
+
