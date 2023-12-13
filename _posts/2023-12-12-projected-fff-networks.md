@@ -47,16 +47,16 @@ For each of the experiment, we use a neural network with one hidden layer with 1
 
 | d             | final val acc |
 | ------------- |:-------------:|
-|4 |  17.72|
-|16 |  28.68|
-|64 |  51.52|
-|256 |  61.52|
-|512 |  76.73|
-|1024 |  89.95|
+|4 |  17.56|
+|16 |  20.39|
+|64 |  50.2|
+|256 |  71.1|
+|512 |  61.25|
+|1024 |  61.66|
 |original| 95.65|
 
 
-{% include figure.html path="assets/img/2023-12-12-projected-fff-networks/non_random.jpg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-12-12-projected-fff-networks/random.jpg" class="img-fluid" %}
 
 ## Better initialization
 
