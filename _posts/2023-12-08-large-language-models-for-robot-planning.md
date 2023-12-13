@@ -98,9 +98,26 @@ Nonetheless, multi-modal foundation models have proven to be a useful tool acros
 
 ## Results
 
-[Table]
+After experimenting on a wide range of complex environments with various prompting strategies, it is clear that VLMs are able to 
 
-[Bar Chart]
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/cosine-similarities.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Table 1: A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.html path="assets/img/bar-chart.jpg" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
+<div class="caption">
+    Figure 3: A simple, elegant caption looks good between image rows, after each row, or doesn't have to be there at all.
+</div>
+
 
 ## Discussion
 
