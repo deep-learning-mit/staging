@@ -3,22 +3,22 @@
 # -----------------------------------------------------------------------------
 
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
-first_name: abc
-middle_name: b
-last_name: c
-email: charlie.gauthier@umontreal.ca
+first_name: Philipp
+middle_name: 
+last_name: Zimmer
+email: philippz@mit.edu
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  Staging website for the 2023 ICLR Blogposts track
+  Project Proposal for Deep Learning Class
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
   Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
-keywords: machine-learning, ml, deep-learning, reinforcement-learning, iclr  # add your own keywords or leave empty
+keywords: machine-learning, ml, deep-learning, causality, political-conflicts  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: iclr_favicon.ico  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
-url: https://deep-learning-mit.github.io # the base hostname & protocol for your site
-baseurl: /staging # the subpath of your site, e.g. /blog/
+url: https://github.com/philippzi98/deep-learning-conflicts # the base hostname & protocol for your site
+baseurl:  # the subpath of your site, e.g. /blog/
 
 
 # url: https://iclr-blogposts.github.io # the base hostname & protocol for your site
@@ -265,7 +265,7 @@ more_authors_animation_delay: 10  # more authors are revealed on click using ani
 # -----------------------------------------------------------------------------
 
 imagemagick:
-  enabled: true # enables responsive images for your site (recomended, see https://github.com/alshedivat/al-folio/issues/537)
+  enabled: false # enables responsive images for your site (recomended, see https://github.com/alshedivat/al-folio/issues/537)
   widths:
     - 480
     - 800
