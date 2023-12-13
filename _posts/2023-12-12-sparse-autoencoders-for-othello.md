@@ -29,8 +29,6 @@ toc:
   - name: Discussion and Conclusion
 ---
 
-# 6.S898 Project - Studying the benefits and limitations of sparse auto-encoders for compositional reasoning tasks
-
 # Introduction
 
 Neural networks accomplish complex tasks and are poised to be increasingly used in critical and ubiquitous sectors of civilization. But given a model seemingly solving a problem, how much can we say about precisely how it does that and what its solution looks like?
@@ -128,11 +126,13 @@ Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
 
 | Layer |  MSE  |
 |:-----:|:-----:|
-|   0   | 0.749 |
-|   1   | 0.979 |
-|   2   | 1.363 |
-|   3   | 1.673 |
-|   4   | 3.105 |
+|   0   | 0.954 |
+|   1   | 1.389 |
+|   2   | 1.715 |
+|   3   | 2.038 |
+|   4   | 3.057 |
+
+We see that without the effect of size and only sparsity, the model performs significantly worse and if we compare the results to the one of size $64 \times 512 = 32768$ the model gets better because it is has more dimensions.
 
 ## Investigating the effect of size
 
