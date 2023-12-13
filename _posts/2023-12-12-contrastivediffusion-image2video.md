@@ -121,9 +121,9 @@ Thus, we propose a novel method for conditional image-to-image generation (gener
 
 Given a base pretrained diffusion model, such as Runway ML’s StableDiffusion 1.4, which is the model used in this blog, it consists of various components. The three that are the most important are the VAE image encoder/decoder, the UNet, and the CLIP text encoder. The VAE begins by learning to transform images into latents and vice-versa, which is used to compress the input image and decode the output latent in the original Instruct-Pix2Pix stack. On the other hand, the UNet predicts the noise in the denoising part of the pipeline, whereas the CLIP text encoder encodes the input text.
 
-In terms of the general diffusion loss, we use the traditional diffusion loss,
+In terms of the general diffusion model, we use the traditional diffusion loss,
 
-$$\mathcal{L} = \mathbb{E}[(\epsilon - \epsilon_\theta(z_t))^2]$$
+$$\mathcal{L} = \mathbb{E}[(\epsilon - \epsilon_\theta(x_t))^2]$$
 
 which essentially encodes the mean squared error loss between the added noise and the noise that is predicted by the UNet. This pipeline is illustrated in the below image.
 
@@ -159,7 +159,7 @@ where c indicates contrastive and i, t indicate input and target, respectively.
 
 For the images, they are encoded by the VAE, which has learned structure due to its Gaussian training objective in the ELBO loss, which means we can directly dot product the latents when calculating the contrastive loss:
 
-$$\mathcal{L}_c = \mathbb{E}[\frac{e^{x_+^{T}x}}{\sum_{x' \in \{x_+, x_{-} \}} e^{x'^{T}}}]$$
+$$\mathcal{L}_c = \mathbb{E}[\frac{e^{x_+^{T}x}}{\sum_{x' \in \{x_+, x_{-} \}} e^{x'^{T}x}}]$$
 
 This is calculated easily using a matrix multiplication and a cross entropy loss. Now, since we compute the contrastive loss using the predicted latent, and not the noise, we also add on a constructive aspect to our diffusion model. From the final noise prediction, the model also generates the predicted latent using the noise scheduler:
 
@@ -216,7 +216,9 @@ First, we sample 25k and 10k videos from WebVid-10M and MSR-VTT, respectively. W
 
 ## Experiments
 
-To assess the efficacy of our newly proposed strategy, we run experiments on both the original Instruct-Pix2Pix task of text-conditioned image-to-image generation, as well as the task of text-conditioned image-to-video generation, against the baseline Instruct-Pix2Pix model. The original Instruct-Pix2Pix task is run to confirm that our model, after obtaining coherency, does not lose significant expressivity. On the other hand, we expect the image-to-video model to have comparable expressivity to the baseline on a task where coherency is significantly more important. All of these evaluations and experiments were performed using the Accelerate library and HuggingFace Diffusers, <d-cite key = "von-platen-etal-2022-diffusers"></d-cite>, building off of their Instruct-Pix2Pix codebase. For the task of image-to-image generation, we trained both the baseline Instruct-Pix2Pix and our model for 9000 training steps on 4xA100-80GB with a batch size of 16 and a learning rate of 5e-5, which took on the order of 12 hours. For the image-to-video generation task, we trained both baseline Instruct-Pix2Pix and our contrastive model for 4500 training steps at a learning rate of 1e-5 and a batch size of 16 due to overfitting issues at higher # of training steps and higher learning rates, possibly due to the repetitiveness of our dataset. Note that we had a limited ability to hyperparameter tune/ablate, since each diffusion fine tuning run took multiple hours at a minimum, and we were operating on a minimal budget of spare A100s when they were available from our labs, so those results are not shown in this blog. 
+To assess the efficacy of our newly proposed strategy, we run experiments on both the original Instruct-Pix2Pix task of text-conditioned image-to-image generation, as well as the task of text-conditioned image-to-video generation, against the baseline Instruct-Pix2Pix model. The original Instruct-Pix2Pix task is run to confirm that our model, after obtaining coherency, does not lose significant expressivity. On the other hand, we expect the image-to-video model to have comparable expressivity to the baseline on a task where coherency is significantly more important. 
+
+All of these evaluations and experiments were performed using the Accelerate library and HuggingFace Diffusers, <d-cite key = "von-platen-etal-2022-diffusers"></d-cite>, building off of their Instruct-Pix2Pix codebase. The model is RunwayML's Stable Diffusion v1.5 release. For the task of image-to-image generation, we trained both the baseline Instruct-Pix2Pix and our model for 9000 training steps on 4xA100-80GB with a batch size of 16 and a learning rate of 5e-5, which took on the order of 12 hours. For the image-to-video generation task, we trained both baseline Instruct-Pix2Pix and our contrastive model for 4500 training steps at a learning rate of 1e-5 and a batch size of 16 due to overfitting issues at higher # of training steps and higher learning rates, possibly due to the repetitiveness of our dataset. Note that we had a limited ability to hyperparameter tune/ablate, since each diffusion fine tuning run took multiple hours at a minimum, and we were operating on a minimal budget of spare A100s when they were available from our labs, so those results are not shown in this blog. 
 
 
 
@@ -238,7 +240,7 @@ For text-conditioned image-to-image generation, we observe that our models have 
 | Baseline  | **142.4** | 21.7                    | **24.4**                | 24.1                   |     
 
 
-Our model matches the baseline on CLIP score, meaning that our model exhibits similar prompt following characteristics as the baseline. On top of that, our FID is only slightly higher than the baseline, meaning that the expressivity has not decreased significantly. However, coherence has few good metrics, as directly computed errors like MSE would punish single wrong pixel significantly more than overall incorrectness. On the other hand, embedding-based metrics might classify qualitatively small changes like color changes, or movement in the image, as non-important for clustering, which is why we have a combination of the two types of metrics in our training objective.
+Our model matches the baseline on CLIP score, meaning that our model exhibits similar prompt following characteristics as the baseline. On top of that, our FID is only slightly higher than the baseline, meaning that the expressivity has not decreased significantly. However, images do not have similarly robust 
 
 Hence, we now evaluate coherence qualitatively.
 
