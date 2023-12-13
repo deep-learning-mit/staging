@@ -2,7 +2,7 @@
 layout: distill
 title: Adaptive Controller with Neural Net Equations of Motion for High-DOF Robots
 description: This project aims to develop an adaptive control mechanism using a graph neural network to approximate the equations of motion (EoM) for high-degree-of-freedom (DOF) robotic arms bypassing the need for symbolic EoM to build an adaptive controller.
-date: 2023-12-12
+date: 2023-11-09
 htmlwidgets: true
 
 authors:
@@ -12,7 +12,7 @@ authors:
       name: [MIT Mechanical Engineering Department]
 
 # must be the exact same name as your blogpost
-bibliography: 2023-12-12-adaptive-controller-graph-eom.bib  
+bibliography: 2023-11-09-adaptive-controller-graph-eom.bib  
 
 # Add a table of contents to your post.
 toc:
