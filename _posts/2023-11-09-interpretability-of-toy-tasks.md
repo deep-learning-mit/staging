@@ -52,7 +52,7 @@ toc:
 With the recent emergence of grokking, mechanistic interpretability research has trended towards understanding how models learn <d-cite key="GrokNanda"></d-cite> <d-cite key="Pizza"></d-cite>. A central concept in this pursuit is superposition - a single neuron learning multiple "features."
 
 
-Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas. For example, in language there exist nouns, verbs, and adjectives. It has been found that language models often map these ideas to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
+Features are the distinguishing properties of data points, the “things” that allow a neural network to learn the difference between, say, a dog and a cat, or a Phillip Isola and a Jennifer Aniston. Features are the building blocks that determine what makes one data point different from another. In many cases, features discovered by and encoded within neural networks correspond to human-understandable ideas. For example, in language models there exist embedding vectors describing relations like gender or relative size (e.g., the famous vec(“king”) - vec(“man”) + vec(“woman”) =~ vec(“queen”)<d-cite key="mikolov2013efficient"></d-cite>). It has been found that language models often map ideas like these to features within their parameters. Human understanding is not necessary though, as models can find and map features that exist beyond the perception of humans. This is an important part of the success (and dual inscrutability) of modern deep models, as these models can determine features and relationships within the data that allow them to model large datasets, like language, very well.
 
 In this work we:
 
@@ -81,7 +81,7 @@ In a linear model, i.e., one which maps inputs to outputs with only linear funct
 So why do we care about Superposition? Why spend time studying this?
 
 
-While it may seem tangential, Superposition sheds important insights on Large Language Models (LLMs)! While LLMs are billions of parameters large, this is still not enough for a one-to-one mapping to “features" on the internet. Therefore LLMs also MUST exhibit superposition in order to learn. We focus our current work on the $\textit{bottleneck superposition}$ regime, but <d-cite key="incidental"></d-cite> has shown that the picture is far more complicated than presented in <d-cite key="toymodels"></d-cite>. Namely, varying the initialization can change how superposition unfolds. To normalize across experiments, we initialize all weights using the Xavier norm, as outlined by \cite{xavier}.
+While it may seem tangential, Superposition sheds important insights on Large Language Models (LLMs)! While LLMs are billions of parameters large, this is still not enough for a one-to-one mapping to “features" on the internet. Therefore LLMs also MUST exhibit superposition in order to learn. We focus our current work on the $\textit{bottleneck superposition}$ regime, but <d-cite key="incidental"></d-cite> has shown that the picture is far more complicated than presented in <d-cite key="toymodels"></d-cite>. Namely, varying the initialization can change how superposition unfolds. To normalize across experiments, we initialize all weights using the Xavier norm, as outlined by <d-cite key="xavier"></d-cite>.
 
 
 <div class="row mt-3 l-page">
@@ -106,10 +106,10 @@ There are three possibilities. As the network trains each neuron has three choic
 3. The neuron chooses to encode multiple features
 
 
-The neuron doesn’t choose to do anything - there is no free will - you are born into a loss landscape and an optimizer telling you what to do
+The neuron doesn’t choose to do anything - there is no free will - you are born into a loss landscape and an optimizer telling you what to do.
 
 
-In such linear models, each neuron is limited to representing only the most significant features (2), discarding others (1). Conversely, superposition, enabled by non-linear activation functions, adopts a more inclusive approach (3), trying to encode multiple features per neuron and learning efficient representational shortcuts.
+In linear models, each neuron is limited to representing only the most significant features (2), discarding others (1). Conversely, superposition, enabled by non-linear activation functions, adopts a more inclusive approach (3), trying to encode multiple features per neuron and learning efficient representational shortcuts.
 
 
 While ReLU bears similarity to the Gaussian Error Linear Unit (GeLU) used in modern GPT architectures, a deeper understanding of how different nonlinear activations impact superposition can provide crucial insights. Such understanding is key to unraveling the complex mechanisms through which neural networks utilize non-linearities, a cornerstone in the broader narrative of neural network interpretability.
@@ -155,7 +155,7 @@ Here we define two important augmentations that we used in the dataset to simula
 #### Sparsity
 
 
-Sparsity is a measure of how often a specific feature is present in a dataset. A feature is characterized as “sparse” if it only appears in a fraction of the inputs to the model. Similarly, features that are “dense” appear in many of the inputs.
+Sparsity is a measure of how often a specific feature is present in a dataset. A feature is characterized as “sparse” if it only appears in a small fraction of the inputs to the model. Similarly, features that are “dense” appear in many of the inputs. We will also use the term "density" to refer to the complement of sparsity $1-S$.
 
 
 Specifically, a feature with a sparsity of $S \in [0, 1]$ has a probability $S$ of being expressed in any given input. If we have $S=0$, this means that the feature is expressed in every input, whereas if we have $S=0.5$, this means that the feature is expected to be expressed in about half of the inputs.
@@ -411,6 +411,8 @@ The plots are generally consistent with the analysis from the previous experimen
 ## Conclusion
 
 Our investigation into the effects of various activation functions reveals that significant changes occur in model behavior depending on the chosen function. This finding underscores the ability to modulate the degree of superposition through the selection of activation functions, highlighting yet unexplored degrees of freedom in model design. This line of inquiry goes seamlessly with considerations of how neural networks are initialized and trained, suggesting these as promising future research directions.
+
+Our work is limited by the breadth of activation functions that we tested, though. Further iterations on each of the activation functions (e.g., tweaking the Sigmoid function to map to the range $(-\epsilon, 1+\epsilon)$) could prove fruitful in getting better performance from the models. Despite this, we have learned valuable insights about the effects that our set of activation functions can have on superposition.
 
 Pursuing enhanced interpretability, however, does not come without its challenges. Specifically, striving for transparency and understand-ability in neural network models raises concerns about the potential for deception. Despite these challenges, our research moves us closer to achieving neural network models that are not only more interpretable but also more transparent and secure, marking significant progress in the field of AI safety and reliability.
 
