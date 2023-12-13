@@ -6,7 +6,7 @@ date: 2023-12-10
 htmlwidgets: true
 
 authors:
-  - name: Sebastian Diaz
+  - name: Sebastian (Sebo) Diaz
     url:
     affiliations:
       name: MIT
