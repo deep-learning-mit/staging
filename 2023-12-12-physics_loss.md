@@ -95,7 +95,7 @@ where the $p_1$ objective was taken to be Fourier transform $\mathcal{F}$, spati
 
 
 
-​	*Table 1: Training performance for two-objective loss functions. All runs were performed with $\alpha =0.9,\; \mathcal{T}=1$*. The rightmost column show the percent improvement from the single objective training. The poor performance of $\mathcal{F}\circ\frac{d}{dx}$ might be due to high frequency noise being amplified by the derivative operator before being passed through the Fourier transform.
+​	*Table 1: Training performance for two-objective loss functions. All runs were performed with $\alpha =0.9,\; \mathcal{T}=1$. The rightmost column show the percent improvement from the single objective training. The poor performance of $\mathcal{F}\circ\frac{d}{dx}$ might be due to high frequency noise being amplified by the derivative operator before being passed through the Fourier transform.*
 
 |       $\boldsymbol{p_1}$       | $\boldsymbol{\mathcal{L_0}(\text{epoch = }200)}$ | % Improvement over Single Objective |
 | :----------------------------: | :----------------------------------------------: | :---------------------------------: |
