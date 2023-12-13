@@ -42,11 +42,11 @@ toc:
 
 In transfer learning, a model is trained for a specific task and is then fine-tuned for a different task <d-cite key="zhuang2020comprehensive"></d-cite>. In doing so, one tries to best leverage and reuse features and performance of the large pre-trained model for other tasks. Many works have focused on making transfer learning more robust and efficient. Transfer learning can be very useful for saving compute resources, time, and money.
 
-In this project, we study an opposing question: how to learn model weights that perform well for one dataset but reduce learning efficiency when transferred to another dataset. The motivation is as follows. As computational resources and capable models become more accessible, the risk of unregulated agents fine-tuning existing models increases, including for malicious tasks. Recent work has shown that previously aligned models can be compromised to produce malicious or harmful outputs <d-cite key="anonymous2023shadow"></d-cite> <d-cite key="qi2023finetuning"></d-cite>. This may even occur with a few adversarial examples against models specifically trained to produce safe outputs <d-cite key="lermen2023lora"></d-cite>. Currently, risks with language models are commonly discussed. However, investigating CNNs can guide designing defenses for neural network architectures against malicious agents in general.
+In this project, we study an opposing question: how to learn model weights that classify well for one dataset but reduce learning efficiency when transferred to another. The motivation is as follows. As computational resources and capable models become more accessible, the risk of unregulated agents fine-tuning existing models increases, including for malicious tasks. Recent work has shown that previously aligned models can be compromised to produce malicious or harmful outputs <d-cite key="anonymous2023shadow"></d-cite> <d-cite key="qi2023finetuning"></d-cite>. This may even occur with a few adversarial examples against models specifically trained to produce safe outputs <d-cite key="lermen2023lora"></d-cite>. Currently, risks with language models are commonly discussed. However, investigating CNNs can guide designing defenses for neural network architectures against malicious agents in general.
 
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/setting.png" class="img-fluid" %}
 
-To our knowledge, there exists no previous literature on learning parameters robust against transfer learning. A related field is machine unlearning. In machine unlearning, a model must forget certain pieces of data used in training <d-cite key="cao2015towards"></d-cite> <d-cite key="10.1007/s42979-023-01767-4"></d-cite>. However, we wish to examine methods that not only guarantee poor performance after unlearning, but also after fine-tuning on the “malicious” or “forget” dataset. For example, using a popular unlearning approach which reaches 0% accuracy on the “forget” dataset, we easily fine-tuned the model with the same dataset to reach higher accuracy after a few epochs as shown in Figure 1 <d-cite key="tarun2023fast"></d-cite>. This is a gap in previous work in machine unlearning and demonstrates the novelty and difficulty of learning models that not only perform poorly on specified datasets but are robust against fine-tuning.
+To our knowledge, there exists no previous literature on learning parameters robust against transfer learning. A related field is machine unlearning. In machine unlearning, a model must forget certain pieces of data used in training <d-cite key="cao2015towards"></d-cite> <d-cite key="10.1007/s42979-023-01767-4"></d-cite>. However, we wish to examine methods that not only guarantee poor performance after unlearning, but also after fine-tuning on the “malicious” or “forget” dataset. For example, using a popular unlearning approach which reaches 0% accuracy on the “forget” dataset, we easily fine-tuned the model with the same dataset to reach higher accuracy after a few epochs as shown below <d-cite key="tarun2023fast"></d-cite>. This is a gap in previous work in machine unlearning and demonstrates the novelty and difficulty of learning models that not only perform poorly on specified datasets but are robust against fine-tuning.
 
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/machine_unlearning.png" class="img-fluid" %}
 
@@ -125,10 +125,15 @@ Due to computational constraints, we work in the following toy setting. We use t
 The first evaluation metric is accuracy of the outputted model from each approach on beneficial data. This is shown in the figure below.
 
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/beneficial_accuracy.png" class="img-fluid" %}
-
+<div class="caption">
+   Figure 1 
+</div>
 The second metric of evaluation is the accuracy of the output model from each approach on test malicious data as it’s being fine-tuned on fine-tune malicious data. This is shown with learning curves in the figure below. Note that lower accuracy is better.
 
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/malicious_accuracy.png" class="img-fluid" %}
+<div class="caption">
+   Figure 2 
+</div>
 
 ## Discussion
 
@@ -143,7 +148,7 @@ We also experimented with Reverse-MAML under the Omniglot dataset <d-cite key="l
     All digits were predicted to be a 2.
 </div>
 
-Slow learning in SKD is likely caused by filtering by the ReLU activation function which causes activations to become 0. This ideally occurs when we train the student model to output negative activation values into the final classification layer if the input is from the “malicious” dataset. These values make it more difficult to learn useful weights for the final classification layer and apply gradient descent on earlier layers. We confirm this by measuring the percent of “malicious” images that don’t result in all 0 activations into the final classification layer shown below. We show, in general, misses are low across different teacher models. For this ablation, we vary teacher models by the number of epochs they are trained.
+Slow learning in SKD is likely caused by filtering by the ReLU activation function which causes activations to become 0. This ideally occurs when we train the student model to output negative activation values into the final classification layer if the input is from the “malicious” dataset. These values make it more difficult to learn useful weights for the final classification layer and apply gradient descent on earlier layers. We confirm this by measuring misses or the percent of “malicious” images that don’t result in all 0 activations into the final classification layer shown below. We show, in general, misses are low across different teacher models. For this ablation, we vary teacher models by the number of epochs they are trained.
 
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/student_table.png" class="img-fluid" %}
 
@@ -171,8 +176,12 @@ Ideally, in SKD, the underlying model would always output negative activation va
 
 ## Conclusion
 
-In this project, we investigated how to train a model such that it performs well on a “beneficial” dataset but is robust against transfer learning on a “malicious” dataset. First, we show this is a challenging problem, as existing state of the art methods in machine unlearning are unable to prevent fine-tuning. We then propose two new approaches: Reverse-MAML and SKD. Both serve as a proof of concept with promising preliminary results on the CIFAR-10 Dataset. We conclude by noting there are limitations to this work, most notably the need for a “malicious” dataset and computational limits, and we propose future work stemming from these experiments.
+In this project, we investigated how to train a model such that it performs well on a “beneficial” dataset but is robust against transfer learning on a “malicious” dataset. First, we show this is a challenging problem, as existing state of the art methods in machine unlearning are unable to prevent fine-tuning. We then propose two new approaches: Reverse-MAML and SKD. Both serve as a proof of concept with promising preliminary results on the CIFAR-10 Dataset. We conclude by noting there are limitations to this work, most notably the need for a “malicious” dataset and computational limits.  We then propose future work stemming from these experiments.
 
 ## Appendix
 
+
+CNN Architectures used for experiments:
 {% include figure.html path="assets/img/2023-11-09-transfer-resistant-model-training/CNN_architectures.png" class="img-fluid" %}
+
+* Note, all graphs and tables are averaged over 5 seeds with reported standard deviation.
