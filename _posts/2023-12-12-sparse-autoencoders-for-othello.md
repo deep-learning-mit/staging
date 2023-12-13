@@ -83,6 +83,7 @@ Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
 |   4   | 0.744 |
 
 Encoder's reported MSE loss on Pythia-70m after 100000 epochs.
+
 | Layer |  MSE  |
 |:-----:|:-----:|
 |   0   | 0.056 |
@@ -107,6 +108,7 @@ Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
 |   4   | 2.601 |
 
 Encoder's reported MSE loss on Pythia-70m after 100000 epochs.
+
 | Layer |  MSE  |
 |:-----:|:-----:|
 |   0   | 0.09  |
