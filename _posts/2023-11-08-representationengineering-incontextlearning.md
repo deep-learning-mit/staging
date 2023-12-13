@@ -95,11 +95,11 @@ Li et al. (2023) <d-cite key="li2023inferencetime"></d-cite> proposes Inference-
 
 ## Datasets
 
-We adopt the 26 dataset used by Min et al. (2022) <d-cite key="min2022rethinking"></d-cite> plus 4 extra datasets, including `rotten_tomatoes`, `ade_corpus_v2-classification`, `tweet_eval-irony`, `tweet_eval-stance_climate` to evaluate in-context learning. Following Min et al. (2022)<d-cite key="min2022rethinking"></d-cite>, we only use the test set to avoid potential cross-contamination with the data that the model is pretrained on.  reserve `k=64` examples in the test for few-shot training, and the rest are used for testing. 
+We adopt a total of 30 datasets on binary classification, (sentiment analysis, natural language inference, true/false inference) and multiple choices; 16 datasets are used by Min et al. (2022) <d-cite key="min2022rethinking"></d-cite>, plus 12 extra datasets in the `tweet_eval` and `ethos` dataset families, `rotten_tomatoes`, and `ade_corpus_v2-classification`. Following Min et al. (2022)<d-cite key="min2022rethinking"></d-cite>, we only use the test set to avoid potential cross-contamination with the data that the model is pretrained on.  reserve `k=64` examples in the test for few-shot training, and the rest are used for testing. 
 
 ### Training Data Generation 
 
-For training, we construct a set of context pairs for each dataset, each context pairs containing the same examples but different instructions. The instructions are "Pay attention to the following examples" and "Ignore the following examples" respectively, in the hope that by stimulating two opposites and examining the difference, we can find a Context Vector that represents what the model draws from.
+For training, we construct a set of context pairs for each dataset, each context pairs containing the same examples but different instructions. The instructions are "Pay attention to the following examples" and "Ignore the following examples" respectively, in the hope that by stimulating two opposites and examining the difference, we can find a Context Vector that represents what the model draws from. We then truncate the example at each and every token till the last 5 tokens, so we can get a neural activation reading for each of the tokens. 
 
 A sample training data input using the `rotten_tomatoes` dataset is as follows: 
 
@@ -160,7 +160,21 @@ We present results first on finding the Context Vector in the embedding space, t
 
 ## Representation Reading
 
-We use 
+We use the Representation Reading method presented in Zou et al. (2023) <d-cite key="zou2023representation"></d-cite> to find the Context Vector. Specifically, we adopted the setup of the instruction response pairs where for a given function $`f`$ and pairs of instructions $`x_i`$ and $`y_i`$, we denote the model's response truncated at the $`j`$-th token as $`f(x_i)_j`$ and $`f(y_i)_j`$ and take the neuron activity at the last token of each of the responses, namely the activations of each and every token in the response.  
+
+We then perform PCA on the difference of the activations of the two instructions, namely $`f(x_i)_j - f(y_i)_j`$ and find the first principal component $`v`$ that maximizes the difference in the embedding space. 
+
+**Correlation graph and its explanation** 
+
+We use t-SNE to visualize the difference in the embedding space on the inputs of the 30 datasets across 32 different layers and report the results below. 
+
+![t-SNE of the difference in the embedding space, color coded by dataset](/assets/2023-11-08-representationengineering-incontextlearning/tsne_data.png)
+
+![t-SNE of the difference in the embedding space, color coded by layers](/assets/2023-11-08-representationengineering-incontextlearning/tsne_layers.png)
+
+As shown in the figure, we find that the vectors are clustered by dataset, indicating that the Context Vectors are dataset-specific. There are no clear patterns across dataset or between different layers of the Context Vectors, further indicating that in-context learning activates different parts of the model's latent space with information about different types of tasks. 
+
+We also conducted scans for neuron activities across the different tokens of an example sequence in a similar style as Zou et al. (2023) <d-cite key="zou2023representation"></d-cite>. 
 
 ## Representation Control
 
