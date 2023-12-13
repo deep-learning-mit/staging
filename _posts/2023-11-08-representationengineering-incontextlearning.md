@@ -30,7 +30,7 @@ bibliography: 2023-11-08-representationengineering-incontextlearning.bib
 toc:
   - name: Introduction
   - name: Background & Related Work
-  - name: Experioment Setup
+  - name: Experiment Setup
   - name: Results
   - name: Conclusion
   - name: Sources 
@@ -91,7 +91,7 @@ Relatedly, there have been a recent surge in research related to model knowledge
 
 # Experiment Setup
 
-## Datasets
+### Datasets
 
 We adopt a total of 30 datasets on binary classification, (sentiment analysis, natural language inference, true/false inference) and multiple choices; 16 datasets are used by Min et al. (2022) <d-cite key="min2022rethinking"></d-cite>, plus 12 extra datasets in the `tweet_eval` and `ethos` dataset families, `rotten_tomatoes`, and `ade_corpus_v2-classification`. Following Min et al. (2022)<d-cite key="min2022rethinking"></d-cite>, we only use the test set to avoid potential cross-contamination with the data that the model is pretrained on.  reserve `k=64` examples in the test for few-shot training, and the rest are used for testing. 
 
@@ -144,11 +144,11 @@ Input:
 Label:
 > negative.
 
-## Model
+### Model
 
 We have explored using two models with 7 billion parameters, including `Mistral-7B-Instruct-v0.` and `Llama-2-7b-hf`; while we have found preliminary results consistent between the two models, all of our results later reported are from `Mistral-7B-Instruct-v0` for consistency and due to a constraint on computational power and time. 
 
-## Training Infrastructure
+### Training Infrastructure
 
 We used the MIT Supercloud infrastructure and a local machine with a single RTX 4090 GPU to train the model.
 
@@ -156,13 +156,12 @@ We used the MIT Supercloud infrastructure and a local machine with a single RTX 
 
 We present results first on finding the Context Vector in the embedding space, then on using the Context Vector to control model outputs and evaluate their performance.
 
-## Representation Reading
+### Representation Reading
 
 We use the Representation Reading method presented in Zou et al. (2023) <d-cite key="zou2023representation"></d-cite> to find the Context Vector. Specifically, we adopted the setup of the instruction response pairs where for a given function $`f`$ and pairs of instructions $`x_i`$ and $`y_i`$, we denote the model's response truncated at the $`j`$-th token as $`f(x_i)_j`$ and $`f(y_i)_j`$ and take the neuron activity at the last token of each of the responses, namely the activations of each and every token in the response.  
 
 We then perform PCA on the difference of the activations of the two instructions, namely $`f(x_i)_j - f(y_i)_j`$ and find the first principal component $`v`$ that maximizes the difference in the embedding space. 
 
-**Correlation graph and its explanation** 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/correlation_tomato.png" class="img-fluid" %}
 <div class="caption">
   Graph plotting the correlation between the Context Vector sign and actual dataset label on Rotten Tomatoes dataset. The x-axis is the layer and the y-axis is the correlation. 
@@ -187,8 +186,6 @@ We use t-SNE to visualize the difference in the embedding space on the inputs of
 <div class="caption">
   t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by layers.
 </div>
-
-{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_layers.png" class="img-fluid" %}
 
 As shown in the figure, we find that the vectors are clustered by dataset, indicating that the Context Vectors are dataset-specific. There are no clear patterns across dataset or between different layers of the Context Vectors, further indicating that in-context learning activates different parts of the model's latent space with information about different types of tasks. 
 
