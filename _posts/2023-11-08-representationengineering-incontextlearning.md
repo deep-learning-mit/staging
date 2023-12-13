@@ -1,8 +1,8 @@
 ---
 layout: distill
-title: Leveraging Representation Engineering to Evaluate LLM’s Situational Awareness
+title: Leveraging Representation Engineering For LLM’s In-Context-Learning
 description: We present a method to observe model internals whether LLMs are performing in-context learning and control the model outputs based on such Context Vectors.
-date: 2023-11-08
+date: 2023-12-12
 htmlwidgets: true
 
 # Anonymize when submitting
@@ -28,9 +28,12 @@ bibliography: 2023-11-08-representationengineering-incontextlearning.bib
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
 toc:
-  - name: Background
-  - name: Motivation
-  - name: Sources
+  - name: Introduction
+  - name: Background & Related Work
+  - name: Experioment Setup
+  - name: Results
+  - name: Conclusion
+  - name: Sources 
 
 
 # Below is an example of injecting additional post-specific styles.
@@ -62,7 +65,7 @@ We propose to use methods in Zou et al. (2023) <d-cite key="zou2023representatio
 
 We then explore the results of controlling the activations along the "Context Vector" direction, in the hope that editing the activitions would further boost the performance on top of in-context learning. We compare the model outputs on the classification datasets in a zero-shot setting and a setting of natural in-context learning, with the "Context Vector" amplified, and suppressed. While we find boosting performance through such editing to be challenging and sometimes finicky to tune, we find the results to be promising on editing weights to suppress the context that the model draws from and drastically reducing the performance. 
  
-## Background & Related Work
+# Background & Related Work
 
 ### In-Context Learning (ICL)
 An LLM is frequently aseked to perform a task in inference time that many realized providing some examples of how to answer the task can drastically improve the model's performance. This phenomenon is called in-context learning. For example, Zhou et al. (2022) <d-cite key = "zhou2022teaching"></d-cite> evaluates how LLM can become better at solving algorithmic problems through in-context learning, a task that LLM traditionally struggles at. 
@@ -160,6 +163,12 @@ We use the Representation Reading method presented in Zou et al. (2023) <d-cite 
 We then perform PCA on the difference of the activations of the two instructions, namely $`f(x_i)_j - f(y_i)_j`$ and find the first principal component $`v`$ that maximizes the difference in the embedding space. 
 
 **Correlation graph and its explanation** 
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/correlation_tomato.png" class="img-fluid" %}
+<div class="caption">
+  Graph plotting the correlation between the Context Vector sign and actual dataset label on Rotten Tomatoes dataset. The x-axis is the layer and the y-axis is the correlation. 
+</div>
+
+
 More surprisingly is the fact that we can find a clean representation of such Context Vector that correlates decently with the model inputs. 
 
 We use t-SNE to visualize the difference in the embedding space on the inputs of the 30 datasets across 32 different layers and report the results below.
@@ -340,6 +349,9 @@ If we take the negative of all the Context Vectors, the graphs for positive and 
 <div class="caption">
   The accuracy of the model on the `glue_wnli` dataset with amplification (positive) or suppression (negative) of a random vector using  <bold>Addition</bold>. The x-axis is the alpha value of amplification, and the y-axis is the accuracy. 
 </div>
+
+
+
 
 
 
