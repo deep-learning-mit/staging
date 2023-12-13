@@ -77,9 +77,9 @@ In our experiments, we compare how fast does the model train with random initial
 |4 |  17.72|
 |16 |  28.68|
 |64 |  51.52|
-|256 |  61.52|
-|512 |  76.73|
-|1024 |  89.95|
+|256 |  71.18|
+|512 |  83.93|
+|1024 |  90.18|
 |original| 95.65|
 
 
