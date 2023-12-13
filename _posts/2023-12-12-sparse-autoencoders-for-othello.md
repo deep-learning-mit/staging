@@ -29,6 +29,7 @@ toc:
   - name: Discussion and Conclusion
 ---
 
+# 6.S898 Project - Studying the benefits and limitations of sparse auto-encoders for compositional reasoning tasks
 
 # Introduction
 
@@ -61,7 +62,7 @@ Our set up for the replication, where we pick the same hyperparameters as the au
 
 We then train various sizes of sparse autoencoders on the 4th layer of the othello model and investigate the impact of the autoencoders size on the reconstructed hidden state.
 
-We measure the reconstruction power of the encoder with a reconstruction score defined as $\frac {Loss_{ZeroAblation} - Loss_{Reconstruction}} {Loss_{ZeroAblation} - Loss_{Normal}}$ where $Loss_{ZeroAblation}$ is Loss after ablating the reconstructed layer and use this as a measure for how well the encoder is able to reconstruct the mlp layer.
+We measure the reconstruction power of the encoder with a reconstruction score defined as $\frac {Loss_{ZeroAblation} - Loss_{Reconstruction}} {Loss_{ZeroAblation} - Loss_{Normal}}$ where $Loss_{ZeroAblation}$ is Loss after ablating the reconstructed layer and use this as a measure for how well the encoder is able to reconstruct the mlp layer. The intuition behind this is that we compare a "base zero", which is the ablation loss, with both the reconstruction of the layer and the original construction of the layer. This will provide us with a metric of how close our reconstruction is to ground truth.
 
 
 
@@ -84,7 +85,6 @@ Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
 |   4   | 0.744 |
 
 Encoder's reported MSE loss on Pythia-70m after 100000 epochs.
-
 | Layer |  MSE  |
 |:-----:|:-----:|
 |   0   | 0.056 |
@@ -109,7 +109,6 @@ Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
 |   4   | 2.601 |
 
 Encoder's reported MSE loss on Pythia-70m after 100000 epochs.
-
 | Layer |  MSE  |
 |:-----:|:-----:|
 |   0   | 0.09  |
@@ -119,9 +118,21 @@ Encoder's reported MSE loss on Pythia-70m after 100000 epochs.
 |   4   | 0.222 |
 
 
-From the results above we can see that the autoencoder reconstructs with higher MSE loss despite having the same sparsity constraint and multiplier between the activation size and the sparse embedding. The difference becomes more drastic as we increase the size and sparsity of the encoder. Our analysis of these results is that this aligns with our hypothesis in natural language sequence prediction for small models like these, it might be that it is easier for the encoder to learn sparser and more easily separable features that allow it to recover the activations. However, on a task like playing the game of Othello where the features are more abstract, and we think there might be a higher requirement of complex compositionality across layers, increasing sparsity and size, makes the model perform worse.
+From the results above we can see that the autoencoder reconstructs with higher MSE loss despite having the same sparsity constraint and multiplier between the activation size and the sparse embedding. The difference becomes more drastic as we increas the sparsity of the encoder. Our analysis of these results is that this aligns with our hypothesis in natural language sequence prediction for small models like these, it might be that it is easier for the encoder to learn sparser and more easily separable features that allow it to recover the activations. However, on a task like playing the game of Othello where the features are more abstract, and we think there might be a higher requirement of complex compositionality across layers, increasing sparsity and size, makes the model perform worse.
 
 Another significant emerging pattern in the MSE loss of the encoders is the fact that loss increases in the furthur layers, which backs up our initial claim; that as features become more abstract, the autoencoder has a harder time reconstructing them.
+
+It is worth noting that the increase of MSE across the two sets of tables is impacted by both the increase in size and sparsity. We had made the two tables, to match the already existing [benchmarks](https://www.alignmentforum.org/posts/AaoWLcmpY3LKvtdyq/some-open-source-dictionaries-and-dictionary-learning). However, in the following, we include the results of a sparse autoencoder with penalty coefficient of $3e-3$ and size $16 \times  512 = 8192$ to validate our claims about sparsity, without the effect of size.
+
+Encoder's Measured MSE loss on OthelloGPT after 100000 epochs.
+
+| Layer |  MSE  |
+|:-----:|:-----:|
+|   0   | 0.749 |
+|   1   | 0.979 |
+|   2   | 1.363 |
+|   3   | 1.673 |
+|   4   | 3.105 |
 
 ## Investigating the effect of size
 
