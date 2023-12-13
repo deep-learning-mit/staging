@@ -200,5 +200,72 @@ The following are the LAT scans for the neuron activities corresponding to a Con
 
 ## Representation Control
 
+To change an activation along some direction, we can imagine there are several canonical ways. First, given our reading vector $v$ and an activation $a$, we can do one of the following.
+
+
+### Addition
+
+$$
+a' = a + v
+$$
+
+
+### Amplification
+
+
+$$
+a' = a + \text{sign}(a \cdot v) v
+$$
+
+### Projection
+
+
+$$
+a' = a  - (a \cdot v) \cdot \frac{v}{||v||^2}
+$$
+
+
+
+The first represents a constant perturbation so it supposedly transforms the representation to become more of a certain quality. The second amplifies the direction according to which side it is on, so it makes the representation more extreme. The third removes the quality from the representation by subtracting the projection. 
+
+
+
+
+We explore all these methods to control Mistral-7b-instruct. We do our experiments on the `rotten_tomato`, `sick`, `hate_speech18`, and `glue-wnli` in-context-learning datasets consisting of input-output pairings where outputs have two possible correct options -- positive or negative contradiction or entailment, hate or noHate, and entailment or not_entailment (for `sick`, it originally contains a third option of `neutral` which we remove since our framework requires two classes).
+
+Given learned representations with the same configuration as our representation reading, we construct a test set from the same dataset as training. The test set has $16$ examples, each with one demonstration followed by a question. We evaluate correctness by having the LLM generate $10$ tokens and checking if the correct answer is contained in the output and the incorrect answer is not contained in the output, without being sensitive to case. This ensures correct evaluation so that an answer of no_entailment does not evaluate as correct for having entailment inside of it if entailment is the right answer.
+
+
+A hyperparameter which we denote $\alpha$ scales the size of $v$. If our reading vector is $r$, sign value is $s$, then we have $v = \alpha \cdot  r \cdot s$. We vary $\alpha \in \{ 0, 0.25, 0.5, 1, 2, 5, 10}$.
+
+
+
+
+
+
+### Results for Addition
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_tomato.png" class="img-fluid" %}
+<div class="caption">
+  Rotten tomatoes dataset, using add method.
+</div>
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_sick.png" class="img-fluid" %}
+<div class="caption">
+  t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by layers.
+</div>
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_hate_speech.png" class="img-fluid" %}
+<div class="caption">
+  t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by layers.
+</div>
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/add_glue.png" class="img-fluid" %}
+<div class="caption">
+  t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by layers.
+</div>
+
+
+
+### Projection
 
 
