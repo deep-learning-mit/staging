@@ -110,8 +110,6 @@ Policies were evaluated by coding a small bot in the recently released [botting 
 
 I'll now describe some of the changes I tried and give an analysis of the results of each change.  
 
-The game state comes in the form of 15x15 to 20x20 boards. Each cell can have an arbitrary amount of army on it, and a few different special terrain features. On each turn, an action consists of selecting a user-controlled tile and a movement direction. Games can last many hundreds of turns. 
-
 ## Effects of more data
 
 The baseline policy, trained with 1000 games, was not very successful. The bot would often move back and forth, without trying to expand or take land. 
