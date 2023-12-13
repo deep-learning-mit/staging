@@ -185,7 +185,7 @@ There's a decent amount of low hanging fruit:
     <li>Trying a vision transformer<d-cite key="dosovitskiy2021image"></d-cite>, and trying to have it attend to previous states for recurrence too.</li>
 </ol>
 
-I think achieving even higher levels of performance would require doing some form of search. From my understanding, the most similar approach would be something like MuZero. This would allow us to properly learn a world model despite the incomplete information, which we can then do search on.  
+I think achieving even higher levels of performance would require doing some form of search. From my understanding, the most similar approach would be something like MuZero<d-cite key="muzero"></d-cite>. This would allow us to properly learn a world model despite the incomplete information, which we can then do search on.  
 
 Overall, I learned a ton in this project about how to apply deep learning to a new problem. I encountered many of the issues described in "Hacker's Guide to DL" and the related readings. My biggest takeaway is to spend the time setting up the proper infrastructure. Poor infrastructure causes bugs and makes it really hard to iterate. 
 
