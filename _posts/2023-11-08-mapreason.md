@@ -25,12 +25,21 @@ bibliography: 2023-11-08-mapreason.bib
 #     for hyperlinks within the post to work correctly.
 toc:
   - name: Motivation
-  - name: XXX
-  - name: YYY
-  - name: ZZZ
     subsections:
-    - name: ZZZ.A
-    - name: ZZZ.B
+    - name: Literature review and the gap in previous literature
+  - name: New Dataset
+    subsections:
+    - name: A glimpse of the coregistration task
+  - name: Experiments
+    subsections:
+    - name: Zero-shot evaluation
+    - name: Fine-tuned evaluation
+    - name: Improving results for co-registration
+    - name: Human benchmarking
+    - name: Analysis on prompt engineering
+    - name: Investigating the failure points of LVLMs on coregistration
+  - name: Discussion, Limitations, and Future Work
+  - name: Conclusion
 
 # Below is an example of injecting additional post-specific styles.
 # This is used in the 'Layouts' section of this post.
@@ -85,7 +94,6 @@ Recently there has been a massive push towards integrating other modalities into
 
 A frequently used dataset for evaluating LVLMs, which is also included in the Visual Reasoning benchmark, is the ScienceQA<d-cite key="science_qa"></d-cite> dataset which includes more than 20 thousand multimodal multiple-choice questions across 127 categories including a category for maps. However, examining the narrow slice of questions with images in the geography/map category shows that many of them do not necessitate a vision component and can be answered solely based on the textual question (e.g. “Which of these states is farthest north?” with four different states as a multiple choice question), or provide an entirely unused visual representation (e.g. providing a map of the United States with no text alongside the question “What is the capital of New York?”). Out of the questions that rely on the visual component to correctly answer, many of them require relatively little understanding of maps such as asking “Which country is highlighted?” which only requires visual matching of the highlighted section with typical shapes of countries or continents. Additionally, recent papers such as LLama-adapter<d-cite key="llama_adapter"></d-cite> have demonstrated that it’s possible to achieve a high accuracy of 78.3% on ScienceQA using an unimodal text-only Large Language Model. Thus, although ScienceQA does have a subsection dedicated to maps, it does not seem sufficiently capable of testing the capabilities of LVLMs to reason and understand maps.
 
-
 An area closely related to maps that do have a relatively higher degree of focus is the capability of models to parse and reason about diagrams, figures, and plots.  Datasets on this topic include the ACL-FIG<d-cite key="acl_fig"></d-cite> which involves classifying and labeling scientific figures, InfographicVQA<d-cite key="info_vqa"></d-cite> which requires reasoning over data visualizations in infographics, ChartQA<d-cite key="chart_qa"></d-cite> which requires reasoning over charts, and many other datasets that focus on figures are plots. Models have been developed to specifically tackle this challenge, such as Google’s DEPLOT<d-cite key="deplot"></d-cite> which is capable of reasoning over charts and plots by translating them to text and then using an LLM as a reasoning engine on top of the outputted text. However, charts and plots are still significantly different from maps, as the plots these datasets usually contain are simple line charts and bar graphs that can be translated into a table or textual format in a relatively lossless manner, while it is difficult or impossible to perfectly transform a sufficiently detailed map to a textual format without losing information. This illustrates the inherent complexities associated with processing maps meant to depict dense information which requires direct reasoning on the vision modality as opposed to charts and plots which present data in a simple manner.
 
 **Maps Reasoning:** Huge strides have been made in specific tasks related to maps, such as image-to-map<d-cite key="image_to_map"></d-cite> conversion and map segmentation<d-cite key="map_segmentation"></d-cite>. However, we wanted to focus more generally on map understanding and reasoning by LVLMs as opposed to a single task-specific performance. To draw on an analogy, consider the act of isolating specific parts of speech (such as nouns or verbs) in language. A model designed exclusively for this task lacks the comprehensive understanding exhibited by an LLM which is proficient in addressing almost any language task. In the context of map co-location, deep learning models are employed solely as preprocessing steps to extract relevant information for subsequent utilization by matching algorithms as opposed to an LVLM model capable of general reasoning on maps. For example, the authors in this study<d-cite key="intersection_map"></d-cite> use region-based CNN to extract road intersections, which are subsequently input into a map-matching procedure. Other features like street names have also been proposed in the literature<d-cite key="street_name_map"></d-cite>. In general, current frameworks for map reasoning require many hand-crafted and engineered steps (see, e.g., this<d-cite key="aerial_understanding"></d-cite> work and the references within). A recently proposed dataset, MapQA<d-cite key="map_qa"></d-cite>, is closely related to what we consider as map reasoning. However, the maps contained are of sufficiently low information-density and exhibit similar limitations to what we described in InfographicVQA and ChartQA as the images provided can be sufficiently translated to a textual domain before considering the textual input using a similar technique to DEPLOT. To the best of our knowledge, there are no examples in the literature where LVLMs are used to directly reason about maps at the detail we propose and perform tasks such as coregistration.
@@ -93,6 +101,8 @@ An area closely related to maps that do have a relatively higher degree of focus
 Our aim is to tackle the gap in assessing the map reasoning capabilities of LVLMs by developing a dataset aimed only at coregistration and analyzing the capabilities of existing models on such a dataset We focus our benchmark construction on the specific task of coregistration as it serves as an indicator of map reasoning capabilities and is one step towards constructing a comprehensive benchmark for map reasoning capabilities of LVLMs. 
 
 <!-- ############## -->
+
+<br/>
 
 # New Dataset
 
@@ -189,7 +199,11 @@ We showcase multiple positive and negative pairs alongside the natural reasoning
 
 <!-- ############## -->
 
+<br/>
+
 # Experiments
+
+## Zero-shot evaluation
 
 To start, we want to evaluate the zero-shot performance of pre-trained LVLMs on the task of identifying whether the two images are the same (coregistration). The models we start our evaluation with are BLIP-2<d-cite key="blip"></d-cite>, ViLT<d-cite key="vilt"></d-cite>, LXMERT-VQA, and LXMERT-GQA<d-cite key="lxmert"></d-cite>. We specifically chose these models as they are all publicly available multimodal text generative models that were partly trained on visual question-answering datasets. Thus, they are able to accept both the vision and language inputs consisting of an image of the two side-by-side maps alongside the yes-or-no question of whether the two maps depict the same geographical location.
 
@@ -288,7 +302,7 @@ Due to the potential importance of prompts in affecting performance, we decided 
 | 4     | The following image contains two maps with different styles side by side. Do the two maps show the same location? Answer with "Yes" or "No". Answer: |
 | 5     | On the left there is a map from the VFR dataset and on the right a map from the IFR dataset. Do the two maps show the same location? Answer with "Yes" or "No". Answer: 
 | 6     | There are two maps of different styles, do they represent the same area or are they completely different? Answer: |
-| 7     | The following image contains two maps with different styles side by side. Do the two maps show the same location? Try to compare the maps by looking at key landmarks r features. Answer with "Yes" or "No". Answer: |
+| 7     | The following image contains two maps with different styles side by side. Do the two maps show the same location? Try to compare the maps by looking at key landmarks or features. Answer with "Yes" or "No". Answer: |
 | 8     | Carefully examine the following two images that contain two maps with different styles side by side. Do the two maps correspond on the same latitude and longitude point? It is of utmost importance that you answer this correctly. Answer with "Yes" or "No". Answer: |
 
 <br/>
@@ -308,7 +322,7 @@ One aspect that might limit this analysis is that almost all prompts contain an 
 
 ## Investigating the failure points of LVLMs on coregistration
 
-The figures presented in the beginning of the blog post demonstrating some examples in our proposed dataset give a clue of the variance in difficulty of the examples in the dataset, where some samples are easy to identify as positive pairs and others much harder to do so.
+The figures presented in the beginning of the blog post demonstrating some examples in our proposed dataset give a clue of the variance in the difficulty of the examples in the dataset, where some samples are easy to identify as positive pairs and others much harder to do so.
 
 Thus, to get a better insight into the model's performance and investigate its failure points, we investigate some examples where the models made confidently wrong predictions. Here, we focus on a single model, FLAVA, which was our best-performing LVLM. In the figure below, we investigate both false positives with the highest predicted positive label and false negatives with the highest predicted negative label. The figure contains the 9 examples where the model generated a very high (very low) score while the true label was positive (negative).
 
@@ -323,6 +337,8 @@ Thus, to get a better insight into the model's performance and investigate its f
 
 For the false positives, we see more than one example where two maps containing water were wrongly classified. This might indicate that the model is making predictions on these images based on colors more so than spatial reasoning. For the false negatives, there are many examples where the VFR chart is dense while the IFR is sparse. These examples require discarding a lot of information from the VFR charts and focusing solely on the region where the IFR chart contains information. Given that the model made wrong decisions in these examples, there might be a preference for positively matching images based on density. Notably, some of these examples were straightforward for the human subjects (matching based on the shoreline), while other examples required more effort (matching between dense and sparse maps).
 
+<br/>
+
 # Discussion, Limitations, and Future Work
 
 One of the key takeaways of our experiments, and specifically from contrasting the first two experiments with the third experiment, is that it was not difficult for a non-LVLM model to achieve an 85% accuracy on our proposed dataset. Yet, our dataset proved to be challenging for LVLMs, especially in zero-shot performance where they achieved almost no better than random guessing. This implies that it would be beneficial to further expand future datasets that are used for LVLM training and specifically the addition of data collection similar to what we propose and that this could provide invaluable improvements to future training of LVLMs.
@@ -334,6 +350,8 @@ We plan to expand the size of our new dataset used in this project and to make i
 There are some limitations to the current analysis done in this project. A significant limitation is the computational limit preventing us from feasibly generating answers from the LVLMs in an autoregressive manner instead of our analysis which used only one output token per sample. A possible future work is examining more complicated generation methods such as Chain of Thought<d-cite key="chain_Thought"></d-cite> prompting. Additionally regarding the inputs of the models, although we investigated different text prompts, we only used one template for the visual prompts while there have been multiple recent works on visual prompt engineering in vision-language models<d-cite key="vision_prompt"></d-cite> analogous to textual prompt engineering in LLMs. It could be the case that some models are sensitive to the way the maps are concatenated. This aspect warrants further investigation to gain a more comprehensive understanding of how different concatenation methods might impact model performance and results.
 
 Another limitation is that we were only capable of running our analysis on open-source models, the largest model tested was blip-2 with less than 3 billion parameters. This was the largest LVLM that we had access to in terms of weights, to be able to run our analysis on. Future work could attempt to run the analysis on larger closed-source models if access is granted.
+
+<br/>
 
 # Conclusion
 
