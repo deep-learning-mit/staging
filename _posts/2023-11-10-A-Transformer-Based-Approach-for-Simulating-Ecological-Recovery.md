@@ -127,6 +127,10 @@ Both datasets indicate that SpectralFormer performs well with certain classes th
 
 <!-- $$ v_{i, j}^{\alpha, \beta, \gamma } =\Phi \left ({\!\sum _{k} \sum _{h=0}^{H_{i}-1} \sum _{w=0}^{W_{i}-1} \sum _{r=0}^{R_{i}-1} \omega _{i, j, k}^{h', w', r'} v_{i-1, k}^{\alpha +h',\beta +w',\gamma +r'}+b_{i, j}\!}\right) $$ -->
 
+<iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/puispeformertsne_plot.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%" ></iframe>
+
+<iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/saspeformertsne_plot.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%" ></iframe>
+
 The SpectralFormer's moderate class separation reflects its challenge in spatial-spectral feature discrimination. Although its CAF module is designed to enhance feature representation by fusing information across layers, the results suggest there might be room for improvement in its capability to discern overlapping spectral and spatial features. This is particularly evident in the clustering of urban landscape classes in the Pavia University dataset, where the architectural and natural features present similar spectral profiles but differ in their spatial arrangement. While the SpectralFormer shows promise in processing hyperspectral data with complex spectral signatures, its performance might be enhanced by further tuning to address the subtle differences between similar classes. Advancements could include integrating more specialized attention mechanisms or layer fusion techniques to refine its spatial-spectral feature extraction. Additionally, employing domain-specific augmentations or preprocessing steps to emphasize the differences between challenging classes could further bolster its discriminative power.
 
 {% capture figures %}
@@ -146,10 +150,6 @@ The SpectralFormer's moderate class separation reflects its challenge in spatial
 {% include figure.html path="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/spatialspectralarch.png" class="img-fluid" caption="GAHT Model Architecture" %}
 
 The Spectral–Spatial Feature Tokenization Transformer (SSFTT) <d-cite key="sun_spectralspatial_2022"></d-cite> introduces a pioneering approach in hyperspectral image (HSI) classification by leveraging the inherent spectral continuity and variability of the data. Through Groupwise Spectral Embedding (GSE), SSFTT departs from the discrete sequentiality typical of classical transformers and instead, utilizes a grouping operation, to model feature embeddings from locally spectral profiles (or neighboring bands). The grouping redefines the spectral signature as a function of neighboring bands, illustrating a fundamental shift from bandwise to groupwise spectral embeddings. This method capitalizes on the dense sampling of spectral channels and the almost continuous nature of spectral signatures, which reflects different absorption characteristics corresponding to various wavelengths. This unique aspect of SSFTT enables capturing more physically representative features of the material under observation, providing a nuanced understanding of the spectral information and thus, offering a significant advantage in accurately classifying materials based on their spectral signatures.
-
-<iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/puispeformertsne_plot.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%" ></iframe>
-
-<iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/saspeformertsne_plot.html' | relative_url }}" frameborder='0' scrolling='no' height="500px" width="100%" ></iframe>
 
 {% capture figures %}
 <div style="display: flex; justify-content: space-around; align-items: center;">
