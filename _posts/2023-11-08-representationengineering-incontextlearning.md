@@ -67,31 +67,26 @@ While we find boosting performance through such editing to be challenging and so
 ## Background & Related Work
 
 ### In-Context Learning (ICL)
-An LLM is frequently aseked to perform a task in inference time that many realized providing some examples of how to answer the task can drastically improve the model's performance. This phenomenon is called in-context learning. 
-
-For example, Zhou et al. (2022) <d-cite key = "zhou2022teaching"></d-cite> evaluates how LLM can become better at solving algorithmic problems through in-context learning, a task that LLM traditionally struggles at. 
+An LLM is frequently aseked to perform a task in inference time that many realized providing some examples of how to answer the task can drastically improve the model's performance. This phenomenon is called in-context learning. For example, Zhou et al. (2022) <d-cite key = "zhou2022teaching"></d-cite> evaluates how LLM can become better at solving algorithmic problems through in-context learning, a task that LLM traditionally struggles at. 
 
 In other scenarios, the LLM does not need to rely on prompts at all and can deduce the pattern from the few-shot examples alone to predict the answer. While there is no universal definition of in-context learning and its meaning has shifted over time, we define it as the performance boost to answer questions based on a limited amount of examples (as the context). 
 
-
-The concept is first popularized by the GPT-3 paper (Brown et al. (2020) <d-cite key = "brown2020language"></d-cite>), where the authors observe that models can make “increasingly efficient use of in-context information” by "developing a broad set of skills and pattern recognition abilities" during pretraining and then "rapidly adapt to or recognize the desired task" during inference. The concept puzzles many researchers because LLMs are not explicitly pre-trained to perform such tasks, but rather on next-token prediction, and the model's ability to perform such tasks is not well understood.
-
-Min et al. (2022) <d-cite key = "min2022rethinking"></d-cite> observes that such ICL phenonemon is observed as long as examples are given, and a mismatch between input and output pairs would not hinder the ability of models performing ICL and thus its performance on the tasks. Wei et al. (2023) <d-cite key="wei2023larger"></d-cite> further corrobates this work by finding on small models but show that as models scale, the ability to pick up on flipped patterns when given in-context examples with flipped labels and override semantic priors is stronger.
+Interesting, Min et al. (2022) <d-cite key = "min2022rethinking"></d-cite> observes that such ICL phenonemon is observed as long as examples are given, and a mismatch between input and output pairs would not hinder the ability of models performing ICL and thus its performance on the tasks. Wei et al. (2023) <d-cite key="wei2023larger"></d-cite> further corrobates this work by finding on small models but show that as models scale, the ability to pick up on flipped patterns when given in-context examples with flipped labels and override semantic priors is stronger.
 
 ### Theories on why ICL happens
-While the concept of ICL is well studied, the underlying mechanism of ICL is not well understood. Xie et al. (2022) <d-cite key = "xie2022explanation"></d-cite> explains the phenomenon of ICL as an Implicit Bayesian Inference, where the in-context learning prompt serves as a stimulus for the model to go "locate" corresponding concept stored in the model's latent space that the LM has learned implicitly during pre-training. They study this by generating a simple pretraining distribution that parameterizes the transition of a Hidden Markov Model (HMM) and another prompting distribution. In this setting, the authors reduce the ICL task to Bayesian inference when asked about prompts from another distribution and map it through the HMM onto the pretraining distribution. 
+While the concept of ICL is well studied, the underlying mechanism of ICL is not well understood. Xie et al. (2022) <d-cite key = "xie2022explanation"></d-cite> explains the phenomenon of ICL as an Implicit Bayesian Inference, where the in-context learning prompt serves as a stimulus for the model to go "locate" corresponding concept stored in the model's latent space that the LM has learned implicitly during pre-training. They study this by generating a simple pretraining distribution that parameterizes the transition of a Hidden Markov Model (HMM) and another prompting distribution. In this setting, the authors reduce the ICL task to Bayesian inference to map the prompting distribution to the pretraining distribution. 
 
-Akyürek et al. (2022) <d-cite key = "akyürek2023learning"></d-cite> further explains that Transformer-based in-context learners implement standard learning algorithms implicitly. von Oswald et al. (2023) <d-cite key="vonoswald2023transformers" ></d-cite>claims that Transformer-based in-context learners is similar to gradient-based meta-learning formulations where they found that the Transformer can learn smaller models of a certain concept by gradient descent in their forward pass.
+Akyürek et al. (2022) <d-cite key = "akyürek2023learning"></d-cite> further explains that Transformer-based in-context learners implement standard learning algorithms implicitly by encoding smaller models modularized to perform each specific tasks and update them based on the new in-context exampless. von Oswald et al. (2023) <d-cite key="vonoswald2023transformers" ></d-cite>claims that Transformer-based in-context learners is similar to gradient-based meta-learning formulations where they found that the Transformer can learn smaller models of a certain concept by gradient descent in their forward pass.
 
-Furthermore, Olsson et al. (2022)  <d-cite key = "olsson2022context"></d-cite> draws parallel from ICL to a more understood phenomenon of Induction Head, where attention-only Transformers picks up on the algorithm to predict next tokens by searching for a previous occurance of the last token and copying the same next token from previous occurences. They claim that this can be a potential mechanism to explain ICL. 
+Furthermore, Olsson et al. (2022)  <d-cite key = "olsson2022context"></d-cite> draws parallel from ICL to a more understood phenomenon of Induction Head, where attention-only Transformers picks up on the algorithm to predict next tokens by searching for a previous occurance of the last token and copying the same next token from previous occurences. They claim that this can be a potential mechanism to explain ICL.
+
+While many hypotheses and theories have been proposed to explain ICL, most explorations to prove their theory has been small in scale, and the literature lacks a study on the large-scale LMs' internals when performing ICL. 
 
 ### Model Editing & Representation Engineering
 
 We’ll use the Representation reading and controls methods presented in [Zou et al. (2023)](https://arxiv.org/pdf/2310.01405.pdf) to understand the context where the model attends to and discover directions that indicate such reasoning. 
 
-Relatedly, there have been a recent surge in research related to model knowledge editing, including Meng et al. (2023) <d-cite key = "meng2023massediting"></d-cite>, Zhong et al. (2023) <d-cite key = "zhong2023mquake"></d-cite>, and Hernandez et al. (2023) <d-cite key = "hernandez2023inspecting"></d-cite> that demonstrate different methods for locating and editing factual associations. Other work, including Shao et al. (2023) <d-cite key="shao2023gold"></d-cite> and Belrose et al. (2023) <d-cite key="belrose2023leace"></d-cite>, have shown results on concept erasures. 
-
-Li et al. (2023) <d-cite key="li2023inferencetime"></d-cite> proposes Inference-Time Intervention, where they find directions of causal influence on "truthfulness" data and increase the activations along that direction to increase truthfulness, scoring better on the TruthfulQA dataset. 
+Relatedly, there have been a recent surge in research related to model knowledge editing, including Meng et al. (2023) <d-cite key = "meng2023massediting"></d-cite>, Zhong et al. (2023) <d-cite key = "zhong2023mquake"></d-cite>, and Hernandez et al. (2023) <d-cite key = "hernandez2023inspecting"></d-cite> that demonstrate different methods for locating and editing factual associations. Other work, including Shao et al. (2023) <d-cite key="shao2023gold"></d-cite> and Belrose et al. (2023) <d-cite key="belrose2023leace"></d-cite>, have shown results on erasing larger-scale memory units such as concepts. Li et al. (2023) <d-cite key="li2023inferencetime"></d-cite> applies such concept erasion techniques by conducting Inference Time Interference, where one can find a direction of causal influence on "truthfulness" data and increase the activations along that direction to increase truthfulness, scoring better on the TruthfulQA dataset. 
 
 # Experiment Setup
 
@@ -192,13 +187,29 @@ As shown in the figure, we find that the vectors are clustered by dataset, indic
 
 We also conducted scans for neuron activities in the Context Vector across the different tokens of an example sequence in a similar style as Zou et al. (2023) <d-cite key="zou2023representation"></d-cite>, for which the previous work has referred to as Linear Artificial Tomography (LAT) scans. 
 
-The following are the LAT scans for the neuron activities corresponding to a Context Vector trained on `rotten_tomatoes` sentiment analysis dataset evaluated on different dataset sequences. The following graphs further corroborate the findings above on the dataset-specificity of in-context learning; while the a sequence from the `rotton_tomatoes` dataset result in high neural activities for the Context Vector, most sequences from the other dataset do not, showing the uniqueness of such Context Vector. 
+The following are the LAT scans for the neuron activities corresponding to a Context Vector trained on `rotten_tomatoes` sentiment analysis dataset evaluated on different dataset sequences. The following graphs further corroborate the findings above on the dataset-specificity of in-context learning; while the a sequence from the `rotton_tomatoes` dataset result in high neural activities for the Context Vector, most sequences from the other dataset do not, showing the uniqueness of such Context Vector. We have also observed most of the neuron activities in the later layers. This phenomenon makes sense since more abstract concepts and semantic structures formulate in later layers, thus being more correlated with the Context Vector, while earlier layers pick up more on token-level abstractions.
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_rotten_tomatoes.png" class="img-fluid" %}
+<div class="caption">
+  A LAT scan of the Context Vector trained on `rotten_tomatoes` dataset evaluated with a `rotten_tomatoes` sequence. The x-axis is the token index, and the y-axis is the Layer number. More red indicates higher neural activities, and more blue indicates lower neural activities.
+</div>
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_medical_questions_pair.png" class="img-fluid" %}
+<div class="caption">
+  A LAT scan of the Context Vector trained on `rotten_tomatoes` dataset evaluated with a `medical_questions_pair` sequence. 
+</div>
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_ethos_religion.png" class="img-fluid" %}
+<div class="caption">
+  A LAT scan of the Context Vector trained on `rotten_tomatoes` dataset evaluated with a `ethos-religion` sequence. 
+</div>
 
-## Representation Control
+We have also produced graphs that zoom into the token-level neural activities detection on the Context Vector of the opposing pair (Pay attention & Don't pay attention), shown below. A large difference in the neural activities of the two instructions is denoted by red and indicates that the ablation is effective, while the green shades indicate that there are similar in neural activities. The results show that the neural activities are consistently different across the sequence until the model starts generating next tokens and the context ends where the neural activities are similar. 
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/rotten_tomatoes_token_level.png" class="img-fluid" %} 
+<div class="caption">
+  A token-level LAT scan that compares the difference between the neural activities of the Context Vector of the opposing pair (Pay attention & Don't pay attention) on the `rotten_tomatoes` dataset. 
+</div>
+
+## Representation Control 
 
 To change an activation along some direction, we can imagine there are several canonical ways. First, given our reading vector $v$ and an activation $a$, we can do one of the following.
 
