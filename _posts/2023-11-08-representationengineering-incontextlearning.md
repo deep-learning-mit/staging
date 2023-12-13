@@ -167,6 +167,7 @@ We use the Representation Reading method presented in Zou et al. (2023) <d-cite 
 We then perform PCA on the difference of the activations of the two instructions, namely $`f(x_i)_j - f(y_i)_j`$ and find the first principal component $`v`$ that maximizes the difference in the embedding space. 
 
 **Correlation graph and its explanation** 
+More surprisingly is the fact that we can find a clean representation of such Context Vector that correlates decently with the model inputs. 
 
 We use t-SNE to visualize the difference in the embedding space on the inputs of the 30 datasets across 32 different layers and report the results below.
 
@@ -177,7 +178,12 @@ We use t-SNE to visualize the difference in the embedding space on the inputs of
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_data.png" class="img-fluid" %}
 <div class="caption">
-  t-SNE plot of 
+  t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by dataset.
+</div>
+
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_layers.png" class="img-fluid" %}
+<div class="caption">
+  t-SNE plot of the embedding space of the Context Vectors across the 30 datasets and 32 layers, color coded by layers.
 </div>
 
 {% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/tsne_layers.png" class="img-fluid" %}
@@ -186,8 +192,11 @@ As shown in the figure, we find that the vectors are clustered by dataset, indic
 
 We also conducted scans for neuron activities in the Context Vector across the different tokens of an example sequence in a similar style as Zou et al. (2023) <d-cite key="zou2023representation"></d-cite>, for which the previous work has referred to as Linear Artificial Tomography (LAT) scans. 
 
-The following is the LAT scan for the neuron activities corresponding to a Context Vector trained on `rotten_tomatoes` sentiment analysis dataset evaluated on different dataset sequences. The following graphs further corroborate the findings above on the dataset-specificity of in-context learning. 
+The following are the LAT scans for the neuron activities corresponding to a Context Vector trained on `rotten_tomatoes` sentiment analysis dataset evaluated on different dataset sequences. The following graphs further corroborate the findings above on the dataset-specificity of in-context learning; while the a sequence from the `rotton_tomatoes` dataset result in high neural activities for the Context Vector, most sequences from the other dataset do not, showing the uniqueness of such Context Vector. 
 
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_rotten_tomatoes.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_medical_questions_pair.png" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-08-representationengineering-incontextlearning/lat_scan_ethos_religion.png" class="img-fluid" %}
 
 ## Representation Control
 
