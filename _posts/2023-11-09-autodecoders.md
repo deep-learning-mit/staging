@@ -71,7 +71,7 @@ Furthermore, we discuss additional applications in various fields that other res
 
 ### Related Work
 
-Different literature have utilized autodecoder frameworks in the past along with rationale for their usage, mainly for tasks related to reconstruction or generative modeling through representation learning. However, none have provided a detailed dive into the theory of how and why they work.
+Different literature have utilized autodecoder frameworks in the past along with providing rationale for their usage, mainly for tasks related to reconstruction or generative modeling through representation learning. However, none have provided standalone examples of their use, something we aim to accomplish in this blog.
 
 The Generative Latent Optimization framework was introduced by Bojanowski et al. (2019) as an alternative to the adversarial training protocol of GANs. Instead of producing the latent representation with a parametric encoder, the representation is learned freely in a non-parametric manner. One noise vector is optimized by minimizing a simple reconstruction loss and is mapped to each image in the dataset.
 
