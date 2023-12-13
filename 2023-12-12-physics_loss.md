@@ -25,7 +25,7 @@ $$\begin{aligned}
 
 
 
-where $$p_i(\cdot)$$ is a physical objective that we want to enforce during training (e.g. spatial and time derivatives $$\nabla \bf u_H$$, $$\bf\dot{u}_H$$ etc.) and the $$\beta_i$$ are fixed weighting coefficients.
+where $p_i(\cdot)$ is a physical objective that we want to enforce during training (e.g. spatial and time derivatives $\nabla \bf u_H$, $\bf\dot{u}_H$ etc.) and the $\beta_i$ are fixed weighting coefficients.
 
 
 
@@ -75,11 +75,11 @@ To mitigate these issues in this investigation we employ a multi-objective optim
 
 In particular we use the Relative Loss Balancing with Random Lookback (ReLoBRaLo) scheme from [5] for the MOO. The scheme adaptively updates the loss weights at the end of each epoch according to the progress of each individual loss component:
 
-$$\begin{align*}
+$$\begin{aligned}
 \beta_i^{bal}(t) &= m\cdot 
 \frac {\exp\left(\frac{\mathcal{L}_i(t)}{\mathcal{T}\mathcal{L}_i(t-1)}\right)} {\sum_{j=1}^m \exp\left(\frac{\mathcal{L}_j(t)}{\mathcal{T}\mathcal{L}_j(t-1)}\right)},\;i\in\{1,...,m\}\\
 \beta_i(t) &= \alpha\beta_i(t-1) + (1-\alpha)\beta_i^{bal}(t)
-\end{align*}$$
+\end{aligned}$$
 
 There are many more details in [5], but essentially the $\beta_i^{bal}(t)$ term measures the progress of the loss $\mathcal{L}_i$ since the previous epoch relative to the progress made by other losses.  The more a particular loss is struggling the more we increment its weight for the next epoch. The $\alpha$ hyper-parameter indicates bias towards the existing weight values. When $\alpha=1$ no updates are made. The temperature hyper-parameter $\mathcal{T}$ indicates the the level of equality across loss components. As $\mathcal{T} \to 0$ only the most struggling loss component receives a weight update. When $\mathcal{T}\to \infty$ all components receive an equal weight update. Note that we initialize  $\beta_0(0)=1$ and $\beta_i(0)=0$ for $i>0$.
 
