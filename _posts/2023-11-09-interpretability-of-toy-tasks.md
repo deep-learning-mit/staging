@@ -2,7 +2,7 @@
 layout: distill
 title: The Effect of Activation Function On Superposition in Toy Models
 description: An in-depth exploration of how different activation functions influence superposition in neural networks.
-date: 2023-11-08
+date: 2023-12-12
 htmlwidgets: true
 authors:
  - name: Vedang Lad
