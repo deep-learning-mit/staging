@@ -1,7 +1,7 @@
 ---
 layout: distill
 title: Leveraging Representation Engineering to Evaluate LLM’s Situational Awareness
-description: We present a method to tell whether LLMs are drawing from knowledge not explicitly mentioned in the prompt by examining token-level representations.
+description: We present a method to observe model internals whether LLMs are performing in-context learning and control the model outputs based on such Context Vectors.
 date: 2023-11-08
 htmlwidgets: true
 
@@ -58,7 +58,9 @@ Emerging capabilities in deep neural networks are not well understood, one of wh
 
 We attempt to explore the phenomenon of in-context learning by leveraging another exciting field of work on mechanistic interpretability where researchers set out to understand model behaviors by interpreting and editing internal weights in models. One such work that we base on is Representation Engineering by Zou et al. (2023)<d-cite key="zou2023representation"></d-cite> , where they construct a set of training text stimuli to probe LLM activations and use such stimuli to identify a direction that accurately predicts the underlying concept based on the neural activations of the model. This approach allows us to elicit readings of representation and control such representation.
 
-We propose to use methods in Zou et al. (2023) <d-cite key="zou2023representation"></d-cite> to evaluate in-context learning by constructing artificial examples of in-context learning on binary classication tasks. We find a reading vector that shows high neural activity after the model is stimulated with the context pairs; such a "Context Vector" indicates the context the models draws from. We then explore the results of controlling the activations along the "Context Vector" direction, in the hope that editing the activitions would further boost the performance on top of in-context learning. We compare the model outputs on the classification datasets in a zero-shot setting and a setting of natural in-context learning, with the "Context Vector" amplified, and suppressed. We found that such model weight editing accomplish XXX. 
+We propose to use methods in Zou et al. (2023) <d-cite key="zou2023representation"></d-cite> to evaluate in-context learning. There has not been previous attempts to examine the model internals holistically in a LLM while it is performing in-context learning. We expose such neural activations by constructing stimulus through artificial examples of in-context learning on binary classication tasks. We find a reading vector that shows high neural activity after the model is stimulated with the context pairs; such a "Context Vector" indicates the context the models draws from. While we hoped to find certain universal mechanisms across different datasets, we find that the Context Vector is dataset-specific and confirm previous hypotheses that in-context learning retrieves information from different parts of the model's latent space.
+
+We then explore the results of controlling the activations along the "Context Vector" direction, in the hope that editing the activitions would further boost the performance on top of in-context learning. We compare the model outputs on the classification datasets in a zero-shot setting and a setting of natural in-context learning, with the "Context Vector" amplified, and suppressed. We found that such model weight editing accomplish XXX. 
 
 While we find boosting performance through such editing to be challenging and sometimes finicky to tune, we find the results to be promising on editing weights to suppress the context that the model draws from and drastically reducing the performance. We hope that this work can serve as a stepping stone to further understand the phenomenon of in-context learning and how to leverage it to improve LLMs.
  
@@ -174,7 +176,10 @@ We use t-SNE to visualize the difference in the embedding space on the inputs of
 
 As shown in the figure, we find that the vectors are clustered by dataset, indicating that the Context Vectors are dataset-specific. There are no clear patterns across dataset or between different layers of the Context Vectors, further indicating that in-context learning activates different parts of the model's latent space with information about different types of tasks. 
 
-We also conducted scans for neuron activities across the different tokens of an example sequence in a similar style as Zou et al. (2023) <d-cite key="zou2023representation"></d-cite>. 
+We also conducted scans for neuron activities in the Context Vector across the different tokens of an example sequence in a similar style as Zou et al. (2023) <d-cite key="zou2023representation"></d-cite>, for which the previous work has referred to as Linear Artificial Tomography (LAT) scans. 
+
+The following is the LAT scan for the neuron activities corresponding to a Context Vector trained on `rotten_tomatoes` sentiment analysis dataset evaluated on different dataset sequences. The following graphs further corroborate the findings above on the dataset-specificity of in-context learning. 
+
 
 ## Representation Control
 
