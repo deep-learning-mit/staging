@@ -1,8 +1,7 @@
 ---
 layout: distill
-title: Sample Blog Post
-description: Your blog post's abstract.
-  This is an example of a distill-style blog post and the main elements it supports.
+title: Modeling Elephantfish Communication through Deep RNNs
+description: Elephantfish represent a fascinating subject for study within the realms of bioacoustics and animal communication due to their unique use of electric fields for sensing and interaction. 
 date: 2022-12-01
 htmlwidgets: true
 
@@ -11,9 +10,14 @@ htmlwidgets: true
 #   - name: Anonymous
 
 authors:
-  - name: Ishita Goluguri
+  - name: Bright Liu
+    url: "https://en.wikipedia.org/wiki/Albert_Einstein"
     affiliations:
-      name: MIT
+      name: Harvard
+  - name: Anthony Rodriguez-Miranda
+    url: "https://en.wikipedia.org/wiki/Boris_Podolsky"
+    affiliations:
+      name: Harvard
 
 # must be the exact same name as your blogpost
 bibliography: 2022-12-01-distill-example.bib  
