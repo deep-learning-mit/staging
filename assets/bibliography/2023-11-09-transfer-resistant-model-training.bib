@@ -7,6 +7,34 @@
       primaryClass={cs.LG}
 }
 
+@inproceedings{
+anonymous2023shadow,
+title={Shadow Alignment: The Ease of Subverting Safely-Aligned Language Models},
+author={Anonymous},
+booktitle={Submitted to The Twelfth International Conference on Learning Representations},
+year={2023},
+url={https://openreview.net/forum?id=rg0vQmkB7F},
+note={under review}
+}
+
+@misc{qi2023finetuning,
+      title={Fine-tuning Aligned Language Models Compromises Safety, Even When Users Do Not Intend To!}, 
+      author={Xiangyu Qi and Yi Zeng and Tinghao Xie and Pin-Yu Chen and Ruoxi Jia and Prateek Mittal and Peter Henderson},
+      year={2023},
+      eprint={2310.03693},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
+}
+
+@misc{lermen2023lora,
+      title={LoRA Fine-tuning Efficiently Undoes Safety Training in Llama 2-Chat 70B}, 
+      author={Simon Lermen and Charlie Rogers-Smith and Jeffrey Ladish},
+      year={2023},
+      eprint={2310.20624},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG}
+}
+
 @inproceedings{cao2015towards,
   title={Towards making systems forget with machine unlearning},
   author={Cao, Yinzhi and Yang, Junfeng},
@@ -15,6 +43,128 @@
   year={2015},
   organization={IEEE}
 }
+
+@article{10.1007/s42979-023-01767-4,
+author = {Zhang, Haibo and Nakamura, Toru and Isohara, Takamasa and Sakurai, Kouichi},
+title = {A Review on Machine Unlearning},
+year = {2023},
+issue_date = {Apr 2023},
+publisher = {Springer-Verlag},
+address = {Berlin, Heidelberg},
+volume = {4},
+number = {4},
+url = {https://doi.org/10.1007/s42979-023-01767-4},
+doi = {10.1007/s42979-023-01767-4},
+abstract = {Recently, an increasing number of laws have governed the useability of users’ privacy. For example, Article 17 of the General Data Protection Regulation (GDPR), the right to be forgotten, requires machine learning applications to remove a portion of data from a dataset and retrain it if the user makes such a request. Furthermore, from the security perspective, training data for machine learning models, i.e., data that may contain user privacy, should be effectively protected, including appropriate erasure. Therefore, researchers propose various privacy-preserving methods to deal with such issues as machine unlearning. This paper provides an in-depth review of the security and privacy concerns in machine learning models. First, we present how machine learning can use users’ private data in daily life and the role that the GDPR plays in this problem. Then, we introduce the concept of machine unlearning by describing the security threats in machine learning models and how to protect users’ privacy from being violated using machine learning platforms. As the core content of the paper, we introduce and analyze current machine unlearning approaches and several representative results and discuss them in the context of the data lineage. Furthermore, we also discuss the future research challenges in this field.},
+journal = {SN Comput. Sci.},
+month = {apr},
+numpages = {13},
+keywords = {Machine learning, Data lineage, Security, Privacy, Machine unlearning}
+}
+
+@article{tarun2023fast,
+  title={Fast yet effective machine unlearning},
+  author={Tarun, Ayush K and Chundawat, Vikram S and Mandal, Murari and Kankanhalli, Mohan},
+  journal={IEEE Transactions on Neural Networks and Learning Systems},
+  year={2023},
+  publisher={IEEE}
+}
+
+@inproceedings{finn2017model,
+  title={Model-agnostic meta-learning for fast adaptation of deep networks},
+  author={Finn, Chelsea and Abbeel, Pieter and Levine, Sergey},
+  booktitle={International conference on machine learning},
+  pages={1126--1135},
+  year={2017},
+  organization={PMLR}
+}
+
+@article{krizhevsky2012imagenet,
+  title={Imagenet classification with deep convolutional neural networks},
+  author={Krizhevsky, Alex and Sutskever, Ilya and Hinton, Geoffrey E},
+  journal={Advances in neural information processing systems},
+  volume={25},
+  year={2012}
+}
+
+@article{raffel2020exploring,
+  title={Exploring the limits of transfer learning with a unified text-to-text transformer},
+  author={Raffel, Colin and Shazeer, Noam and Roberts, Adam and Lee, Katherine and Narang, Sharan and Matena, Michael and Zhou, Yanqi and Li, Wei and Liu, Peter J},
+  journal={The Journal of Machine Learning Research},
+  volume={21},
+  number={1},
+  pages={5485--5551},
+  year={2020},
+  publisher={JMLRORG}
+}
+
+@article{plested2022deep,
+  title={Deep transfer learning for image classification: a survey},
+  author={Plested, Jo and Gedeon, Tom},
+  journal={arXiv preprint arXiv:2205.09904},
+  year={2022}
+}
+
+@article{goerttler2021exploring,
+  title={Exploring the similarity of representations in model-agnostic meta-learning},
+  author={Goerttler, Thomas and Obermayer, Klaus},
+  journal={arXiv preprint arXiv:2105.05757},
+  year={2021}
+}
+
+@article{park2019meta,
+  title={Meta-curvature},
+  author={Park, Eunbyung and Oliva, Junier B},
+  journal={Advances in Neural Information Processing Systems},
+  volume={32},
+  year={2019}
+}
+
+@inproceedings{bourtoule2021machine,
+  title={Machine unlearning},
+  author={Bourtoule, Lucas and Chandrasekaran, Varun and Choquette-Choo, Christopher A and Jia, Hengrui and Travers, Adelin and Zhang, Baiwu and Lie, David and Papernot, Nicolas},
+  booktitle={2021 IEEE Symposium on Security and Privacy (SP)},
+  pages={141--159},
+  year={2021},
+  organization={IEEE}
+}
+
+@article{wu2023unveiling,
+  title={Unveiling security, privacy, and ethical concerns of chatgpt},
+  author={Wu, Xiaodong and Duan, Ran and Ni, Jianbing},
+  journal={Journal of Information and Intelligence},
+  year={2023},
+  publisher={Elsevier}
+}
+
+@article{DBLP:journals/corr/abs-1803-02999,
+  author       = {Alex Nichol and
+                  Joshua Achiam and
+                  John Schulman},
+  title        = {On First-Order Meta-Learning Algorithms},
+  journal      = {CoRR},
+  volume       = {abs/1803.02999},
+  year         = {2018},
+  url          = {http://arxiv.org/abs/1803.02999},
+  eprinttype    = {arXiv},
+  eprint       = {1803.02999},
+  timestamp    = {Mon, 13 Aug 2018 16:48:00 +0200},
+  biburl       = {https://dblp.org/rec/journals/corr/abs-1803-02999.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
+}
+
+
+@article{lake2015human,
+  title={Human-level concept learning through probabilistic program induction},
+  author={Lake, Brenden M and Salakhutdinov, Ruslan and Tenenbaum, Joshua B},
+  journal={Science},
+  volume={350},
+  number={6266},
+  pages={1332--1338},
+  year={2015},
+  publisher={American Association for the Advancement of Science}
+}
+
 
 @inproceedings{selvaraju2017grad,
   title={Grad-cam: Visual explanations from deep networks via gradient-based localization},
