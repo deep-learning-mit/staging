@@ -145,15 +145,15 @@ We notice first, that the average similarity is much higher in this case, sugges
 
 Finally, we include some photos of molecules generated in this process (we were unable to generate photos in the RDK fingerprint trained autoencoder, because we require an adjacency matrix to draw the molecules, and it is not straightforward to go from fingerprint to matrix):
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.05 PM" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.05 PM.png" class="img-fluid" %}
 
 In the photo above, we can see the lefthand side tail as a recognizable part of an organic molecule, suggesting success with some types of bonds. In the photo below, we see that the autoencoder has learnt some additional aspects beyond basic single bonds (one of the validation images we show further below includes a similar red ring).
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.45 PM" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.45 PM.png" class="img-fluid" %}
 
 Finally, the photo below while the least small-molecule-like in appearance, is interesting because it appeared many times in samples of 100 images (around 20 times) despite the latent space adjacency matrices being distinct. This could perhaps have to do with the process of converting from an adjacency matrix of reals (the result of latent space sampling) to an adjacency matrix of 1/0s, which we accomplish with median thresholding.
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.59 PM" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/Screenshot 2023-12-12 at 7.33.59 PM.png" class="img-fluid" %}
 
 For reference, a sample image from the "validation" true small-molecule dataset is shown below:
 
@@ -168,23 +168,23 @@ In the past, as seen in the E3 paper, diffusion models have been applied to 3D a
 
 The following plots provide information about the training of the diffusion model on adjacency matrices. First, is a plot of the loss over 5 training epochs at LR 0.001; this model was trained on approximately 90K training samples, so the loss was quite low even after the first epoch:
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_1" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_1.png" class="img-fluid" %}
 
 The efficacy of diffusion models as a means of generating novel adjacency matrices is evident from the following visualizations of our results. First, here are two runs of the denoising process for the diffusion model, first on an extremely limited set of approximately 1000 matrices, and then on the entire 90K dataset. As seen, even with very few inputs, it was possible to identify the emergence of a ‘bright spot’ in the top left, which represents the actual adjacency matrix (which was later encoded into actual matrices).
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_2" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_2.png" class="img-fluid" %}
 
 In converting these adjacency matrices into actual molecule images, we aimed to visualize the backbones of these molecules (which is most informative as to the overall structure), so instead of focusing on determining atomic identity, we instead labelled all of them as carbons and proceeded.
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_3" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_3.png" class="img-fluid" %}
 
 Notably, in comparison to the molecules created by the autoencoder, these contain more of the structures which are characteristics of organic molecules, such as 5 and 6 carbon rings with molecules (potentially side chains of length >1) coming off. Indeed, it is possible to observe the progressively increased ordering of the adjacency matrices over times (as they become closer and closer to actual molecules), going from extremely disordered to closer and closer to something meaningful.
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_4" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_4.png" class="img-fluid" %}
 
 The application of diffusion models to the RDKFingerprints is shown here: for two separate runs, they look like this. Notably, in order to use an image classification network for RDKFingerprints, the fingerprints were stacked into an image which looks like a series of stripes. As evident, the diffusion model was able to produce such striped images, and their simplicity is a good indication that these are indeed good learnings of information about the filtered subset.
 
-{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_5" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-molecule_generation/shorna_5.png" class="img-fluid" %}
 
 **Conclusion**
 
