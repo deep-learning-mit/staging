@@ -238,7 +238,7 @@ From this equation, we see that during gradient descent, the network $f$ changes
 
 To further understand the connections between the NTK and wide neural networks, I benchmarked the performance of wide neural networks and the NTK on the task of predicting the effects of a gene knockout on a cell. 
 
-{% include figure3.html path="assets/img/2023-12-12-overparameterization/Fig3.png" class="img-fluid" %} Figure 1. Experiment workflow.
+{% include figure.html path="assets/img/2023-12-12-overparameterization/Fig3.png" class="img-fluid" %} Figure 1. Experiment workflow.
 
 All the datasets are publicly available on [DepMap](https://depmap.org/portal/) and I processed the data the same way as I did in <d-cite key="cai2023synthetic"></d-cite> (but the experimental results I describe here are new). In short, I have 998 cells embedded with a 30,000-dimensional vector of the expression and mutation status of genes in the cell. The target task is to predict the effect of knocking out the gene KRAS in each cell. The "effect" is a scalar that indicates how alive the cell is, with negative values indicating that the cell is more dead and positive values indicating that the cell is more alive. 
 
@@ -273,13 +273,13 @@ It is interesting to note the similarities between this closed form for the pred
 
 To test this insight, I ran an experiment to see how similar a Gaussian Process trained on a fixed dataset is to kernel regression with the same kernel.
 
-{% include figure4.html path="assets/img/2023-12-12-overparameterization/Fig4.png" class="img-fluid" %} Figure 2. Results of Gaussian Process Regression and Kernel Ridge Regression on synthetic data with the same kernel function.
+{% include figure.html path="assets/img/2023-12-12-overparameterization/Fig4.png" class="img-fluid" %} Figure 2. Results of Gaussian Process Regression and Kernel Ridge Regression on synthetic data with the same kernel function.
 
 I sampled $X \sim \mathcal{N}(5,1)$ and $Y \sim \sin(X) + \mathcal{N}(0,0.2)$. I then trained a Gaussian Process and kernel ridge regression on the data with $K(x,\tilde{x}) = -\exp{\frac{\|x-\tilde{x}\|_2^2}{2}} + Id$. As expected, the function learned by kernel ridge regression closely matches the mean of the class of functions learned by the GP.
 
 Another connection between kernel regression and GPs can be made through the introduction of a one hidden layer MLP. See below figure.
 
-{% include figure1.html path="assets/img/2023-12-12-overparameterization/Fig1.png" class="img-fluid" %} Figure 3. Visualization of kernel regression, MLPs, and Gaussian Processes.
+{% include figure.html path="assets/img/2023-12-12-overparameterization/Fig1.png" class="img-fluid" %} Figure 3. Visualization of kernel regression, MLPs, and Gaussian Processes.
 
 Starting with kernel regression, if we fix the "feature map," $B $, then training gradient descent with $A^{(0)} = 0$ is equivalent to training kernel regression with $K(x,\tilde{x}) = \langle \phi(Bx), \phi(Bx) \rangle$. This is intuitive because again, we can just think of kernel regression as linear regression ($A$) after applying a nonlinear feature map, ($\phi \circ B$). 
 
@@ -305,7 +305,7 @@ Ultimately, what this shows is that a neural network of infinite width over i.i.
 
 The below figure summarizes my findings on the connections between the three types of function classes:
 
-{% include figure2.html path="assets/img/2023-12-12-overparameterization/Fig2.png" class="img-fluid" %} Figure 4. Comparison of kernel regression, MLPs, and Gaussian Processes.
+{% include figure.html path="assets/img/2023-12-12-overparameterization/Fig2.png" class="img-fluid" %} Figure 4. Comparison of kernel regression, MLPs, and Gaussian Processes.
 # Discussion
 
 To summarize, these are the implications of the NN-Kernel Regression-GP Connection:
