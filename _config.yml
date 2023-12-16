@@ -3,10 +3,10 @@
 # -----------------------------------------------------------------------------
 
 title: 6.S898 Deep Learning Blogs 2023 # the website title (if blank, full name will be used instead)
-first_name: R.
-middle_name: Preston
-last_name: Hess
-email: rphess@mit.edu
+first_name: abc
+middle_name: b
+last_name: c
+email: charlie.gauthier@umontreal.ca
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   Staging website for the 2023 ICLR Blogposts track
 footer_text: >
@@ -264,7 +264,7 @@ more_authors_animation_delay: 10  # more authors are revealed on click using ani
 # -----------------------------------------------------------------------------
 
 imagemagick:
-  enabled: False # enables responsive images for your site (recomended, see https://github.com/alshedivat/al-folio/issues/537)
+  enabled: true # enables responsive images for your site (recomended, see https://github.com/alshedivat/al-folio/issues/537)
   widths:
     - 480
     - 800
