@@ -1,0 +1,167 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <style>
+        #root, #canvas {
+            width: 100%;
+            height: 100%;
+
+            background: black;
+        }
+
+        #start {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            margin-left: 0px; 
+            margin-right: 0px;
+        }
+
+        @media only screen and (min-width: 820px) and (max-width: 999px) {
+            body {
+                margin-left: 130px; 
+                margin-right: 130px;
+            }
+        }
+
+        @media only screen and (min-width: 1000px) {
+            body {
+                margin-left: 184px; 
+                margin-right: 184px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio controls id="brass">
+        <source src="../../video/2023-11-09-ddsp-proposal/entertainer.wav" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <div id="root">
+        <button id="start">Start Widget</button>
+        <div id="canvas">Widget will load here</div>
+    </div>
+    <script>
+        // https://github.com/adriano-di-giovanni/yinjs/blob/master/yin.min.js
+        !function(n,r){"function"==typeof define&&define.amd?define(function(){return n.yin=r()}):"object"==typeof module&&module.exports?module.exports=r():n.yin=r()}("undefined"!=typeof self?self:this,function(){var n=Math.floor;return function(r,e,t){var o=t||.07,f=function(n){for(var r,e=n.length,t=new Float32Array(e),o=0;o<e;o++){r=0;for(var f=0;f<=o;f++)r+=n[f];t[o]=n[o]/(r/o)}return t}(function(r){for(var e,t,o=r.length,f=new Float32Array(o),u=0,i=n(.5*o);u<=i;u++){t=0;for(var a=0;a<i;a++)t+=(e=r[a]-r[a+u])*e;f[u]=t}return f}(r));return e/function(n,r){for(var e=r+1,t=n.length,o=n[r];e<t&&n[e]<o;)o=n[e],e++;return e-1}(f,function(n,r){for(var e,t,o=Number.POSITIVE_INFINITY,f=0,u=n.length;f<u;f++){if((e=n[f])<r)return f;e<o&&(o=e,t=f)}return t}(f,o))}});
+    </script>
+    <script>
+        function colormap(dB) {
+            const minDB = -100;
+            const maxDB = -30;
+            let normalizedValue = Math.min(Math.max((Math.max(Math.min(dB, maxDB), minDB) - minDB) / (maxDB - minDB), 0.0), 1.0);
+
+            normalizedValue = Math.pow(normalizedValue, 3);
+
+            const viridisColormap = [
+                [0.267004, 0.004874, 0.329415],
+                [0.275191, 0.194905, 0.496005],
+                [0.212395, 0.359683, 0.55171],
+                [0.153364, 0.497, 0.557724],
+                [0.122312, 0.633153, 0.530398],
+                [0.288921, 0.758394, 0.428426],
+                [0.72091, 0.839216, 0.615686],
+                [0.969, 0.969, 0.969],
+            ];
+
+            const index = Math.floor(normalizedValue * (viridisColormap.length - 1));
+            const color1 = viridisColormap[index];
+            const color2 = viridisColormap[Math.min(index + 1, viridisColormap.length - 1)];
+            const fraction = (normalizedValue - index / (viridisColormap.length - 1)) * (viridisColormap.length - 1);
+
+            const red = Math.round((1 - fraction) * color1[0] + fraction * color2[0] * 255);
+            const green = Math.round((1 - fraction) * color1[1] + fraction * color2[1] * 255);
+            const blue = Math.round((1 - fraction) * color1[2] + fraction * color2[2] * 255);
+
+            // Return the RGB color as a string
+            return [red, green, blue];
+        }
+
+        const start = document.getElementById("start");
+        start.onclick = function() {
+            start.remove();
+            const LINE_HEIGHT = 4;
+            const NUM_OVERTONES = 10;
+
+            // UI
+            const record = document.getElementById("microphone");
+
+            // 2D
+            const container = document.getElementById("canvas");
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+
+            container.innerHTML = "";
+            canvas.width = root.clientWidth;
+            canvas.height = root.clientHeight;
+
+            const draw = context.createImageData(canvas.width, canvas.height);
+
+            // Sound
+            const audio = new (window.AudioContext || window.webkitAudioContext)()
+            const analyzer = audio.createAnalyser();
+            const sampleRate = audio.sampleRate;
+            const fft = new Float32Array(Math.pow(2, 1 + Math.floor(Math.log2(canvas.height))))
+            const pcm = new Float32Array(fft.length);
+
+            analyzer.fftSize = fft.length;
+            analyzer.smoothingTimeConstant = 0;
+            analyzer.channelCount = 1;
+
+            let i = 0;
+            requestAnimationFrame(function step() {
+                analyzer.getFloatFrequencyData(fft);
+                analyzer.getFloatTimeDomainData(pcm);
+
+                for (let j = i * 4, k = 0; j < draw.data.length; j += canvas.width * 4, k++) {
+                    const [r, g, b] = colormap(fft[Math.floor(k / LINE_HEIGHT)]);
+                    
+                    draw.data[j] = Math.max(0, Math.min(r, 255));
+                    draw.data[j + 1] = Math.max(0, Math.min(g, 255));
+                    draw.data[j + 2] = Math.max(0, Math.min(b, 255));
+                    draw.data[j + 3] = 255;
+                }
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.putImageData(draw, 0, 0);
+                // context.getImageData(0, 0, canvas.width, canvas.height).data.set(draw);
+
+                const f0 = window.yin(pcm, sampleRate);
+                if (f0 > 100) {
+                    for (let o = 1; o < 1 + NUM_OVERTONES; o++) {
+                        const idx = Math.round(f0 * o / sampleRate * analyzer.fftSize) * LINE_HEIGHT + Math.floor(LINE_HEIGHT / 2);
+                        if (idx >= canvas.height) {
+                            break;
+                        }
+                        context.strokeStyle = o == 1 ? "rgba(255, 0, 0, 0.25)" : "rgba(0, 255, 0, 0.25)";
+                        context.lineWidth = 1;
+                        context.beginPath();
+                        context.moveTo(0, idx);
+                        context.lineTo(canvas.width, idx);
+                        context.stroke();
+                    }
+                }
+
+                i = (i + 1) % canvas.width;
+                requestAnimationFrame(step);
+            });
+
+            // Setup            
+            container.appendChild(canvas);
+            navigator.mediaDevices
+                .getUserMedia({ video: false, audio: true })
+                .then((stream) => {
+                    console.log("OK", analyzer.maxDecibels, analyzer);
+                    audio.createMediaStreamSource(stream).connect(analyzer);
+                });
+            
+            const e = audio.createMediaElementSource(document.getElementById("brass"));
+
+            e.connect(analyzer);
+            e.connect(audio.destination);
+        };
+    </script>
+</body>
+</html>
