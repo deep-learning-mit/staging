@@ -284,3 +284,4 @@ Given the time and computational constraints we had for this project, we had to 
 Overall, despite the limitations, our lightweight model achieved reasonable accuracy with less than optimal conditions. One other challenge we faced had to do with Colab's memory constraints: we were only able to train on a small set of data and were forced to generate positive and negative pairs over and over from the same set. Given a larger and more diverse set of positive/negative pairs, we believe our model could have performed even better.
 
 Furthermore, we felt that our CBOW model definitely could add value for people solving downstream tasks, such as sentiment analysis. The emoji2vec model of summing the emoji's description's word embeddings is useful when there are few datapoints for each emoji, but the CBOW approach captures more subtle meanings and is much more accurate to how people actually use emojis in their day to day life—both have their merits.
+

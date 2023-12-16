@@ -1,0 +1,52 @@
+<html>
+<head><meta charset="utf-8" /></head>
+<style>
+    html,
+    body {
+    height: 100%;
+    margin: 0 auto;
+    }
+    canvas {
+    height: 512px;
+    width: 512px;
+    border: 1px solid black;
+    }
+</style>
+<body>
+<canvas id="canvas"></canvas>
+<br>
+<input id="slider" type="range" min="0" max="65" value="0" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script>
+    
+    var canvas = document.getElementById("canvas");
+    canvas.height = 512;
+    canvas.width = 512;
+
+    var totalImages = 65;
+    var videoFrames = [];
+    for (var i = 0; i < totalImages; i++) {
+        var videoFrame = new Image;
+        var index = i.toString();
+        var videoFrameUrl = "../../img/2023-11-01-latent-interpolation/translation/img_" + index.padStart(3, 0) + ".jpg";
+        videoFrame.src = videoFrameUrl;
+        videoFrames.push(videoFrame);
+    }
+    
+    var firstImg = new Image();
+    firstImg.onload = function() {
+        canvas.getContext("2d").drawImage(firstImg, 0, 0);
+    };
+    firstImg.src = "../../img/2023-11-01-latent-interpolation/translation/img_000.jpg";
+    
+    $("#slider").on("input", function(event) {
+    console.log('######', event.target.value);
+    var currentImage = videoFrames[event.target.value - 1];
+    var context = canvas.getContext("2d");
+    context.drawImage(currentImage, 0, 0);
+    });
+    
+</script>
+
+</body>
+</html>
