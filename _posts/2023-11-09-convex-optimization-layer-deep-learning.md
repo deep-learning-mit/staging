@@ -23,7 +23,7 @@ authors:
 
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-09-convex_optimization_layer_deep_learning.bib 
+bibliography: 2023-11-09-convex-optimization-layer-deep-learning.bib 
 
 
 # Add a table of contents to your post.

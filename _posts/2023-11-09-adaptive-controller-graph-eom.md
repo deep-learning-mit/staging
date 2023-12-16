@@ -16,14 +16,6 @@ bibliography: 2023-11-09-adaptive-controller-graph-eom.bib
 
 # Add a table of contents to your post.
 toc:
-
-1) An introduction or motivation.
-2) Background and related work with literature cited.
-3) A description of your methods and experiments with figures showing the method or setup.
-4) An analysis of the results of your experiments with figures showing the results.
-5) A conclusion or discussion, with mention of limitations.
-
-
   - name: Introduction
   - name: Background and Related Work
   - name: Experiments and Results
