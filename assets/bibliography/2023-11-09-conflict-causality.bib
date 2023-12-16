@@ -4,3 +4,232 @@
   journal={arXiv preprint arXiv:1706.09528},
   year={2017}
 }
+
+
+@article{zhao2023text,
+	title = {Bike {Frames}: {Understanding} the {Implicit} {Portrayal} of {Cyclists} in the {News}},
+	shorttitle = {Bike {Frames}},
+	url = {http://arxiv.org/abs/2301.06178},
+	abstract = {Increasing the number of cyclists, whether for general transport or recreation, can provide health improvements and reduce the environmental impact of vehicular transportation. However, the public's perception of cycling may be driven by the ideologies and reporting standards of news agencies. For instance, people may identify cyclists on the road as "dangerous" if news agencies overly report cycling accidents, limiting the number of people that cycle for transportation. Moreover, if fewer people cycle, there may be less funding from the government to invest in safe infrastructure. In this paper, we explore the perceived perception of cyclists within news headlines. To accomplish this, we introduce a new dataset, "Bike Frames", that can help provide insight into how headlines portray cyclists and help detect accident-related headlines. Next, we introduce a multi-task (MT) regularization approach that increases the detection accuracy of accident-related posts, demonstrating improvements over traditional MT frameworks. Finally, we compare and contrast the perceptions of cyclists with motorcyclist-related headlines to ground the findings with another related activity for both male- and female-related posts. Our findings show that general news websites are more likely to report accidents about cyclists than other events. Moreover, cyclist-specific websites are more likely to report about accidents than motorcycling-specific websites, even though there is more potential danger for motorcyclists. Finally, we show substantial differences in the reporting about male vs. female-related persons, e.g., more male-related cyclists headlines are related to accidents, but more female-related motorcycling headlines about accidents. WARNING: This paper contains descriptions of accidents and death.},
+	language = {en},
+	urldate = {2023-12-13},
+	publisher = {arXiv},
+	author = {Zhao, Xingmeng and Walton, Xavier and Shrestha, Suhana and Rios, Anthony},
+	month = jan,
+	year = {2023},
+	note = {arXiv:2301.06178 [cs]},
+	keywords = {Computer Science - Computation and Language, Computer Science - Computers and Society},
+	file = {Zhao et al. - 2023 - Bike Frames Understanding the Implicit Portrayal .pdf:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\3YLFIFH9\\Zhao et al. - 2023 - Bike Frames Understanding the Implicit Portrayal .pdf:application/pdf},
+}
+
+
+@inproceedings{chen2013dialog,
+	address = {Olomouc, Czech Republic},
+	title = {Unsupervised induction and filling of semantic slots for spoken dialogue systems using frame-semantic parsing},
+	isbn = {978-1-4799-2756-2},
+	url = {http://ieeexplore.ieee.org/document/6707716/},
+	doi = {10.1109/ASRU.2013.6707716},
+	abstract = {Spoken dialogue systems typically use predeﬁned semantic slots to parse users’ natural language inputs into uniﬁed semantic representations. To deﬁne the slots, domain experts and professional annotators are often involved, and the cost can be expensive. In this paper, we ask the following question: given a collection of unlabeled raw audios, can we use the frame semantics theory to automatically induce and ﬁll the semantic slots in an unsupervised fashion? To do this, we propose the use of a state-of-the-art frame-semantic parser, and a spectral clustering based slot ranking model that adapts the generic output of the parser to the target semantic space. Empirical experiments on a real-world spoken dialogue dataset show that the automatically induced semantic slots are in line with the reference slots created by domain experts: we observe a mean averaged precision of 69.36\% using ASR-transcribed data. Our slot ﬁlling evaluations also indicate the promising future of this proposed approach.},
+	language = {en},
+	urldate = {2023-12-13},
+	booktitle = {2013 {IEEE} {Workshop} on {Automatic} {Speech} {Recognition} and {Understanding}},
+	publisher = {IEEE},
+	author = {Chen, Yun-Nung and Wang, William Yang and Rudnicky, Alexander I.},
+	month = dec,
+	year = {2013},
+	pages = {120--125},
+	file = {Chen et al. - 2013 - Unsupervised induction and filling of semantic slo.pdf:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\4W4KUA9R\\Chen et al. - 2013 - Unsupervised induction and filling of semantic slo.pdf:application/pdf},
+}
+
+
+@article{baker1998framenet,
+	title = {The {Berkeley} {FrameNet} {Project}},
+	abstract = {FrameNet is a three-year NSF-supported project in corpus-based computational lexicography, now in its second year (NSF IRI-9618838, "Tools for Lexicon Building"). The project's key features are (a) a commitment to corpus evidence for semantic and syntactic generalizations, and (b) the representation of the valences of its target words (mostly nouns, adjectives, and verbs) in which the semantic portion makes use of frame semantics. The resulting database will contain (a) descriptions of the semantic frames underlying the meanings of the words described, and (b) the valence representation (semantic and syntactic) of several thousand words and phrases, each accompanied by (c) a representative collection of annotated corpus attestations, which jointly exemplify the observed linkings between "frame elements" and their syntactic realizations (e.g. grammatical function, phrase type, and other syntactic traits). This report will present the project's goals and workflow, and information about the computational tools that have been adapted or created in-house for this work.},
+	language = {en},
+	year = {1998},
+	author = {Baker, Collin F and Fillmore, Charles J and Lowe, John B},
+	keywords = {PRIO, TO DO},
+	file = {Baker et al. - The Berkeley FrameNet Project.pdf:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\KGS3MI83\\Baker et al. - The Berkeley FrameNet Project.pdf:application/pdf},
+}
+
+
+
+@article{gildea2002frame,
+	title = {Automatic {Labeling} of {Semantic} {Roles}},
+	volume = {28},
+	issn = {0891-2017},
+	url = {https://doi.org/10.1162/089120102760275983},
+	doi = {10.1162/089120102760275983},
+	abstract = {We present a system for identifying the semantic relationships, or semantic roles, filled by constituents of a sentence within a semantic frame. Given an input sentence and a target word and frame, the system labels constituents with either abstract semantic roles, such as Agent or Patient, or more domain-specific semantic roles, such as Speaker, Message, and Topic.The system is based on statistical classifiers trained on roughly 50,000 sentences that were hand-annotated with semantic roles by the FrameNet semantic labeling project. We then parsed each training sentence into a syntactic tree and extracted various lexical and syntactic features, including the phrase type of each constituent, its grammatical function, and its position in the sentence. These features were combined with knowledge of the predicate verb, noun, or adjective, as well as information such as the prior probabilities of various combinations of semantic roles. We used various lexical clustering algorithms to generalize across possible fillers of roles. Test sentences were parsed, were annotated with these features, and were then passed through the classifiers.Our system achieves 82\% accuracy in identifying the semantic role of presegmented constituents. At the more difficult task of simultaneously segmenting constituents and identifying their semantic role, the system achieved 65\% precision and 61\% recall.Our study also allowed us to compare the usefulness of different features and feature combination methods in the semantic role labeling task. We also explore the integration of role labeling with statistical syntactic parsing and attempt to generalize to predicates unseen in the training data.},
+	number = {3},
+	urldate = {2023-12-13},
+	journal = {Computational Linguistics},
+	author = {Gildea, Daniel and Jurafsky, Daniel},
+	month = sep,
+	year = {2002},
+	keywords = {PRIO, TO DO},
+	pages = {245--288},
+	file = {Full Text PDF:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\7F5JYTC9\\Gildea and Jurafsky - 2002 - Automatic Labeling of Semantic Roles.pdf:application/pdf},
+}
+
+
+@misc{kalyanpur2020open,
+	title = {Open-{Domain} {Frame} {Semantic} {Parsing} {Using} {Transformers}},
+	url = {https://arxiv.org/abs/2010.10998v2},
+	abstract = {Frame semantic parsing is a complex problem which includes multiple underlying subtasks. Recent approaches have employed joint learning of subtasks (such as predicate and argument detection), and multi-task learning of related tasks (such as syntactic and semantic parsing). In this paper, we explore multi-task learning of all subtasks with transformer-based models. We show that a purely generative encoder-decoder architecture handily beats the previous state of the art in FrameNet 1.7 parsing, and that a mixed decoding multi-task approach achieves even better performance. Finally, we show that the multi-task model also outperforms recent state of the art systems for PropBank SRL parsing on the CoNLL 2012 benchmark.},
+	language = {en},
+	urldate = {2023-10-10},
+	journal = {arXiv.org},
+	author = {Kalyanpur, Aditya and Biran, Or and Breloff, Tom and Chu-Carroll, Jennifer and Diertani, Ariel and Rambow, Owen and Sammons, Mark},
+	month = oct,
+	year = {2020},
+	keywords = {TO DO, PRIO},
+	file = {Full Text PDF:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\RF7WX3ZY\\Kalyanpur et al. - 2020 - Open-Domain Frame Semantic Parsing Using Transform.pdf:application/pdf},
+}
+
+
+
+@misc{chanin2023open,
+	title = {Open-source {Frame} {Semantic} {Parsing}},
+	url = {https://arxiv.org/abs/2303.12788v1},
+	abstract = {While the state-of-the-art for frame semantic parsing has progressed dramatically in recent years, it is still difficult for end-users to apply state-of-the-art models in practice. To address this, we present Frame Semantic Transformer, an open-source Python library which achieves near state-of-the-art performance on FrameNet 1.7, while focusing on ease-of-use. We use a T5 model fine-tuned on Propbank and FrameNet exemplars as a base, and improve performance by using FrameNet lexical units to provide hints to T5 at inference time. We enhance robustness to real-world data by using textual data augmentations during training.},
+	language = {en},
+	urldate = {2023-10-10},
+	journal = {arXiv.org},
+	author = {Chanin, David},
+	month = mar,
+	year = {2023},
+	keywords = {TO DO, PRIO},
+	file = {Full Text PDF:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\NECJVQW4\\Chanin - 2023 - Open-source Frame Semantic Parsing.pdf:application/pdf},
+}
+
+
+@article{balashankar2023predicting,
+	title = {Predicting food crises using news streams},
+	volume = {9},
+	url = {https://www.science.org/doi/10.1126/sciadv.abm3449},
+	doi = {10.1126/sciadv.abm3449},
+	abstract = {Anticipating food crisis outbreaks is crucial to efficiently allocate emergency relief and reduce human suffering. However, existing predictive models rely on risk measures that are often delayed, outdated, or incomplete. Using the text of 11.2 million news articles focused on food-insecure countries and published between 1980 and 2020, we leverage recent advances in deep learning to extract high-frequency precursors to food crises that are both interpretable and validated by traditional risk indicators. We demonstrate that over the period from July 2009 to July 2020 and across 21 food-insecure countries, news indicators substantially improve the district-level predictions of food insecurity up to 12 months ahead relative to baseline models that do not include text information. These results could have profound implications on how humanitarian aid gets allocated and open previously unexplored avenues for machine learning to improve decision-making in data-scarce environments.},
+	number = {9},
+	urldate = {2023-05-12},
+	journal = {Science Advances},
+	author = {Balashankar, Ananth and Subramanian, Lakshminarayanan and Fraiberger, Samuel P.},
+	month = mar,
+	year = {2023},
+	note = {Publisher: American Association for the Advancement of Science},
+	keywords = {READ},
+	pages = {eabm3449},
+	file = {Full Text PDF:C\:\\Users\\Philipp Zimmer\\Zotero\\storage\\DN7Y5SEP\\Balashankar et al. - 2023 - Predicting food crises using news streams.pdf:application/pdf},
+}
+
+
+
+@article{mueller2018reading,
+	title = {Reading {Between} the {Lines}: {Prediction} of {Political} {Violence} {Using} {Newspaper} {Text}},
+	volume = {112},
+	issn = {0003-0554, 1537-5943},
+	shorttitle = {Reading {Between} the {Lines}},
+	url = {https://www.cambridge.org/core/product/identifier/S0003055417000570/type/journal_article},
+	doi = {10.1017/S0003055417000570},
+	abstract = {This article provides a new methodology to predict armed conflict by using newspaper text. Through machine learning, vast quantities of newspaper text are reduced to interpretable topics. These topics are then used in panel regressions to predict the onset of conflict. We propose the use of the within-country variation of these topics to predict the timing of conflict. This allows us to avoid the tendency of predicting conflict only in countries where it occurred before. We show that the within-country variation of topics is a good predictor of conflict and becomes particularly useful when risk in previously peaceful countries arises. Two aspects seem to be responsible for these features. Topics provide depth because they consist of changing, long lists of terms that make them able to capture the changing context of conflict. At the same time, topics provide width because they are summaries of the full text, including stabilizing factors.},
+	language = {en},
+	number = {2},
+	urldate = {2023-08-24},
+	journal = {American Political Science Review},
+	author = {Mueller, Hannes and Rauh, Christopher},
+	month = may,
+	year = {2018},
+	keywords = {READ},
+	pages = {358--375}
+}
+
+
+
+@article{weidmann2023recent,
+	title = {Recent {Events} and the {Coding} of {Cross}-{National} {Indicators}},
+	issn = {0010-4140},
+	url = {https://doi.org/10.1177/00104140231193006},
+	doi = {10.1177/00104140231193006},
+	abstract = {Much research in political science relies on datasets produced by human coders. Many variables included in these datasets are not based on observable facts but rather require a considerable level of human judgment. This project studies the extent to which this judgment is affected by availability bias and how it influences the retrospective coding of historic cases. The analysis uses coder-level data from the V-Dem project, one of the few datasets collecting and releasing codings tagged with timestamps when they were produced. The results show that recent dramatic events in a country just prior to the coding have a small, but visible impact on coder ratings, but primarily for those variables that are directly related to the observed events. The magnitude of this effect, however, is small. This alleviates concerns that prominent events in world politics around the time of coding significantly affect the reliability of cross-national indicators.},
+	language = {en},
+	urldate = {2023-08-23},
+	journal = {Comparative Political Studies},
+	author = {Weidmann, Nils B.},
+	month = aug,
+	year = {2023},
+	note = {Publisher: SAGE Publications Inc},
+	keywords = {READ},
+	pages = {00104140231193006}
+}
+
+
+@article{vesco2022united,
+	title = {United they stand: {Findings} from an escalation prediction competition},
+	volume = {48},
+	issn = {0305-0629, 1547-7444},
+	shorttitle = {United they stand},
+	url = {https://www.tandfonline.com/doi/full/10.1080/03050629.2022.2029856},
+	doi = {10.1080/03050629.2022.2029856},
+	abstract = {This article presents results and lessons learned from a prediction competition organized by ViEWS to improve collective scientific knowledge on forecasting (de-)escalation in Africa. The competition call asked participants to forecast changes in state-based violence for the true future (October 2020–March 2021) as well as for a held-out test partition. An external scoring committee, independent from both the organizers and participants, was formed to evaluate the models based on both qualitative and quantitative criteria, including performance, novelty, uniqueness, and replicability. All models contributed to advance the research frontier by providing novel methodological or theoretical insight, including new data, or adopting innovative model specifications. While we discuss several facets of the competition that could be improved moving forward, the collection passes an important test. When we build a simple ensemble prediction model—which draws on the unique insights of each contribution to differing degrees—we can measure an improvement in the prediction from the group, over and above what the average individual model can achieve. This wisdom of the crowd effect suggests that future competitions that build on both the successes and failures of ours, can contribute to scientific knowledge by incentivizing diverse contributions as well as focusing a group’s attention on a common problem.},
+	language = {en},
+	number = {4},
+	urldate = {2023-07-26},
+	journal = {International Interactions},
+	author = {Vesco, Paola and Hegre, Håvard and Colaresi, Michael and Jansen, Remco Bastiaan and Lo, Adeline and Reisch, Gregor and Weidmann, Nils B.},
+	month = jul,
+	year = {2022},
+	keywords = {READ},
+	pages = {860--896}
+}
+
+
+@article{goldstein1992conflict,
+	title = {A {Conflict}-{Cooperation} {Scale} for {WEIS} {Events} {Data}},
+	volume = {36},
+	issn = {0022-0027},
+	url = {https://www.jstor.org/stable/174480},
+	abstract = {The problem of aggregating WEIS events data, coded as discrete events, into a continuous time series representing conflict or cooperation between two nations is discussed. Past literature on the subject reveals continuing confusion and controversy regarding such a conflict-cooperation scale. A new scale based on a small panel of international relations faculty is presented. Replication of several past studies of great power reciprocity, using the new scale, shows a slight increase in the statistical significance of relationships.},
+	number = {2},
+	urldate = {2023-07-12},
+	journal = {The Journal of Conflict Resolution},
+	author = {Goldstein, Joshua S.},
+	year = {1992},
+	note = {Publisher: Sage Publications, Inc.},
+	keywords = {READ},
+	pages = {369--385}
+}
+
+
+
+@article{beck2000improving,
+	title = {Improving {Quantitative} {Studies} of {International} {Conflict}: {A} {Conjecture}},
+	volume = {94},
+	shorttitle = {Improving {Quantitative} {Studies} of {International} {Conflict}},
+	journal = {American Political Science Review},
+	author = {Beck, Nathaniel and King, Gary and Zeng, Langche},
+	year = {2000},
+	keywords = {READ},
+	pages = {21--36}
+}
+
+
+@article{vieu2016a,
+	title = {A general framework for the annotation of causality based on {FrameNet}},
+	abstract = {We present here a general set of semantic frames to annotate causal expressions, with a rich lexicon in French and an annotated corpus of about 4000 instances of causal lexical items with their corresponding semantic frames. The aim of our project is to have both the largest possible coverage of causal phenomena in French, across all parts of speech, and have it linked to a general semantic framework such as FN, to beneﬁt in particular from the relations between other semantic frames, e.g., temporal ones or intentional ones, and the underlying upper lexical ontology that enables some forms of reasoning. This is part of the larger ASFALDA French FrameNet project, which focuses on a few different notional domains which are interesting in their own right (Djemaa et al., 2016), including cognitive positions and communication frames. In the process of building the French lexicon and preparing the annotation of the corpus, we had to remodel some of the frames proposed in FN based on English data, with hopefully more precise frame deﬁnitions to facilitate human annotation. This includes semantic clariﬁcations of frames and frame elements, redundancy elimination, and added coverage. The result is arguably a signiﬁcant improvement of the treatment of causality in FN itself.},
+	language = {en},
+	author = {Vieu, Laure and Muller, Philippe and Candito, Marie and Djemaa, Marianne},
+	keywords = {PRIO, TO DO},
+	year = {2016}
+}
+
+
+@article{vieu2020a,
+	title = {A {FrameNet} lexicon and annotated corpus as {DRD} resource: {Causality} in the {Asfalda} {French} {FrameNet}},
+	language = {en},
+	author = {Vieu, Laure},
+	keywords = {PRIO, TO DO},
+	year = {2020}
+}
+
+
+
