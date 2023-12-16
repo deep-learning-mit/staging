@@ -23,6 +23,7 @@ authors:
 # must be the exact same name as your blogpost
 bibliography: 2023-11-09-structured-physics-loss-diffusion.md
 
+
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
 #     for hyperlinks within the post to work correctly.
