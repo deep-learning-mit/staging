@@ -1,5 +1,22 @@
+---
+layout: distill
+title: Physics Loss
+description: Learning a deep net to optimize an LP, based on predicting the optimal basis vector. Surveys existing approaches in the literature. Demonstrates high accuracy of feasibility and optimality on small problem instances, but documents issues when scaling to larger problems. Benchmarks against a modern optimization solver, with discussions on upfront training vs. variable inference computation times.
+date: 2023-12-12
+htmlwidgets: true
+
+# Anonymize when submitting
+# authors:
+#   - name: Anonymous
+
+authors:
+  - name: Julian Powers
+    url: ""
+    affiliations:
+      name: MIT
+---
+
 # Super Resolution: Multi-Objective Training for Optimizing a Single Objective
-### Julian Powers
 ## Introduction
 Super-resolution (SR) refers to image processing techniques which enhance the quality of low-resolution images [2]. Recently deep learning based SR has been applied to the field fluid dynamics to recreate chaotic turbulent flows from low-resolution experimental or numerical data [3]. For some loss function $$\mathcal{L}$$, the goal is to find weights $$\theta^*$$ such that
 
@@ -9,7 +26,7 @@ $$\begin{aligned}
 
 where $$\bf u_H$$ is the reference high resolution data field and $$\bf u_L$$ is the corresponding coarsened low resolution data input to the neural network $$f$$ (see the figure below).
 
-![Super-resolution reconstruction of turbulent vorticity field using physics-based neural network. Adapted from [2].](/assets/img/2023-11-11-physics_loss/fig1.png)
+![Super-resolution reconstruction of turbulent vorticity field using physics-based neural network. Adapted from [2].](/assets/img/2023-11-11-physics-loss/fig1.png)
 
 ​	*Fig 1: Super-resolution reconstruction of turbulent vorticity field using physics-based neural network. Adapted from [2]. Disclaimer: we didn't have time to train on nice images like these for the present investigation.*
 
@@ -47,7 +64,7 @@ The amplitude scaling $k^{-1}$ models how the frequencies in a particular turbul
 
 For input to the network, the samples are discretized to a $512$ point high resolution grid: $(\mathbf{u_H})_j = u(x_j)=u(j\cdot\frac{2\pi}{512})$. The low resolution data is average pooled with a kernel size of $32$. This results in a low resolution grid of size $512/32 = 16$. Average pooling has been shown to have nice training properties for super resolution reconstruction [2]. The following is typical high/low resolution pair: 
 
-![Typical Input](assets/img/2023-11-11-physics_loss/fig2.png)
+![Typical Input](assets/img/2023-11-11-physics-loss/fig2.png)
 
 ​	*Fig 2: Typical high/low resolution data pair. The high resolution version exists on a 512 point grid. The low resolution version has been average pooled down to a 16 point grid using a average pooling kernel of size 32. The pooling procedure removes the highest frequency components of the data meaning that full reconstruction requires deeper understanding of the underlying structure.* 
 
@@ -67,7 +84,7 @@ presents a unique training challenge. Many turbulence super-resolution studies t
 
 To mitigate these issues in this investigation we employ a multi-objective optimizer (MOO). After each training epoch a MOO reviews the progress for each loss component $\mathcal{L}_i$ and updates the weights $\beta_i$. A schematic is shown below:
 
-![Schematic of one training epoch ](assets/img/2023-11-11-physics_loss/fig3.png)
+![Schematic of one training epoch ](assets/img/2023-11-11-physics-loss/fig3.png)
 
 ​	*Fig3: One epoch of training with adaptive loss using ReLoBRaLo MOO. At the end of batched training iterations the MOO updates $\{\beta_i\}$ according to the progress of each individual loss component. The Adam training optimizer learning rate is fixed at $10^{-5}$ for the entire investigation.*
 
@@ -111,15 +128,15 @@ where the $p_1$ objective was taken to be Fourier transform $\mathcal{F}$, spati
 
 Figures 4 provides a more detailed look at the training for $p_1=\mathcal{F}$. There is considerable variation in the rate of learning due to altering the $\alpha$ hyper-parameter. The bottom panel of figure 4 gives an example of a reconstructed signal. With enough training the network is able to learn the inherent structure in the data and reconstruct the high frequencies. 
 
-![Fourier loss two objective training](assets/img/2023-11-11-physics_loss/fig4.png)
+![Fourier loss two objective training](assets/img/2023-11-11-physics-loss/fig4.png)
 
-![Reconstructed data by two-objective training](assets/img/2023-11-11-physics_loss/fig4b.png)
+![Reconstructed data by two-objective training](assets/img/2023-11-11-physics-loss/fig4b.png)
 
 ​	*Fig 4: Top panel: Two objective training with Fourier loss for $\mathcal{T}=1$. The results for setting $\mathcal{T}=0.01,100$ are very similar so they are omitted for brevity. The two objective training (reconstruction + Fourier) outperforms the single objective training for every value of $\alpha$. The optimal value of $\alpha$ is close to $0.999$.* Bottom panel: example of reconstructed validation data. The model is able to recover the high frequency components from the original high resolution signal. 
 
-![beta evolution](assets/img/2023-11-11-physics_loss/fig5a.png)
+![beta evolution](assets/img/2023-11-11-physics-loss/fig5a.png)
 
-![fig5b](assets/img/2023-11-11-physics_loss/fig5b.png)
+![fig5b](assets/img/2023-11-11-physics-loss/fig5b.png)
 
 ​	*Fig 5: Reconstruction and Fourier objective $\{\beta_i\}$ evolution for $\alpha=0.9,0.999$. The smaller $\alpha$ the faster the loss weights converge to 1.* 
 
@@ -127,7 +144,7 @@ The two objective training curves in figure 4 are significantly better than the 
 
 Figure 6 shows a similar weight evolution when the second objective is 'bad',  $p_1=\sigma(\cdot)$:
 
-![beta evolution for standard deviation](assets/img/2023-11-11-physics_loss/fig6.png)
+![beta evolution for standard deviation](assets/img/2023-11-11-physics-loss/fig6.png)
 
 ​	*Fig 6: Reconstruction and $\sigma(\cdot)$ objective $\{\beta_i\}$ evolutions. There is evidence of instability at the start of training.*
 

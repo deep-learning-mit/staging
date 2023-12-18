@@ -24,7 +24,7 @@ authors:
   #     name: IAS, Princeton
 
 # must be the exact same name as your blogpost
-bibliography: 2023-11-09-transformer_time.bib
+bibliography: 2023-11-09-transformer-time.bib
 
 # Add a table of contents to your post.
 #   - make sure that TOC names match the actual section names
@@ -74,7 +74,7 @@ Not all time series are predictable, the ones that is feasible to be better fore
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/GRIN.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/GRIN.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -100,7 +100,7 @@ We used a multivariate traffic<d-footnote>https://pems.dot.ca.gov/</d-footnote> 
 We choose two models, Informer<d-cite key="Zhou_Zhang_Peng_Zhang_Li_Xiong_Zhang_2021"></d-cite>  and PatchTST(supervised) <d-cite key="nie2023time"></d-cite> to test the influence of distillation, positional embeddings, patching and data decomposition. For the implementation of Informer and PatchTST, we used the code provided by the authors.<d-footnote>https://github.com/yuqinie98/patchtst</d-footnote>. We mean to compare different methods that aim to efficiently explore on long sequence data, considering both efficiency and accuracy. This leads to a discussion about the trade off when using these models to solve real life cases and the possibility of improving or combing different methods.
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/Informer.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/Informer.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -109,7 +109,7 @@ We choose two models, Informer<d-cite key="Zhou_Zhang_Peng_Zhang_Li_Xiong_Zhang_
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/PatchTST.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/PatchTST.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -123,7 +123,7 @@ Setting 2. Explore the influence of data decomposition. We slightly change the s
 ## Result
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/test1.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/test1.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -132,7 +132,7 @@ Setting 2. Explore the influence of data decomposition. We slightly change the s
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/1.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/1.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">
@@ -141,7 +141,7 @@ Setting 2. Explore the influence of data decomposition. We slightly change the s
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-11-09-transformer_time/test2.png" class="img-fluid" %}
+        {% include figure.html path="assets/img/2023-11-09-transformer-time/test2.png" class="img-fluid" %}
     </div>
 </div>
 <div class="caption">

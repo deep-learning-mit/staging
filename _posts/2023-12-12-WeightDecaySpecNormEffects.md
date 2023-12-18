@@ -73,10 +73,10 @@ At the end of training, the MLP with depth 5, width 2000, and no norm scaling ha
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP_Train_acc_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP_Train_acc_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP_Train_loss_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP_Train_loss_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -85,10 +85,10 @@ At the end of training, the MLP with depth 5, width 2000, and no norm scaling ha
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP_Test_acc_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP_Test_acc_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP_Test_loss_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP_Test_loss_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -97,10 +97,10 @@ At the end of training, the MLP with depth 5, width 2000, and no norm scaling ha
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res_Train_acc_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res_Train_acc_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res_Train_loss_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res_Train_loss_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -109,10 +109,10 @@ At the end of training, the MLP with depth 5, width 2000, and no norm scaling ha
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res_Test_acc_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res_Test_acc_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res_Test_loss_sum.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res_Test_loss_sum.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -127,10 +127,10 @@ One of the most interesting findings of this investigation is the effect of spec
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_bl_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_bl_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_bl_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_bl_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -139,10 +139,10 @@ One of the most interesting findings of this investigation is the effect of spec
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_frob_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_frob_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_frob_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_frob_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -151,10 +151,10 @@ One of the most interesting findings of this investigation is the effect of spec
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_spec_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_spec_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP4k_spec_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP4k_spec_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -167,10 +167,10 @@ We see that this pattern does not hold for ResNets. Rather, it seems that the Fr
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_bl_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_bl_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_bl_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_bl_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -179,10 +179,10 @@ We see that this pattern does not hold for ResNets. Rather, it seems that the Fr
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_frob_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_frob_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_frob_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_frob_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -191,10 +191,10 @@ We see that this pattern does not hold for ResNets. Rather, it seems that the Fr
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_spec_acc.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_spec_acc.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res50_spec_loss.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res50_spec_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -210,13 +210,13 @@ While both our spectral norm and Frobenius norm scaling algorithms resulted in c
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP2k_bl_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP2k_bl_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP2k_frob_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP2k_frob_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\MLP2k_spec_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/MLP2k_spec_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -225,13 +225,13 @@ While both our spectral norm and Frobenius norm scaling algorithms resulted in c
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res34_bl_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res34_bl_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res34_frob_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res34_frob_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-12-12-WeightDecaySpecNormEffects\Res34_spec_norms.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-WeightDecaySpecNormEffects/Res34_spec_norms.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
