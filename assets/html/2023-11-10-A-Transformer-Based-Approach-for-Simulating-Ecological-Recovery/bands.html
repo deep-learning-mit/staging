@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Slider</title>
+    <style>
+        .slider-container {
+            text-align: center;
+            margin: 20px;
+        }
+        .slider {
+            width: 80%;
+            margin: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+    <iframe id="imageFrame" src="./band/band_1.html"></iframe>
+    <input type="range" min="1" max="200" value="1" class="slider" id="imageSlider" oninput="updateImage(this.value)">
+</div>
+
+<script>
+    function updateImage(imageNumber) {
+        var iframe = document.getElementById('imageFrame');
+        iframe.src = './band/band_' + imageNumber + '.html';
+    }
+</script>
+
+</body>
+</html>

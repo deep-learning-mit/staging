@@ -55,15 +55,13 @@ Hyperspectral imaging (HSI) captures a wide spectrum of light per pixel, providi
 
 Traditional hyperspectral image classification (HSIC) methods, based on pattern recognition and manually designed features, struggled with spectral variability. Deep learning, particularly CNNs, brought advancements by extracting intricate spectral-spatial features, enhancing HSIC's accuracy. Yet, CNNs have their drawbacks, such as a propensity for overfitting due to the high dimensionality of hyperspectral data and limitations imposed by their fixed-size kernel, which could obscure the classification boundary and fail to capture varying spatial relationships in the data effectively.
 
-<div style="display: flex; justify-content: center; align-items: center;">
-    <div style="flex: 1; padding: 10px;">
-        <!-- Embed the first iframe (e.g., hyperspectral band images slider) -->
-        <iframe src="/Users/cgriggs/Documents/MIT/Fall_2023/Deep_Learning/hsitransformers/assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/bands" width="100%" height="600px" style="border:none;"></iframe>
-    </div>
-    <div style="flex: 1; padding: 10px;">
-        <!-- Embed the second iframe (e.g., interactive box plot) -->
-        <iframe src="/Users/cgriggs/Documents/MIT/Fall_2023/Deep_Learning/hsitransformers/assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/plots/hyperbands_plot.html" width="100%" height="600px" style="border:none;"></iframe>
-    </div>
+<div class="l-body-outset" style="display: flex; justify-content: center; align-items: center;">
+  <iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/hyperbands_plot.html' | relative_url }}" frameborder="0" scrolling="no" height="600px" width="100%"></iframe>
+</div>
+
+
+<div class="l-body-outset" style="display: flex; justify-content: center; align-items: center;">
+  <iframe src="{{ 'assets/html/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/bands.html' | relative_url }}" frameborder="0" scrolling="no" height="800px" width="100%"></iframe>
 </div>
 
 

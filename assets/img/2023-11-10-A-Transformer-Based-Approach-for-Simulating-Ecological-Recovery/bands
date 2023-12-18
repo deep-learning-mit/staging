@@ -21,14 +21,14 @@
 <body>
 
 <div class="slider-container">
-    <iframe id="imageFrame" src="/Users/cgriggs/Documents/MIT/Fall_2023/Deep_Learning/hsitransformers/assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/band/band_1.html"></iframe>
+    <iframe id="imageFrame" src="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/band/band_1.html"></iframe>
     <input type="range" min="1" max="200" value="1" class="slider" id="imageSlider" oninput="updateImage(this.value)">
 </div>
 
 <script>
     function updateImage(imageNumber) {
         var iframe = document.getElementById('imageFrame');
-        iframe.src = '/Users/cgriggs/Documents/MIT/Fall_2023/Deep_Learning/hsitransformers/assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/band' + imageNumber + '.html';
+        iframe.src = 'assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/band' + imageNumber + '.html';
     }
 </script>
 
