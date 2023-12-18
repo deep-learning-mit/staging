@@ -50,7 +50,7 @@ Frankle et al. study linear mode connectivity in neural networks, which is a str
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/LMC.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/LMC.PNG" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -82,7 +82,7 @@ All models trained for the linear interpolation instability analysis were traine
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/interpolation_loss.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/interpolation_loss.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -90,7 +90,7 @@ The above plot shows the result of linear interpolation after fine tuning two co
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/instability.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/instability.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -106,10 +106,10 @@ We used the PLATON compression algorithm (Zhang et al. 2022) during training to 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/sparsity20percent.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/sparsity20percent.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/sparsity5percent.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/sparsity5percent.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -117,7 +117,7 @@ Pruning and retraining the pretrained model to 20% of its original size over 4 e
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-LinearMode/pruned_weights_as_mask.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-LinearMode/pruned_weights_as_mask.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">

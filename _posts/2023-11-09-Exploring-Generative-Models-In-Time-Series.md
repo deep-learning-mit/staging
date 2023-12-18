@@ -130,7 +130,7 @@ Before we lay out the experimental findings and their implications, we begin by 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cpu_series_plot.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cpu_series_plot.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -139,7 +139,7 @@ Plot of the cpu series with anomaly points colored red
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cpu_series_decomp.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cpu_series_decomp.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -149,7 +149,7 @@ Plot of the cpu series seasonal decomposition
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\g_series_plot.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/g_series_plot.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -158,7 +158,7 @@ Plot of the g series with anomaly points colored red
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\g_series_seasonal.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/g_series_seasonal.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -168,7 +168,7 @@ Plot of the g series seasonal decomposition
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\weather_series_plot.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/weather_series_plot.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -177,7 +177,7 @@ Plot of the weather series with anomaly points colored red
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\weather_series_decomp.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/weather_series_decomp.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -213,7 +213,7 @@ Xu et al <d-cite key="xu2018unsupervised"></d-cite> show that using both mcmc im
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\f_score_distribution.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/f_score_distribution.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -234,7 +234,7 @@ Xu et al <d-cite key="xu2018unsupervised"></d-cite> noticed a phenomenon they la
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\original_paper_latent.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/original_paper_latent.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -246,7 +246,7 @@ They noticed that the latent space was spread out according to time of the day, 
 
 <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_pred_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_pred_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
   </div>
 <div class = "caption">
@@ -288,10 +288,10 @@ where z is sampled from the latent space. With a fatter tailed distribution, we 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cnn_latent_space_tdist_cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cnn_latent_space_tdist_cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -307,10 +307,10 @@ where z is sampled from the latent space. With a fatter tailed distribution, we 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\laten_space_tdist_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/laten_space_tdist_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -327,10 +327,10 @@ For the weather dataset, the performance reduction is negligible which suggests 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space_weather.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space_weather.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_tdist_weather.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_tdist_weather.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -373,10 +373,10 @@ We now analyze the emperical results. We first analyze the effects on the cpu da
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_q_cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_q_cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -391,10 +391,10 @@ On the g dataset, we can certainly see a differently shaped latent space. We not
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_q_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_q_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -409,10 +409,10 @@ Finally, for the weather dataset, we also see that weighting the entropy term di
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space_weather.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space_weather.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_q_weather.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_q_weather.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -449,10 +449,10 @@ The performance results provide some interesting insights, and can serve to moti
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_latent_space_cpu_expandednet.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_latent_space_cpu_expandednet.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_q0.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_q0.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -462,10 +462,10 @@ The performance results provide some interesting insights, and can serve to moti
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_q2.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_q2.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_q4.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_q4.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -474,10 +474,10 @@ The performance results provide some interesting insights, and can serve to moti
 
 <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_q6.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_q6.png" class="img-fluid rounded z-depth-1" %}
     </div>
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_q8.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_q8.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -521,10 +521,10 @@ When $$\beta$$ is set to to 0, we see that the latent space looks fairly compact
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_0.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_0.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_1.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_1.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -533,10 +533,10 @@ When $$\beta$$ is set to to 0, we see that the latent space looks fairly compact
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_3.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_3.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_5.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_5.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -546,10 +546,10 @@ When $$\beta$$ is set to to 0, we see that the latent space looks fairly compact
 
 <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_7.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_7.png" class="img-fluid rounded z-depth-1" %}
     </div>
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\latent_space_cpu_pbeta_9.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/latent_space_cpu_pbeta_9.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -575,13 +575,13 @@ For the cpu dataset, we observe significant performance improvements with the CN
  
  <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\best_baseline_pred_cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/best_baseline_pred_cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
 
   </div>
   <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cnn_pred_cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cnn_pred_cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -590,7 +590,7 @@ For the cpu dataset, we observe significant performance improvements with the CN
 
 <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cnn_latent_space_cpu.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cnn_latent_space_cpu.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
@@ -605,12 +605,12 @@ We did not see this same performance improvement in the other two datasets. Addi
  
  <div class="row mt-3">
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\baseline_pred_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/baseline_pred_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
   </div>
   <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets\img\2023-11-09-Exploring-Generative-Models-In-Time-Series\cnn_pred_g.png" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-11-09-Exploring-Generative-Models-In-Time-Series/cnn_pred_g.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class = "caption">
