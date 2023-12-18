@@ -103,7 +103,7 @@ We simulated the arm moving from one random configuration to another—marked in
 ### Attempt 1: Graph Neural Net
 As inspired by Bhatoo, we rearrange the dataset as a Graph Dataset based on the PyTorch Geometric Library. Each node contains the 10 physical property parameters, angle, angular velocity, and torque input. In total, each node has 13 features. The output is set to be angular acceleration of the 7 joints (1x7 vector). As for the edge index, the graph is defined to be directed, either information flows from the last node to the first or the first node to the last node. This is inspired by the physical intuition that forces propagate sequentially from one body to the next, and that motion with respect to the global coordinate frame also sequential depended on the previous body link. 
 
-{% include figure.html path="assets/img/2023-11-09-adaptive-controller-graph-eom/node.jpg" class="img-fluid" %}
+{% include figure.html path="assets/img/2023-11-09-adaptive-controller-graph-eom/nodes.jpg" class="img-fluid" %}
 
 We applied nine iterations of the Graph Convolution Layer, ensuring information flow from one end of the arm to the other.
 

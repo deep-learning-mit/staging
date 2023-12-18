@@ -99,10 +99,10 @@ We train a model with SWAG on the MINST and CIFAR10 datasets. First, we only tra
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/violin_mnist_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/violin_mnist_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/violin_cifar_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/violin_cifar_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
@@ -110,16 +110,16 @@ We can also take a look at the data itself and identify the images which have th
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_id_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_id_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_id_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_id_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_id_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_id_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_id_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_id_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
 </div>
 The above pictures correspond to the highest and lowest scores from in-distribution training data. The major contributors for the high scores for MNIST are digits that are so poorly written it's hard to say what it is or it resembles another image too much. For CIFAR, it seems like the high score images are inducing confusion due to their color scheme or background. A lot of images with a blue or sky background such as those of birds do seem to be mistaken for planes at times. The low score images on the other hands are all extremely similar to one another; they're very well written digits (usually 0) or something that is obviously a car (usually red). 
@@ -127,16 +127,16 @@ The above pictures correspond to the highest and lowest scores from in-distribut
 Next, we take a look at how these scores fair on new out-of-distribution images. 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_ood_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_ood_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_ood_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_ood_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_ood_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_ood_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_ood_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_ood_swag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
 </div>
 
@@ -148,11 +148,11 @@ Now that we've seen that we can use our measure of uncertainty as how well the o
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_correlation_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_correlation_swag.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.9923
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_correlation_swag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_correlation_swag.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.3867
     </div>
 </div>
@@ -167,11 +167,11 @@ This model is very simple and our weight "peturbations" are not too mathematical
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_correlation_mc.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_correlation_mc.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.9944
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_correlation_mc.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_correlation_mc.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.2936
     </div>
 </div>
@@ -239,11 +239,11 @@ We do this by introducing a wrapper model that takes in a base model as well as 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_scwag_correlations.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_scwag_correlations.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.9897
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_scwag_correlations.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_scwag_correlations.png" class="img-fluid rounded z-depth-1" %}
         Spearman Correlation: -.8484
     </div>
 </div>
@@ -252,16 +252,16 @@ With MNIST, we already had near perfect correlation so this slight decrease isn'
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_scwag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_hard_scwag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_scwag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/mnist_easy_scwag.png" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_scwag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_hard_scwag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_scwag.jpg" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/2023-12-12-uncertainty-detection-project/cifar_easy_scwag.png" class="img-fluid rounded z-depth-1" %}
     </div>  
 </div>
 
