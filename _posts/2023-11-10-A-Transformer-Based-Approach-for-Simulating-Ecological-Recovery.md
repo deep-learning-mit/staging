@@ -93,7 +93,7 @@ Utilizing these datasets, an analysis is performed on four different models to u
 
 {% include figure.html path="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/3dcnn.png" class="img-fluid" %}
 
-$$ f(x, y, z) * g(x, y, z) = \sum_{i=-a}^{a} \sum_{j=-b}^{b} \sum_{k=-c}^{c} f(i, j, k) \, g(x-i, y-j, z-k) $$
+<!-- $$ f(x, y, z) * g(x, y, z) = \sum_{i=-a}^{a} \sum_{j=-b}^{b} \sum_{k=-c}^{c} f(i, j, k) \, g(x-i, y-j, z-k) $$ -->
 
 {% capture figures %}
 <div style="display: flex; justify-content: space-around; align-items: center;">
