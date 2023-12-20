@@ -27,8 +27,8 @@ toc:
   - name: Introduction
     subsections:
     - name: Hyperspectral Image Classification 
-    - name: Methodology
-    - name: Evaluation
+    - name: Datasets
+    - name: Conclusions
 
 ---
 
@@ -200,3 +200,5 @@ The spatial and spectral complexity of a dataset significantly influences the mo
 Models that can adeptly handle the dataset's complexity show tighter and more distinct clusters. It also becomes apparent that no single model outperforms the others across all scenarios; their effectiveness is context-dependent, based on the inherent characteristics of the dataset being analyzed. This suggests that a hybrid approach or ensemble models that combine spatial and spectral feature extraction strengths may be beneficial for complex datasets that present both spatial and spectral challenges. Interpreting hyperspectral imagery through deep learning unveils a landscape where every detail matters. Exploring different models – from the volumetric views of 3DCNN to the intricate layers of SpectralFormer, and from the novel perspectives of SSFTT to the group-focused insights of GAHT – showcases a diverse toolkit for dissecting the complex tapestry of land and life captured from above. The spectral and spatial richness of hyperspectral data beckons for a nuanced approach; models like GAHT and SpectralFormer excel, particularly when fine-grained spectral distinctions are key.
 
 However, no single model claims universal supremacy. The choice of model is guided by the unique spectral and spatial narratives of datasets becoming more and more available. Findings hint at a future where hybrid models will be able to uncover and analyze unique patterns in landscapes. Combining the spatial strength of models like 3DCNN with the spectral sensitivity of transformers could forge analytical power, capable of capturing the subtlest changes in the environment. As we stand at the crossroads of innovation and discovery, the potential of transformers in remote sensing invites us to reimagine the boundaries of what we can see and understand.
+
+{% include figure.html path="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/pavia_ghat.png" class="img-fluid" %}
