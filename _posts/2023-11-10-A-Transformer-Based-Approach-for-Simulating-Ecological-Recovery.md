@@ -121,7 +121,9 @@ The strengths lie in its ability to process spatial information, which is benefi
 
 The SpectralFormer utilizes a Transformer-based architecture with Cross-layer Adaptive Fusion (CAF) <d-cite key="hong_spectralformer_2022"></d-cite>  to integrate spatial and spectral information. Its structure is tailored to capitalize on the Transformer's ability to handle long-range dependencies, making it particularly suited to focus on the complex spectral signatures present in hyperspectral datasets.
 
-{% include figure.html path="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/spectralformerarch.png" class="img-fluid" caption="SpectralFormer Model Architecture<d-cite key="hong_spectralformer_2022"></d-cite> " %}
+{% include figure.html path="assets/img/2023-11-10-A-Transformer-Based-Approach-for-Simulating-Ecological-Recovery/spectralformerarch.png" class="img-fluid" caption="SpectralFormer Model Architecture<d-cite key='hong_spectralformer_2022'></d-cite> " %}
+
+
 
 Both datasets indicate that SpectralFormer performs well with certain classes that have distinct spectral characteristics, as seen with 'Asphalt' and 'Meadows' in Pavia University and 'Grapes_untrained' and 'Soil_vinyard_develop' in Salinas. However, the model shows some limitations in distinguishing between classes with similar spectral profiles or when spectral features are subtle, such as 'Bare Soil' and 'Bitumen' in Pavia University, and 'Brocoli_green_weeds_1' and 'Brocoli_green_weeds_2' in Salinas. This due to the Transformer's self-attention mechanism which, while adept at identifying dominant spectral patterns, doesn't capture the finer differences between closely resembling classes.
 
