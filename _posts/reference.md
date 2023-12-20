@@ -71,7 +71,6 @@ $$
 
 Note that MathJax 3 is [a major re-write of MathJax](https://docs.mathjax.org/en/latest/upgrading/whats-new-3.0.html) that brought a significant improvement to the loading and rendering speed, which is now [on par with KaTeX](http://www.intmath.com/cg5/katex-mathjax-comparison.php).
 
-
 ## Images and Figures
 
 Its generally a better idea to avoid linking to images hosted elsewhere - links can break and you
@@ -211,14 +210,14 @@ string myString;
     cout << "input a string: ";
     getline(cin, myString);
     int length = myString.length();
-
+    
     char charArray = new char * [length];
-
+    
     charArray = myString;
     for(int i = 0; i < length; ++i){
         cout << charArray[i] << " ";
     }
-
+    
     return 0;
 }
 
