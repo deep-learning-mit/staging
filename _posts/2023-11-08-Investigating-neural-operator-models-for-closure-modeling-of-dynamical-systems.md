@@ -237,14 +237,14 @@ Now that we know that our model focuses on the most important features for closu
 {% include figure.html path="assets/img/2023-12-19-Investigating-vision-transformer-based-models-for-closure-modeling-of-fluid-dynamical-systems/run00011_ch0_compressed.gif" class="fig:u_pred" %}
 </div>
 <div class="caption">
-Figure 7: GIF shows the attention map of a single patch on the low-fidelity u velocity input at different time steps
+Figure 7: GIF shows comparison of low fidelity prediction and augmented neural closure single step predictions for u velocity for testing times
 </div>
 
 <div id="fig:v_pred">
 {% include figure.html path="assets/img/2023-12-19-Investigating-vision-transformer-based-models-for-closure-modeling-of-fluid-dynamical-systems/run00011_ch1_compressed.gif" class="fig:v_pred" %}
 </div>
 <div class="caption">
-Figure 8: GIF shows the attention map of a single patch on the low-fidelity v velocity input at different time step
+Figure 8: GIF shows comparison of low fidelity prediction and augmented neural closure single step predictions for v velocity for testing times
 </div>
 
 ## Fine tuning for recursive predictions
@@ -271,7 +271,7 @@ The resulting predictions and error fields after fine-tuning are shown in the GI
 Figure 10: GIF shows the result of recursive predictions after fine-tuning
 </div>
 
-Finally, to show the effectiveness of fine-tuning, we compare the weighted loss of the original best single-time step model and the resulting best-fine-tuned model for long roll-out predictions of 50-time steps in <a href="#fig:loss_rec_no_rec"><span>Figure 11</span></a>. We can see that the original model sees exponential growth of errors up to 2 orders of magnitude higher in just 10 recursions while the fine-tuned model is stable up to 50 recursions.
+Finally, to show the effectiveness of fine-tuning, we compare the weighted loss of the original best single-time step model and the resulting best-fine-tuned model for long roll-out predictions of 50-time steps in <a href="#fig:loss_rec_no_rec"><span>Figure 11</span></a>. We can see that the original model sees exponential growth of errors up to 2 orders of magnitude higher in just 10 recursions while the fine-tuned model is stable up to 50 recursions. Thus, we can see that our fine tuning mechanism allows for stable roll outs well beyond the training sequence length.
 
 <div id="fig:loss_rec_no_rec">
 {% include figure.html path="assets/img/2023-12-19-Investigating-vision-transformer-based-models-for-closure-modeling-of-fluid-dynamical-systems/loss_rec_no_rec.png" class="fig:rec_pred_multiple" %}
