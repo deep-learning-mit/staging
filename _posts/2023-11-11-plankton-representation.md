@@ -124,3 +124,7 @@ Latent space representations will be extracted from each of the models at the la
 I will use t-SNE (t-Distributed Stochastic Neighbor Embedding) to visualize the feature vectors<d-cite key="vanderMaaten2008tsne"></d-cite>. 
 
 I will then use K-means clustering and compare the emergent groups to the labels in the dataset.<d-cite key="kanungo_efficient_2002"></d-cite>
+
+# Aknowledgments
+
+ChatGPT was used to create visualizations, write some paragraphs which were then edited, and generate latex equations. 
