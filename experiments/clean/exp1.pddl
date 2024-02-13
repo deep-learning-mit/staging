@@ -9,7 +9,7 @@
     cleaning-tool - object
     surface - object
     - location
-  )
+  ) 
   
   (:predicates
     (is-clean ?s - surface)
